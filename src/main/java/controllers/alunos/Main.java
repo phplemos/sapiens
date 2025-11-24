@@ -1,6 +1,5 @@
 package controllers.alunos;
 
-import views.alunos.AlunoFormView;
 import views.alunos.AlunoListView;
 
 import javax.swing.*;

@@ -155,26 +155,31 @@ public class AlunoController {
         }
 
         this.alunoRepo.excluir(pessoaId);
-
-        System.out.println("Botão EXCLUIR clicado");
-
+        formView.dispose();
+        atualizarTabela();
     }
 
     private void salvarAluno() {
         System.out.println("Botão SALVAR (do form) clicado");
+
+        Endereco newEndereco = new Endereco();
+        newEndereco.setCep(formView.getCep());
+        newEndereco.setLogradouro(formView.getLogradouro());
+        newEndereco.setNumero(formView.getNumero());
+        newEndereco.setBairro(formView.getBairro());
+        newEndereco.setCidade(formView.getCidade());
+        newEndereco.setEstado(formView.getEstado());
+        newEndereco = this.enderecoRepo.salvar(newEndereco);
+
         Pessoa newPessoa = new Pessoa();
         newPessoa.setCpf(formView.getCpf());
         newPessoa.setDataNascimento(LocalDate.parse(formView.getDataNasc()));
         newPessoa.setRg(formView.getRg());
         newPessoa.setNomeCompleto(formView.getNome());
         newPessoa.setEmailContato(formView.getEmail());
+        newPessoa.setTelefone(formView.getTelefone());
+        newPessoa.setEnderecoId(newEndereco.getId());
         this.pessoaRepo.salvar(newPessoa);
-
-        Endereco newEndereco = new Endereco();
-        newEndereco.setCep(formView.getCep());
-        newEndereco.setBairro(formView.getBairro());
-        newEndereco.setCidade(formView.getCidade());
-        this.enderecoRepo.salvar(newEndereco);
 
         Aluno aluno = new Aluno();
         aluno.setPessoaId(newPessoa.getId());
