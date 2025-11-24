@@ -12,7 +12,6 @@ public class ProfessorRepository extends BaseRepository<Professor> {
     }
 
     public Professor salvar(Professor professor) {
-        // Assume que 'professor.getPessoaId()' já foi preenchido
         this.cache.add(professor);
         salvarNoArquivo();
         return professor;
