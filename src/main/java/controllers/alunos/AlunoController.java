@@ -1,13 +1,10 @@
 package controllers.alunos;
 
-import models.Aluno;
-import models.Endereco;
-import models.Pessoa;
-import repositories.AlunoRepository;
-import repositories.PessoaRepository;
-import repositories.EnderecoRepository;
+import models.*;
+import repositories.*;
 import views.alunos.AlunoListView;
 import views.alunos.AlunoFormView;
+import views.components.ComboItem;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +14,8 @@ import java.util.List;
 public class AlunoController {
 
     private final AlunoRepository alunoRepo;
+    private final ResponsavelRepository responsavelRepo;
+    private final AlunoResponsavelRepository alunoResponsavelRepo;
     private final PessoaRepository pessoaRepo;
     private final EnderecoRepository enderecoRepo;
 
@@ -25,16 +24,33 @@ public class AlunoController {
 
     public AlunoController(AlunoListView listView) {
         this.alunoRepo = new AlunoRepository();
+        this.responsavelRepo = new ResponsavelRepository();
+        this.alunoResponsavelRepo = new AlunoResponsavelRepository();
         this.pessoaRepo = new PessoaRepository();
         this.enderecoRepo = new EnderecoRepository();
 
         this.listView = listView;
 
         this.formView = new AlunoFormView(this.listView);
-
+        carregarComboResponsaveis();
         initController();
     }
+    /**
+     * Busca todos os responsáveis e preenche o dropdown da View
+     */
+    private void carregarComboResponsaveis() {
+        List<Responsavel> responsaveis = this.responsavelRepo.listarTodos();
 
+        this.formView.adicionarResponsavelCombo(new ComboItem(0, "Selecione um responsável..."));
+
+        for (Responsavel resp : responsaveis) {
+            Pessoa p = this.pessoaRepo.buscarPorId(resp.getPessoaId()).orElse(null);
+
+            if (p != null) {
+                this.formView.adicionarResponsavelCombo(new ComboItem(p.getId(), p.getNomeCompleto()));
+            }
+        }
+    }
     /**
      * Ponto de entrada do Controller.
      * Carrega os dados iniciais e configura os eventos (cliques de botão).
@@ -143,6 +159,16 @@ public class AlunoController {
         this.formView.setEstado(endereco.getEstado());
 
         this.formView.setTitle("Editando Aluno: " + pessoa.getNomeCompleto());
+        List<AlunoResponsavel> vinculos = this.alunoResponsavelRepo.buscarPorAlunoId(pessoaId);
+
+        if (!vinculos.isEmpty()) {
+            // Pega o ID do responsável do primeiro vínculo encontrado
+            int idResponsavelVinculado = vinculos.get(0).getResponsavelPessoaId();
+            // Manda a View selecionar esse ID no dropdown
+            this.formView.setResponsavelSelecionado(idResponsavelVinculado);
+        } else {
+            this.formView.setResponsavelSelecionado(0); // Nenhum
+        }
         this.formView.setVisible(true); // Abre o popup
     }
 
@@ -153,9 +179,12 @@ public class AlunoController {
         if(!this.isLinhaSelecionada(selectedRow)){
             return;
         }
+        int confirm = JOptionPane.showConfirmDialog(listView, "Tem certeza que deseja excluir esse Aluno?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
 
-        this.alunoRepo.excluir(pessoaId);
-        formView.dispose();
+        if (confirm == JOptionPane.YES_OPTION) {
+            this.alunoRepo.excluir(pessoaId);
+            formView.dispose();
+        }
         atualizarTabela();
     }
 
@@ -184,7 +213,17 @@ public class AlunoController {
         Aluno aluno = new Aluno();
         aluno.setPessoaId(newPessoa.getId());
         this.alunoRepo.salvar(aluno);
+        int idResponsavel = this.formView.getResponsavelSelecionadoId();
 
+        if (idResponsavel > 0) {
+            AlunoResponsavel vinculo = new AlunoResponsavel();
+            vinculo.setAlunoPessoaId(aluno.getPessoaId()); // ID do aluno recém salvo
+            vinculo.setResponsavelPessoaId(idResponsavel); // ID do combo selecionado
+
+            this.alunoResponsavelRepo.salvar(vinculo);
+
+            System.out.println("Vínculo criado: Aluno " + aluno.getPessoaId() + " <-> Resp " + idResponsavel);
+        }
         formView.dispose();
         atualizarTabela();
     }

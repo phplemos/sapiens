@@ -1,5 +1,7 @@
 package views.alunos;
 
+import views.components.ComboItem;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -29,6 +31,9 @@ public class AlunoFormView extends JDialog {
     // Armazena o ID da Pessoa/Aluno que está sendo editado (0 se for novo)
     private int pessoaIdParaEdicao = 0;
 
+    // Combobox AlunoREsponsavel
+    private JComboBox<ComboItem> cbResponsavel;
+
     public AlunoFormView(JFrame parent) {
         // 'true' torna o Dialog "modal" (trava a janela principal)
         super(parent, "Formulário de Aluno", true);
@@ -36,6 +41,7 @@ public class AlunoFormView extends JDialog {
         setSize(600, 500);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
+        GridBagConstraints gbc = new GridBagConstraints();
 
         // --- 1. Painel de Campos (Centro) ---
         JPanel painelCampos = new JPanel();
@@ -70,6 +76,20 @@ public class AlunoFormView extends JDialog {
         painelPessoal.add(new JLabel("Email:"));
         txtEmail = new JTextField();
         painelPessoal.add(txtEmail);
+        gbc.gridy = 4; // Ajuste o índice da linha conforme seu layout atual
+        gbc.gridx = 0;
+        gbc.weightx = 0.0;
+        gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Responsável:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridwidth = 3; // Ocupa o resto da linha
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Inicializa o ComboBox
+        cbResponsavel = new JComboBox<>();
+        painelPessoal.add(cbResponsavel, gbc);
 
         // --- Sub-painel Endereço ---
         JPanel painelEndereco = new JPanel(new GridLayout(0, 2, 5, 5));
@@ -117,9 +137,10 @@ public class AlunoFormView extends JDialog {
         painelBotoes.add(btnCancelar);
 
         add(painelBotoes, BorderLayout.SOUTH);
+
+
     }
 
-    // --- Métodos de Acesso (para o Controller) ---
 
     // Getters para os botões
     public JButton getBtnSalvar() { return btnSalvar; }
@@ -171,6 +192,34 @@ public class AlunoFormView extends JDialog {
         return this.pessoaIdParaEdicao;
     }
 
+    public void adicionarResponsavelCombo(ComboItem item) {
+        cbResponsavel.addItem(item);
+    }
+
+    /**
+     * Retorna o ID do responsável selecionado (ou 0 se nenhum)
+     */
+    public int getResponsavelSelecionadoId() {
+        ComboItem item = (ComboItem) cbResponsavel.getSelectedItem();
+        if (item != null) {
+            return item.getId();
+        }
+        return 0;
+    }
+
+    /**
+     * Define qual responsável está selecionado (usado na Edição)
+     */
+    public void setResponsavelSelecionado(int id) {
+        for (int i = 0; i < cbResponsavel.getItemCount(); i++) {
+            ComboItem item = cbResponsavel.getItemAt(i);
+            if (item.getId() == id) {
+                cbResponsavel.setSelectedIndex(i);
+                return;
+            }
+        }
+    }
+
     public void limparFormulario() {
         txtNome.setText("");
         txtCpf.setText("");
@@ -185,5 +234,8 @@ public class AlunoFormView extends JDialog {
         txtCidade.setText("");
         txtEstado.setText("");
         pessoaIdParaEdicao = 0; // Reseta o ID
+        if (cbResponsavel.getItemCount() > 0) {
+            cbResponsavel.setSelectedIndex(0);
+        }
     }
 }
