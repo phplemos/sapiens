@@ -153,12 +153,24 @@ public class ResponsavelController {
         int selectedRow = this.listView.getTabelaResponsaveis().getSelectedRow();
         int pessoaId = (Integer) this.listView.getTableModel().getValueAt(selectedRow, 0);
 
+        System.out.println("ID selecionado: " + pessoaId);
+
         if(!this.isLinhaSelecionada(selectedRow)){
+            JOptionPane.showMessageDialog(
+                    this.listView,
+                    "Selecione um Responsavel que deseja excluir.",
+                    "Erro de seleção",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
-        this.responsavelRepo.excluir(pessoaId);
-        formView.dispose();
+        int confirm = JOptionPane.showConfirmDialog(listView, "Tem certeza que deseja excluir esse Responsavel?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            this.responsavelRepo.excluir(pessoaId);
+            formView.dispose();
+        }
         atualizarTabela();
     }
 
@@ -204,4 +216,5 @@ public class ResponsavelController {
         }
         return true;
     }
+
 }

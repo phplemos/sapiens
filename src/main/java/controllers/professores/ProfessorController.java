@@ -153,9 +153,11 @@ public class ProfessorController {
         if(!this.isLinhaSelecionada(selectedRow)){
             return;
         }
-
-        this.professorRepo.excluir(pessoaId);
-        formView.dispose();
+        int confirm = JOptionPane.showConfirmDialog(listView, "Tem certeza que deseja excluir esse Professor?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            this.professorRepo.excluir(pessoaId);
+            formView.dispose();
+        }
         atualizarTabela();
     }
 
