@@ -13,31 +13,26 @@ public class ResponsavelListView extends JFrame {
     private JButton btnExcluir;
 
     public ResponsavelListView() {
-        // --- Configuração básica da Janela ---
         setTitle("Sapiens - Gestão de Alunos");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Centralizar na tela
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
-        // --- 1. Tabela (Centro) ---
         String[] colunas = {"ID", "Nome Completo", "CPF", "Email"};
 
-        // O 'tableModel' permite adicionar e remover linhas da tabela dinamicamente
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Trava a edição direta na tabela
+                return false;
             }
         };
         tabelaResponsaveis = new JTable(tableModel);
-        tabelaResponsaveis.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Só pode selecionar 1 por vez
+        tabelaResponsaveis.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // Adiciona a tabela a um painel com barra de rolagem
         JScrollPane scrollPane = new JScrollPane(tabelaResponsaveis);
         add(scrollPane, BorderLayout.CENTER);
 
-        // --- 2. Painel de Botões (Sul) ---
         JPanel painelBotoes = new JPanel();
         painelBotoes.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
 
@@ -51,9 +46,6 @@ public class ResponsavelListView extends JFrame {
 
         add(painelBotoes, BorderLayout.SOUTH);
     }
-
-    // --- Métodos de Acesso (para o Controller) ---
-    // O Controller usará estes métodos para adicionar listeners e pegar dados
 
     public JTable getTabelaResponsaveis() {
         return tabelaResponsaveis;
