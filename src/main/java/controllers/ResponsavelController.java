@@ -1,25 +1,30 @@
 package controllers;
 
+import enums.TipoPerfilUsuario;
 import models.Endereco;
 import models.Pessoa;
 import models.Responsavel;
+import models.Usuario;
 import repositories.EnderecoRepository;
 import repositories.PessoaRepository;
 import repositories.ResponsavelRepository;
+import repositories.UsuarioRepository;
 import views.ResponsavelFormView;
 import views.ResponsavelListView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class ResponsavelController {
 
     private final ResponsavelRepository responsavelRepo;
     private final PessoaRepository pessoaRepo;
     private final EnderecoRepository enderecoRepo;
-
+    private final UsuarioRepository usuarioRepo;
     private final ResponsavelListView listView;
     private final ResponsavelFormView formView; // O formulário de popup
 
@@ -27,6 +32,7 @@ public class ResponsavelController {
         this.responsavelRepo = new ResponsavelRepository();
         this.pessoaRepo = new PessoaRepository();
         this.enderecoRepo = new EnderecoRepository();
+        this.usuarioRepo = new UsuarioRepository();
 
         this.listView = listView;
         this.formView = new ResponsavelFormView(listView);
@@ -189,11 +195,22 @@ public class ResponsavelController {
         newPessoa.setEmailContato(formView.getEmail());
         newPessoa.setTelefone(formView.getTelefone());
         newPessoa.setEnderecoId(newEndereco.getId());
-        this.pessoaRepo.salvar(newPessoa);
+        newPessoa = this.pessoaRepo.salvar(newPessoa);
 
         Responsavel responsavel = new Responsavel();
         responsavel.setPessoaId(newPessoa.getId());
         this.responsavelRepo.salvar(responsavel);
+
+        Optional<Usuario> usuarioOpt = usuarioRepo.buscarPorPessoaId(newPessoa.getId());
+        if(usuarioOpt.isEmpty()) {
+            Usuario usuario = new Usuario();
+            usuario.setPessoaId(newPessoa.getId());
+            usuario.setLogin(newPessoa.getCpf());
+            usuario.setSenhaHash("123");
+            usuario.setTipoPerfil(TipoPerfilUsuario.RESPONSAVEL);
+            usuario.setCriadoEm(LocalDateTime.now());
+            this.usuarioRepo.salvar(usuario);
+        }
 
         formView.dispose();
         atualizarTabela();
