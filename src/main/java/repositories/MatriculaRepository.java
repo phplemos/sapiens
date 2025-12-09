@@ -1,6 +1,7 @@
 package repositories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import enums.StatusMatricula;
 import models.Matricula;
 
 import java.util.List;
@@ -46,5 +47,13 @@ public class MatriculaRepository extends BaseRepository<Matricula> {
         return this.cache.stream()
                 .filter(t -> t.getTurmaId() == turmaId)
                 .toList();
+    }
+
+    public boolean alunoJaMatriculado(int alunoId, int turmaId) {
+        return this.cache.stream().anyMatch(m -> m.getAlunoPessoaId() == alunoId && m.getTurmaId() == turmaId);
+    }
+
+    public boolean alunoJaMatriculadoEmTurmaAtiva(int alunoId){
+        return this.cache.stream().anyMatch(m -> m.getAlunoPessoaId() == alunoId && m.getStatus() == StatusMatricula.ATIVA);
     }
 }

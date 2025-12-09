@@ -9,7 +9,7 @@ import java.util.Optional;
 public class MatriculaDisciplinaRepository extends BaseRepository<MatriculaDisciplina> {
 
     public MatriculaDisciplinaRepository() {
-        super("matricula_disciplina", new TypeReference<List<MatriculaDisciplina>>(){});
+        super("matricula_disciplina.json", new TypeReference<List<MatriculaDisciplina>>(){});
     }
 
     public MatriculaDisciplina salvar(MatriculaDisciplina matriculaDisciplina) {
