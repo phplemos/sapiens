@@ -10,6 +10,7 @@ public class DashboardAdminController {
     private final UsuarioRepository usuarioRepo;
     private final DashboardAdminView dashboardView;
     private final AlunoListView alunoListView;
+    private final ResponsavelListView responsavelListView;
     private final ProfessorListView professorListView;
     private final TurmaListView turmaListView;
     private final DisciplinaListView disciplinaListView;
@@ -19,6 +20,7 @@ public class DashboardAdminController {
     private final AnoEscolarListView AnoEscolarListView;
     private final SerieListView serieListView;
     private final PeriodoLetivoListView periodoLetivoListView;
+    private final UsuarioPerfilView usuarioPerfilView;
     private final Usuario usuario;
 
     public DashboardAdminController(DashboardAdminView view, Usuario usuario) {
@@ -28,6 +30,7 @@ public class DashboardAdminController {
         this.usuario = usuario;
 
         this.alunoListView = new AlunoListView();
+        this.responsavelListView = new ResponsavelListView();
         this.professorListView = new ProfessorListView();
         this.turmaListView = new TurmaListView();
         this.disciplinaListView = new DisciplinaListView();
@@ -37,6 +40,7 @@ public class DashboardAdminController {
         this.AnoEscolarListView = new AnoEscolarListView();
         this.serieListView = new SerieListView();
         this.periodoLetivoListView = new PeriodoLetivoListView();
+        this.usuarioPerfilView = new UsuarioPerfilView();
 
         new AlunoController(this.alunoListView);
         new ProfessorController(this.professorListView);
@@ -48,7 +52,7 @@ public class DashboardAdminController {
         new AnoEscolarController(AnoEscolarListView);
         new SerieController(this.serieListView);
         new PeriodoLetivoController(periodoLetivoListView);
-
+        new ResponsavelController(this.responsavelListView);
         open();
     }
 
@@ -58,6 +62,10 @@ public class DashboardAdminController {
         // 1. Alunos
         dashboardView.btnAlunos.addActionListener(e -> {
             alunoListView.setVisible(true);
+        });
+        // 1. Responsaveis
+        dashboardView.btnResponsavel.addActionListener(e -> {
+            responsavelListView.setVisible(true);
         });
 
         // 2. Professores
@@ -102,6 +110,10 @@ public class DashboardAdminController {
             } else if (choice == 2) {
                 periodoLetivoListView.setVisible(true);
             }
+        });
+        dashboardView.btnPerfil.addActionListener(e -> {
+            new UsuarioPerfilController(this.usuarioPerfilView, usuario);
+            usuarioPerfilView.setVisible(true);
         });
 
         // 8. Sair
