@@ -47,7 +47,7 @@ public class DashboardAdminController {
         new TurmaController(this.turmaListView);
         new DisciplinaController(this.disciplinaListView);
         new MatriculaController(this.matriculaListView);
-        new NotaController(this.notaLancamentoView);
+        new GestaoNotasAdminController(this.notaLancamentoView);
         new FinanceiroController(this.financeiroView);
         new AnoEscolarController(AnoEscolarListView);
         new SerieController(this.serieListView);
@@ -100,7 +100,7 @@ public class DashboardAdminController {
 
         // 7. Configurações (Sub-menu)
         dashboardView.btnConfig.addActionListener(e -> {
-            String[] options = {"Anos Escolares", "Séries", "Períodos Letivos"};
+            String[] options = {"Anos Escolares", "Séries", "Períodos Letivos","Parâmetros Gerais"};
             int choice = JOptionPane.showOptionDialog(dashboardView, "Selecione uma configuração:", "Configurações",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
             if (choice == 0) {
@@ -109,6 +109,9 @@ public class DashboardAdminController {
                 serieListView.setVisible(true);
             } else if (choice == 2) {
                 periodoLetivoListView.setVisible(true);
+            } else if (choice == 3) {
+                ParametrosEscolaView paramView = new ParametrosEscolaView(dashboardView);
+                new ParametrosEscolaController(paramView);
             }
         });
         dashboardView.btnPerfil.addActionListener(e -> {

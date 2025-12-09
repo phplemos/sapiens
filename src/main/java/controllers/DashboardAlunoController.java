@@ -12,6 +12,8 @@ public class DashboardAlunoController {
     private final UsuarioPerfilView usuarioPerfilView;
     private final ComunicadoView comunicadoView;
     private final AlunoHistoricoView alunoHistoricoView;
+    private final BoletimView boletimView; // Passa o dashboard como janela pai
+
     private final Usuario usuario;
 
     public DashboardAlunoController(DashboardAlunoView view, Usuario usuario) {
@@ -20,6 +22,7 @@ public class DashboardAlunoController {
         this.usuarioPerfilView = new UsuarioPerfilView();
         this.comunicadoView = new ComunicadoView();
         this.alunoHistoricoView = new AlunoHistoricoView(view);
+        this.boletimView = new BoletimView(view);
         this.usuario = usuario;
         open();
     }
@@ -35,6 +38,8 @@ public class DashboardAlunoController {
 
         // 2. Boletim
         dashboardView.btnBoletim.addActionListener(e -> {
+            new BoletimController(boletimView, usuario.getPessoaId());
+            this.boletimView.setVisible(true);
         });
 
         // 3. Perfil

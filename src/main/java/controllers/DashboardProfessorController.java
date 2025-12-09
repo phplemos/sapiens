@@ -141,7 +141,7 @@ public class DashboardProfessorController extends JDialog {
         }
 
         // Abre a janela do Diário
-        DiarioClasseView diarioView = new DiarioClasseView(view);
+        DiarioClasseView diarioView = new DiarioClasseView();
         new DiarioClasseController(diarioView, tdId);
         diarioView.setVisible(true);
     }
