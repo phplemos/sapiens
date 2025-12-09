@@ -1,8 +1,8 @@
 package views.components;
 
 public class ComboItem {
-    private int id;
-    private String label;
+    private final int id;
+    private final String label;
 
     public ComboItem(int id, String label) {
         this.id = id;
@@ -11,6 +11,10 @@ public class ComboItem {
 
     public int getId() {
         return id;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     @Override
