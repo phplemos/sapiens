@@ -163,7 +163,7 @@ public class AlunoFormView extends JDialog {
         }
     }
 
-    public boolean validateForm(){
+    public boolean validateForm(boolean isEdicao ){
         if(txtNome.getText().isEmpty()){
             System.out.println(txtNome.getText());
             JOptionPane.showMessageDialog(null, "Preencha o nome do aluno!");
@@ -173,6 +173,9 @@ public class AlunoFormView extends JDialog {
             JOptionPane.showMessageDialog(null, "Preencha o cpf do aluno!");
             return false;
         } else {
+            if(isEdicao){
+                return true;
+            }
             Optional<Pessoa> temCadastro = this.pessoaRepository.buscarPorCPF(txtCpf.getText());
             if(temCadastro.isPresent()){
                 JOptionPane.showMessageDialog(null, "CPF ja cadastrado!");

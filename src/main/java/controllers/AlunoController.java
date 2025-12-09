@@ -24,7 +24,7 @@ public class AlunoController {
 
     private final AlunoListView listView;
     private final AlunoFormView formView;
-
+    private boolean isEditForm = false;
     public AlunoController(AlunoListView listView) {
         this.alunoRepo = new AlunoRepository();
         this.responsavelRepo = new ResponsavelRepository();
@@ -79,8 +79,12 @@ public class AlunoController {
             abrirHistorico();
         });
         this.formView.getBtnSalvar().addActionListener(e -> {
-            boolean isValid = this.formView.validateForm();
+            boolean isValid = this.formView.validateForm(this.isEditForm);
             if (isValid) {
+                if(isEditForm){
+                    atualizarAluno();
+                    return;
+                }
                 salvarAluno();
             }
         });
@@ -130,21 +134,17 @@ public class AlunoController {
     }
 
     private void abrirFormularioEditarAluno() {
-        System.out.println("Botão EDITAR clicado");
+        isEditForm = true;
         int selectedRow = this.listView.getTabelaAlunos().getSelectedRow();
 
         if (!this.isLinhaSelecionada(selectedRow)) return;
 
         int pessoaId = (Integer) this.listView.getTableModel().getValueAt(selectedRow, 0);
 
-        System.out.println("ID selecionado: " + pessoaId);
-
-
         Pessoa pessoa = this.pessoaRepo.buscarPorId(pessoaId).orElse(null);
 
         models.Endereco endereco = null;
         if (pessoa != null) {
-            System.out.println("Entrou aqui");
             endereco = this.enderecoRepo.buscarPorId(pessoa.getEnderecoId()).orElse(null);
         }
 
@@ -160,7 +160,6 @@ public class AlunoController {
 
         this.formView.limparFormulario(); // Limpa antes de preencher
         this.formView.setPessoaIdParaEdicao(pessoaId); // Salva o ID para o 'salvar'
-
         this.formView.setNome(pessoa.getNomeCompleto());
         this.formView.setCpf(pessoa.getCpf());
         this.formView.setDataNasc(pessoa.getDataNascimento().toString()); // Converte LocalDate para String
@@ -198,6 +197,7 @@ public class AlunoController {
         atualizarTabela("");
     }
 
+
     private void salvarAluno() {
         System.out.println("Botão SALVAR (do form) clicado");
         Optional<Pessoa> responsavel = this.pessoaRepo.buscarPorId(this.formView.getResponsavelSelecionadoId());
@@ -228,6 +228,44 @@ public class AlunoController {
             this.alunoResponsavelRepo.salvar(vinculo);
 
             System.out.println("Vínculo criado: Aluno " + aluno.getPessoaId() + " <-> Resp " + idResponsavel);
+        }
+        formView.dispose();
+        atualizarTabela("");
+    }
+
+    private void atualizarAluno() {
+        Optional<Pessoa> dadosPessoa = this.pessoaRepo.buscarPorId(this.formView.getPessoaIdParaEdicao());
+        Optional<Aluno> dadosAluno = this.alunoRepo.buscarPorPessoaId(this.formView.getPessoaIdParaEdicao());
+        if(dadosAluno.isEmpty() || dadosPessoa.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Problema ao buscar aluno, verifique se preencheu corretamente");
+            return;
+        }
+        Optional<Pessoa> responsavel = this.pessoaRepo.buscarPorId(this.formView.getResponsavelSelecionadoId());
+        if(responsavel.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Problema ao buscar responsavel, verifique se preencheu corretamente");
+            return;
+        }
+
+        Pessoa pessoa = dadosPessoa.get();
+        pessoa.setCpf(formView.getCpf());
+        pessoa.setDataNascimento(LocalDate.parse(formView.getDataNasc()));
+        pessoa.setRg(formView.getRg());
+        pessoa.setNomeCompleto(formView.getNome());
+        pessoa.setEmailContato(formView.getEmail());
+        pessoa.setTelefone(formView.getTelefone());
+        pessoa.setEnderecoId(responsavel.get().getEnderecoId());
+        this.pessoaRepo.editar(pessoa);
+
+        int idResponsavel = this.formView.getResponsavelSelecionadoId();
+
+        if (idResponsavel > 0) {
+            AlunoResponsavel vinculo = new AlunoResponsavel();
+            vinculo.setAlunoPessoaId(dadosAluno.get().getPessoaId()); // ID do aluno recém salvo
+            vinculo.setResponsavelPessoaId(idResponsavel); // ID do combo selecionado
+
+            this.alunoResponsavelRepo.salvar(vinculo);
+
+            System.out.println("Vínculo criado: Aluno " + dadosAluno.get().getPessoaId() + " <-> Resp " + idResponsavel);
         }
         formView.dispose();
         atualizarTabela("");

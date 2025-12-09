@@ -22,6 +22,7 @@ public class NotaController {
     private final PessoaRepository pessoaRepo;
     private final NotaRepository notaRepo;
     private final AlunoRepository alunoRepo;
+    private final BoletimStatusRepository boletimRepo;
 
     public NotaController(NotaLancamentoView view) {
         this.view = view;
@@ -35,6 +36,7 @@ public class NotaController {
         this.pessoaRepo = new PessoaRepository();
         this.notaRepo = new NotaRepository();
         this.alunoRepo = new AlunoRepository();
+        this.boletimRepo = new BoletimStatusRepository();
 
         initController();
     }
@@ -47,8 +49,32 @@ public class NotaController {
         // Botões
         view.getBtnBuscar().addActionListener(e -> listarAlunosENotas());
         view.getBtnSalvarNotas().addActionListener(e -> salvarNotas());
+        view.getBtnPublicar().addActionListener(e -> publicarBoletim());
     }
+    private void publicarBoletim() {
+        int turmaId = view.getTurmaSelecionadaId();
+        int periodoId = view.getPeriodoSelecionadoId();
 
+        if (turmaId == 0 || periodoId == 0) {
+            JOptionPane.showMessageDialog(view, "Selecione Turma e Período para publicar.");
+            return;
+        }
+
+        // Confirmação
+        int confirm = JOptionPane.showConfirmDialog(view,
+                "Deseja tornar as notas deste período visíveis para os alunos?\n" +
+                        "Certifique-se de ter salvo todas as alterações antes.",
+                "Publicar Boletim", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            boletimRepo.registrarPublicacao(turmaId, periodoId, true);
+
+            JOptionPane.showMessageDialog(view, "Boletim publicado com sucesso!");
+
+            // Opcional: Disparar notificação para a turma inteira avisando!
+            // ComunicadoController.dispararNotificacaoTurma(...) // Se você criar esse método
+        }
+    }
     private void carregarComboTurmas() {
         List<Turma> turmas = turmaRepo.listarTodos();
         view.getCbTurma().removeAllItems();

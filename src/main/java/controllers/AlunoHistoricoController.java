@@ -22,7 +22,7 @@ public class AlunoHistoricoController {
     private final DisciplinaRepository disciplinaRepo;
     private final NotaRepository notaRepo;
     private final PeriodoLetivoRepository periodoRepo;
-
+    private final BoletimStatusRepository  boletimRepo;
     public AlunoHistoricoController(AlunoHistoricoView view, int alunoPessoaId, boolean isAdmin) {
         this.view = view;
 
@@ -37,7 +37,7 @@ public class AlunoHistoricoController {
         this.disciplinaRepo = new DisciplinaRepository();
         this.notaRepo = new NotaRepository();
         this.periodoRepo = new PeriodoLetivoRepository();
-
+        this.boletimRepo = new BoletimStatusRepository();
         carregarDados(alunoPessoaId);
         this.view.getBtnFechar().addActionListener(e -> {
             if (isAdmin) view.dispose();
@@ -101,33 +101,39 @@ public class AlunoHistoricoController {
                     Optional<Disciplina> dOpt = disciplinaRepo.buscarPorId(tdOpt.get().getDisciplinaId());
                     if (dOpt.isPresent()) nomeDisciplina = dOpt.get().getNome();
                 }
-
-                // C. Busca Notas lançadas para essa matéria
-                // Aqui podemos listar uma linha por Nota/Período
                 List<Nota> notas = notaRepo.listarTodos().stream()
                         .filter(n -> n.getMatriculaDisciplinaId() == md.getId())
                         .toList();
 
-                if (notas.isEmpty()) {
-                    // Adiciona linha sem nota
-                    view.getTableModel().addRow(new Object[]{
-                            anoLetivo, nomeTurma, nomeDisciplina, "-", "-", md.getTotalFaltas()
-                    });
-                } else {
-                    for (Nota n : notas) {
-                        String nomePeriodo = "-";
-                        Optional<PeriodoLetivo> perOpt = periodoRepo.buscarPorId(n.getPeriodoLetivoId());
-                        if(perOpt.isPresent()) nomePeriodo = perOpt.get().getNome();
+                for (Nota n : notas) {
+                    String nomePeriodo = "-";
+                    Optional<PeriodoLetivo> perOpt = periodoRepo.buscarPorId(n.getPeriodoLetivoId());
+                    if(perOpt.isPresent()) nomePeriodo = perOpt.get().getNome();
 
-                        view.getTableModel().addRow(new Object[]{
-                                anoLetivo,
-                                nomeTurma,
-                                nomeDisciplina,
-                                nomePeriodo,
-                                n.getValorNota(),
-                                md.getTotalFaltas()
-                        });
+                    // --- VERIFICAÇÃO DE SEGURANÇA (RF043) ---
+                    int periodoId = n.getPeriodoLetivoId();
+                    int turmaId = mat.getTurmaId(); // Pegamos da matrícula do loop externo
+
+                    boolean isPublicado = boletimRepo.isPublicado(turmaId, periodoId);
+
+                    // Variável para exibição
+                    Object valorExibido;
+
+                    if (isPublicado) {
+                        valorExibido = n.getValorNota();
+                    } else {
+                        valorExibido = "Em fecham."; // Ou "-" ou "Oculto"
                     }
+                    // ----------------------------------------
+
+                    view.getTableModel().addRow(new Object[]{
+                            anoLetivo,
+                            nomeTurma,
+                            nomeDisciplina,
+                            nomePeriodo,
+                            valorExibido, // <--- Use a variável tratada
+                            md.getTotalFaltas()
+                    });
                 }
             }
         }
