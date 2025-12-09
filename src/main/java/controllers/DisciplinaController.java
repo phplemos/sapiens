@@ -1,7 +1,12 @@
 package controllers;
 
 import models.Disciplina;
+import models.MatriculaDisciplina;
+import models.Turma;
+import models.TurmaDisciplina;
 import repositories.DisciplinaRepository;
+import repositories.MatriculaDisciplinaRepository;
+import repositories.TurmaDisciplinaRepository;
 import views.DisciplinaFormView;
 import views.DisciplinaListView;
 
@@ -13,11 +18,15 @@ import java.util.Optional;
 public class DisciplinaController {
 
     private final DisciplinaRepository repository;
+    private final MatriculaDisciplinaRepository matriculaDisciplinaRepository;
+    private final TurmaDisciplinaRepository turmaDisciplinaRepository;
     private final DisciplinaListView listView;
     private final DisciplinaFormView formView;
 
     public DisciplinaController(DisciplinaListView listView) {
         this.repository = new DisciplinaRepository();
+        this.matriculaDisciplinaRepository = new MatriculaDisciplinaRepository();
+        this.turmaDisciplinaRepository = new TurmaDisciplinaRepository();
         this.listView = listView;
         this.formView = new DisciplinaFormView(listView);
 
@@ -133,6 +142,23 @@ public class DisciplinaController {
 
         int confirm = JOptionPane.showConfirmDialog(listView, "Tem certeza que deseja excluir esta disciplina?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
 
+        List<TurmaDisciplina> turmaDisciplinaOpt = this.turmaDisciplinaRepository.buscarPorDisciplinaId(id);
+        boolean temAlunoMatriculado = false;
+        for (TurmaDisciplina d : turmaDisciplinaOpt) {
+            if(temAlunoMatriculado) {
+                return;
+            }
+            int turmaId = d.getId();
+            List<MatriculaDisciplina> matriculas = this.matriculaDisciplinaRepository.buscarPorTurmaDisciplinaId(turmaId);
+            if(!matriculas.isEmpty()){
+                temAlunoMatriculado = true;
+            }
+        }
+
+        if(temAlunoMatriculado) {
+            JOptionPane.showMessageDialog(formView, "Impossivel excluir disciplina, ja há alunos matriculados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (confirm == JOptionPane.YES_OPTION) {
             repository.excluir(id);
             atualizarTabela();
