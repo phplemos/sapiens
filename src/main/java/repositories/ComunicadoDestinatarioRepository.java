@@ -5,16 +5,18 @@ import models.AlunoResponsavel;
 import models.ComunicadoDestinatario;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ComunicadoDestinatarioRepository extends BaseRepository<ComunicadoDestinatario> {
     public ComunicadoDestinatarioRepository() {
         super("comunicado_destinatario.json", new TypeReference<List<ComunicadoDestinatario>>() {});
     }
 
-    public ComunicadoDestinatario salvar(ComunicadoDestinatario comunicadoDestinatario) {
-        this.cache.add(comunicadoDestinatario);
+    public void salvar(ComunicadoDestinatario cd) {
+        int novoId = gerarProximoId(ComunicadoDestinatario::getId);
+        cd.setId(novoId);
+        this.cache.add(cd);
         salvarNoArquivo();
-        return comunicadoDestinatario;
     }
 
     public List<ComunicadoDestinatario> listarTodos() {
@@ -39,5 +41,19 @@ public class ComunicadoDestinatarioRepository extends BaseRepository<ComunicadoD
                         ar.getDestinatarioPessoaId() == destinatarioPessoaId
         );
         salvarNoArquivo();
+    }
+    public void marcarComoLido(int id) {
+        Optional<ComunicadoDestinatario> opt = this.cache.stream().filter(cd -> cd.getComunicadoId() == id).findFirst();
+        if(opt.isPresent()) {
+            opt.get().setLido(true);
+            salvarNoArquivo();
+        }
+    }
+
+    // Busca todas as mensagens destinadas a uma pessoa
+    public List<ComunicadoDestinatario> buscarPorDestinatario(int pessoaId) {
+        return this.cache.stream()
+                .filter(cd -> cd.getDestinatarioPessoaId() == pessoaId)
+                .toList();
     }
 }
