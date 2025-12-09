@@ -7,10 +7,11 @@ import java.time.LocalDateTime;
 public class Usuario {
 
     private int pessoaId;
-    private String emailLogin;
+    private String login;
     private String senhaHash;
     private TipoPerfilUsuario tipoPerfil;
     private LocalDateTime criadoEm;
+
 
     public int getPessoaId() {
         return pessoaId;
@@ -20,12 +21,12 @@ public class Usuario {
         this.pessoaId = pessoaId;
     }
 
-    public String getEmailLogin() {
-        return emailLogin;
+    public String getLogin() {
+        return login;
     }
 
-    public void setEmailLogin(String emailLogin) {
-        this.emailLogin = emailLogin;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getSenhaHash() {
