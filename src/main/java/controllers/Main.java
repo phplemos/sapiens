@@ -158,7 +158,7 @@ public class Main {
 
             SwingUtilities.invokeLater(() -> {
                 NotaLancamentoView view = new NotaLancamentoView();
-                new NotaController(view);
+                new GestaoNotasAdminController(view);
                 view.setVisible(true);
             });
         };
