@@ -52,5 +52,11 @@ public class NotaRepository extends BaseRepository<Nota> {
                 .filter(t -> t.getPeriodoLetivoId() == periodoLetivoId)
                 .toList();
     }
+    public Optional<Nota> buscarNota(int matriculaDisciplinaId, int periodoLetivoId) {
+        return this.cache.stream()
+                .filter(n -> n.getMatriculaDisciplinaId() == matriculaDisciplinaId &&
+                        n.getPeriodoLetivoId() == periodoLetivoId)
+                .findFirst();
+    }
 
 }
