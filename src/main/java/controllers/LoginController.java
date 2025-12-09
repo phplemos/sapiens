@@ -5,6 +5,7 @@ import models.Usuario;
 import repositories.UsuarioRepository;
 import views.DashboardAdminView;
 import views.DashboardAlunoView;
+import views.DashboardProfessorView;
 import views.LoginView;
 
 import javax.swing.*;
@@ -16,7 +17,7 @@ public class LoginController {
     private final LoginView view;
     private final DashboardAdminView dashboardAdminView;
     private final DashboardAlunoView dashboardAlunoView;
-
+    private final DashboardProfessorView dashboardProfessorView;
 
 
     public LoginController() {
@@ -24,7 +25,7 @@ public class LoginController {
         this.usuarioRepo = new UsuarioRepository();
         this.dashboardAdminView = new DashboardAdminView();
         this.dashboardAlunoView = new DashboardAlunoView();
-
+        this.dashboardProfessorView = new DashboardProfessorView();
     }
     public void start() {
         abrirTelaLogin();
@@ -49,7 +50,9 @@ public class LoginController {
                     view.dispose();
                 }
                 if(usuarioOpt.get().getTipoPerfil().equals(TipoPerfilUsuario.PROFESSOR)){
-                   System.out.println("Usuario professor!");
+                    new DashboardProfessorController(dashboardProfessorView, usuarioOpt.get());
+                    dashboardProfessorView.setVisible(true);
+                    view.dispose();
                 }
 
             } else {
