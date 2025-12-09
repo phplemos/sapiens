@@ -42,4 +42,10 @@ public class PessoaRepository extends BaseRepository<Pessoa> {
         this.cache.removeIf(p -> p.getId() == id);
         salvarNoArquivo();
     }
+
+    public Optional<Pessoa> buscarPorCPF(String cpf) {
+        return this.cache.stream()
+                .filter(p -> p.getCpf().equalsIgnoreCase(cpf.toLowerCase()) )
+                .findFirst();
+    }
 }

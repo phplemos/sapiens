@@ -1,11 +1,18 @@
 package views;
 
+import models.Pessoa;
+import repositories.PessoaRepository;
+import repositories.ProfessorRepository;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.Optional;
 
 public class ProfessorFormView extends JDialog {
+
+    private final PessoaRepository pessoaRepo;
 
     // Campos de Pessoa
     private final JTextField txtNome;
@@ -124,6 +131,8 @@ public class ProfessorFormView extends JDialog {
         painelBotoes.add(btnCancelar);
 
         add(painelBotoes, BorderLayout.SOUTH);
+
+        this.pessoaRepo = new PessoaRepository();
     }
 
     // --- Métodos de Acesso (para o Controller) ---
@@ -183,6 +192,58 @@ public class ProfessorFormView extends JDialog {
         return this.pessoaIdParaEdicao;
     }
 
+    public boolean validateForm(){
+
+        if(txtNome.getText().isEmpty()){
+            System.out.println(txtNome.getText());
+            JOptionPane.showMessageDialog(null, "Preencha o nome do Professor!");
+            return false;
+        }
+        if(txtCpf.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha o cpf do Professor!");
+            return false;
+        } else {
+            Optional<Pessoa> temCadastro = this.pessoaRepo.buscarPorCPF(txtCpf.getText());
+            if(temCadastro.isPresent()){
+                JOptionPane.showMessageDialog(null, "CPF ja cadastrado!");
+                return false;
+            }
+        }
+        if(txtRg.getText().isEmpty()){
+            // JOptionPane.showMessageDialog(null, "Preencha o rg do aluno!");
+            return true; // Por enquanto liberado
+        }
+        if(txtDataNasc.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha o data de nascimento do aluno!");
+            return false;
+        }
+        if(txtTelefone.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha o telefone do aluno!");
+            return false;
+        }
+        if(txtEmail.getText().isEmpty()){
+            // JOptionPane.showMessageDialog(null, "Preencha o email do aluno!");
+            return true; // Por enquanto liberado
+        }
+        if(txtLogradouro.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha o logradouro do aluno!");
+            return false;
+        }
+        if(txtNumero.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha o numero do aluno!");
+            return false;
+        }
+        if(txtBairro.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha o bairro do aluno!");
+            return false;
+        }
+        if(txtCidade.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha o cidade do aluno!");
+            return false;
+        }
+
+        return true;
+    }
     public void limparFormulario() {
         txtNome.setText("");
         txtCpf.setText("");

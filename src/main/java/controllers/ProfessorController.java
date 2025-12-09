@@ -1,17 +1,21 @@
 package controllers;
 
+import enums.TipoPerfilUsuario;
 import models.Endereco;
 import models.Pessoa;
 import models.Professor;
+import models.Usuario;
 import repositories.EnderecoRepository;
 import repositories.PessoaRepository;
 import repositories.ProfessorRepository;
+import repositories.UsuarioRepository;
 import views.ProfessorFormView;
 import views.ProfessorListView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ProfessorController {
@@ -19,6 +23,7 @@ public class ProfessorController {
     private final ProfessorRepository professorRepo;
     private final PessoaRepository pessoaRepo;
     private final EnderecoRepository enderecoRepo;
+    private final UsuarioRepository usuarioRepo;
 
     private final ProfessorListView listView;
     private final ProfessorFormView formView;
@@ -27,6 +32,7 @@ public class ProfessorController {
         this.professorRepo = new ProfessorRepository();
         this.pessoaRepo = new PessoaRepository();
         this.enderecoRepo = new EnderecoRepository();
+        this.usuarioRepo = new UsuarioRepository();
 
         this.listView = listView;
         this.formView = new ProfessorFormView(this.listView);
@@ -56,7 +62,10 @@ public class ProfessorController {
         });
 
         this.formView.getBtnSalvar().addActionListener(e -> {
-            salvarProfessor();
+            boolean isValid = this.formView.validateForm();
+            if (isValid) {
+                salvarProfessor();
+            }
         });
 
         this.formView.getBtnCancelar().addActionListener(e -> {
@@ -193,6 +202,14 @@ public class ProfessorController {
         professor.setPessoaId(newPessoa.getId());
         professor.setFormacaoAcademica(formView.getFormacaoAcademica());
         this.professorRepo.salvar(professor);
+
+        Usuario usuario = new Usuario();
+        usuario.setPessoaId(newPessoa.getId());
+        usuario.setLogin(newPessoa.getEmailContato());
+        usuario.setSenhaHash("123");
+        usuario.setTipoPerfil(TipoPerfilUsuario.PROFESSOR);
+        usuario.setCriadoEm(LocalDateTime.now());
+        this.usuarioRepo.salvar(usuario);
 
         formView.dispose();
         atualizarTabela("");
