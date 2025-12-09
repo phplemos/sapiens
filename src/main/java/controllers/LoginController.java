@@ -3,10 +3,7 @@ package controllers;
 import enums.TipoPerfilUsuario;
 import models.Usuario;
 import repositories.UsuarioRepository;
-import views.DashboardAdminView;
-import views.DashboardAlunoView;
-import views.DashboardProfessorView;
-import views.LoginView;
+import views.*;
 
 import javax.swing.*;
 import java.util.Optional;
@@ -18,7 +15,7 @@ public class LoginController {
     private final DashboardAdminView dashboardAdminView;
     private final DashboardAlunoView dashboardAlunoView;
     private final DashboardProfessorView dashboardProfessorView;
-
+    private final DashboardResponsavelView  dashboardResponsavelView;
 
     public LoginController() {
         this.view = new LoginView();
@@ -26,6 +23,7 @@ public class LoginController {
         this.dashboardAdminView = new DashboardAdminView();
         this.dashboardAlunoView = new DashboardAlunoView();
         this.dashboardProfessorView = new DashboardProfessorView();
+        this.dashboardResponsavelView = new DashboardResponsavelView();
     }
     public void start() {
         abrirTelaLogin();
@@ -39,22 +37,33 @@ public class LoginController {
             Optional<Usuario> usuarioOpt = usuarioRepo.autenticar(login, senha);
 
             if (usuarioOpt.isPresent()) {
-                if(usuarioOpt.get().getTipoPerfil().equals(TipoPerfilUsuario.ADMIN)){
-                    new DashboardAdminController(dashboardAdminView, usuarioOpt.get());
-                    dashboardAdminView.setVisible(true);
-                    view.dispose();
-                }
-                if(usuarioOpt.get().getTipoPerfil().equals(TipoPerfilUsuario.ALUNO)){
-                    new DashboardAlunoController(dashboardAlunoView, usuarioOpt.get());
-                    dashboardAlunoView.setVisible(true);
-                    view.dispose();
-                }
-                if(usuarioOpt.get().getTipoPerfil().equals(TipoPerfilUsuario.PROFESSOR)){
-                    new DashboardProfessorController(dashboardProfessorView, usuarioOpt.get());
-                    dashboardProfessorView.setVisible(true);
-                    view.dispose();
-                }
+                switch (usuarioOpt.get().getTipoPerfil()) {
+                    case ADMIN:{
+                        new DashboardAdminController(dashboardAdminView, usuarioOpt.get());
+                        dashboardAdminView.setVisible(true);
+                        view.dispose();
+                        break;
+                    }
+                    case PROFESSOR: {
+                        new DashboardProfessorController(dashboardProfessorView, usuarioOpt.get());
+                        dashboardProfessorView.setVisible(true);
+                        view.dispose();
+                        break;
+                    }
+                    case ALUNO:{
+                        new DashboardAlunoController(dashboardAlunoView, usuarioOpt.get());
+                        dashboardAlunoView.setVisible(true);
+                        view.dispose();
+                        break;
+                    }
+                    case RESPONSAVEL:{
+                        new DashboardResponsavelController(dashboardResponsavelView, usuarioOpt.get());
+                        dashboardResponsavelView.setVisible(true);
+                        view.dispose();
+                        break;
+                    }
 
+                }
             } else {
                 JOptionPane.showMessageDialog(view, "Login ou Senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
