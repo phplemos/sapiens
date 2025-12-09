@@ -1,16 +1,26 @@
 [ {
+  "id" : 3,
+  "matriculaDisciplinaId" : 2,
+  "periodoLetivoId" : 1,
+  "valorNota" : 7.0
+}, {
   "id" : 1,
   "matriculaDisciplinaId" : 1,
   "periodoLetivoId" : 1,
-  "valorNota" : 1.0
+  "valorNota" : 4.0
+}, {
+  "id" : 4,
+  "matriculaDisciplinaId" : 3,
+  "periodoLetivoId" : 1,
+  "valorNota" : 12.0
 }, {
   "id" : 2,
   "matriculaDisciplinaId" : 1,
   "periodoLetivoId" : 2,
-  "valorNota" : 1.0
+  "valorNota" : 1.02
 }, {
-  "id" : 3,
-  "matriculaDisciplinaId" : 2,
-  "periodoLetivoId" : 1,
-  "valorNota" : 12.0
+  "id" : 5,
+  "matriculaDisciplinaId" : 3,
+  "periodoLetivoId" : 2,
+  "valorNota" : 2.0
 } ]

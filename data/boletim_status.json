@@ -1,0 +1,11 @@
+[ {
+  "id" : 1,
+  "turmaId" : 1,
+  "periodoLetivoId" : 1,
+  "publicado" : true
+}, {
+  "id" : 2,
+  "turmaId" : 1,
+  "periodoLetivoId" : 2,
+  "publicado" : true
+} ]

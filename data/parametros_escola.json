@@ -1,0 +1,7 @@
+[ {
+  "id" : 1,
+  "mediaAprovacao" : 7.0,
+  "mediaRecuperacao" : 4.0,
+  "limiteFaltas" : 25,
+  "nomeInstituicao" : "Sapiens"
+} ]

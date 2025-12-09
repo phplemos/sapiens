@@ -8,4 +8,14 @@
   "comunicadoId" : 2,
   "destinatarioPessoaId" : 3,
   "lido" : true
+}, {
+  "id" : 3,
+  "comunicadoId" : 3,
+  "destinatarioPessoaId" : 8,
+  "lido" : false
+}, {
+  "id" : 4,
+  "comunicadoId" : 4,
+  "destinatarioPessoaId" : 8,
+  "lido" : false
 } ]

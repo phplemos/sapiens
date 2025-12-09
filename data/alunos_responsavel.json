@@ -1,4 +1,13 @@
 [ {
   "alunoPessoaId" : 3,
   "responsavelPessoaId" : 2
+}, {
+  "alunoPessoaId" : 3,
+  "responsavelPessoaId" : 2
+}, {
+  "alunoPessoaId" : 6,
+  "responsavelPessoaId" : 2
+}, {
+  "alunoPessoaId" : 8,
+  "responsavelPessoaId" : 7
 } ]

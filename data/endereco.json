@@ -25,4 +25,31 @@
   "cidade" : "eqweqwe",
   "estado" : "qweqweqwe",
   "cep" : "QWEQWE"
+}, {
+  "id" : 4,
+  "logradouro" : "qwe",
+  "numero" : "qwe",
+  "complemento" : null,
+  "bairro" : "qwe",
+  "cidade" : "qwe",
+  "estado" : "qwe",
+  "cep" : "qwe"
+}, {
+  "id" : 5,
+  "logradouro" : "uqowieu",
+  "numero" : "oiqwueo",
+  "complemento" : null,
+  "bairro" : "iuqwei",
+  "cidade" : "uqweu",
+  "estado" : "qwoeiu",
+  "cep" : "oqweujoqwueoi"
+}, {
+  "id" : 6,
+  "logradouro" : "uqowieu",
+  "numero" : "oiqwueo",
+  "complemento" : null,
+  "bairro" : "iuqwei",
+  "cidade" : "uqweu",
+  "estado" : "qwoeiu",
+  "cep" : "oqweujoqwueoi"
 } ]

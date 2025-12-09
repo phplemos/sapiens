@@ -16,4 +16,22 @@
   "senhaHash" : "123",
   "tipoPerfil" : "ALUNO",
   "criadoEm" : "2025-12-09T11:30:44.573815771"
+}, {
+  "pessoaId" : 5,
+  "login" : "12312312312",
+  "senhaHash" : "123",
+  "tipoPerfil" : "RESPONSAVEL",
+  "criadoEm" : "2025-12-09T15:50:03.978495839"
+}, {
+  "pessoaId" : 7,
+  "login" : "12312312311",
+  "senhaHash" : "123",
+  "tipoPerfil" : "RESPONSAVEL",
+  "criadoEm" : "2025-12-09T16:23:19.193065656"
+}, {
+  "pessoaId" : 8,
+  "login" : "12312332112",
+  "senhaHash" : "123",
+  "tipoPerfil" : "ALUNO",
+  "criadoEm" : "2025-12-09T16:25:11.981396992"
 } ]
