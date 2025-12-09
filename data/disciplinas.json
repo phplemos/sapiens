@@ -1,1 +1,722 @@
-[ ]
+[ {
+  "id" : 1,
+  "nome" : "Matemática (1º Ano EF1)",
+  "codigo" : "MAT-EF1-1",
+  "cargaHoraria" : 200,
+  "descricao" : "Disciplina de Matemática do currículo base do 1º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 2,
+  "nome" : "Língua Portuguesa (1º Ano EF1)",
+  "codigo" : "PORT-EF1-1",
+  "cargaHoraria" : 200,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 1º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 3,
+  "nome" : "Ciências (1º Ano EF1)",
+  "codigo" : "CIE-EF1-1",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Ciências do currículo base do 1º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 4,
+  "nome" : "História (1º Ano EF1)",
+  "codigo" : "HIS-EF1-1",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de História do currículo base do 1º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 5,
+  "nome" : "Geografia (1º Ano EF1)",
+  "codigo" : "GEO-EF1-1",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Geografia do currículo base do 1º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 6,
+  "nome" : "Artes (1º Ano EF1)",
+  "codigo" : "ART-EF1-1",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Artes do currículo base do 1º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 7,
+  "nome" : "Educação Física (1º Ano EF1)",
+  "codigo" : "EDF-EF1-1",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Educação Física do currículo base do 1º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 8,
+  "nome" : "Matemática (2º Ano EF1)",
+  "codigo" : "MAT-EF1-2",
+  "cargaHoraria" : 200,
+  "descricao" : "Disciplina de Matemática do currículo base do 2º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 9,
+  "nome" : "Língua Portuguesa (2º Ano EF1)",
+  "codigo" : "PORT-EF1-2",
+  "cargaHoraria" : 200,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 2º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 10,
+  "nome" : "Ciências (2º Ano EF1)",
+  "codigo" : "CIE-EF1-2",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Ciências do currículo base do 2º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 11,
+  "nome" : "História (2º Ano EF1)",
+  "codigo" : "HIS-EF1-2",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de História do currículo base do 2º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 12,
+  "nome" : "Geografia (2º Ano EF1)",
+  "codigo" : "GEO-EF1-2",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Geografia do currículo base do 2º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 13,
+  "nome" : "Artes (2º Ano EF1)",
+  "codigo" : "ART-EF1-2",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Artes do currículo base do 2º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 14,
+  "nome" : "Educação Física (2º Ano EF1)",
+  "codigo" : "EDF-EF1-2",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Educação Física do currículo base do 2º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 15,
+  "nome" : "Matemática (3º Ano EF1)",
+  "codigo" : "MAT-EF1-3",
+  "cargaHoraria" : 200,
+  "descricao" : "Disciplina de Matemática do currículo base do 3º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 16,
+  "nome" : "Língua Portuguesa (3º Ano EF1)",
+  "codigo" : "PORT-EF1-3",
+  "cargaHoraria" : 200,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 3º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 17,
+  "nome" : "Ciências (3º Ano EF1)",
+  "codigo" : "CIE-EF1-3",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Ciências do currículo base do 3º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 18,
+  "nome" : "História (3º Ano EF1)",
+  "codigo" : "HIS-EF1-3",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de História do currículo base do 3º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 19,
+  "nome" : "Geografia (3º Ano EF1)",
+  "codigo" : "GEO-EF1-3",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Geografia do currículo base do 3º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 20,
+  "nome" : "Artes (3º Ano EF1)",
+  "codigo" : "ART-EF1-3",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Artes do currículo base do 3º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 21,
+  "nome" : "Educação Física (3º Ano EF1)",
+  "codigo" : "EDF-EF1-3",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Educação Física do currículo base do 3º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 22,
+  "nome" : "Matemática (4º Ano EF1)",
+  "codigo" : "MAT-EF1-4",
+  "cargaHoraria" : 200,
+  "descricao" : "Disciplina de Matemática do currículo base do 4º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 23,
+  "nome" : "Língua Portuguesa (4º Ano EF1)",
+  "codigo" : "PORT-EF1-4",
+  "cargaHoraria" : 200,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 4º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 24,
+  "nome" : "Ciências (4º Ano EF1)",
+  "codigo" : "CIE-EF1-4",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Ciências do currículo base do 4º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 25,
+  "nome" : "História (4º Ano EF1)",
+  "codigo" : "HIS-EF1-4",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de História do currículo base do 4º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 26,
+  "nome" : "Geografia (4º Ano EF1)",
+  "codigo" : "GEO-EF1-4",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Geografia do currículo base do 4º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 27,
+  "nome" : "Artes (4º Ano EF1)",
+  "codigo" : "ART-EF1-4",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Artes do currículo base do 4º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 28,
+  "nome" : "Educação Física (4º Ano EF1)",
+  "codigo" : "EDF-EF1-4",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Educação Física do currículo base do 4º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 29,
+  "nome" : "Matemática (5º Ano EF1)",
+  "codigo" : "MAT-EF1-5",
+  "cargaHoraria" : 200,
+  "descricao" : "Disciplina de Matemática do currículo base do 5º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 30,
+  "nome" : "Língua Portuguesa (5º Ano EF1)",
+  "codigo" : "PORT-EF1-5",
+  "cargaHoraria" : 200,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 5º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 31,
+  "nome" : "Ciências (5º Ano EF1)",
+  "codigo" : "CIE-EF1-5",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Ciências do currículo base do 5º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 32,
+  "nome" : "História (5º Ano EF1)",
+  "codigo" : "HIS-EF1-5",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de História do currículo base do 5º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 33,
+  "nome" : "Geografia (5º Ano EF1)",
+  "codigo" : "GEO-EF1-5",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Geografia do currículo base do 5º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 34,
+  "nome" : "Artes (5º Ano EF1)",
+  "codigo" : "ART-EF1-5",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Artes do currículo base do 5º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 35,
+  "nome" : "Educação Física (5º Ano EF1)",
+  "codigo" : "EDF-EF1-5",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Educação Física do currículo base do 5º ano do EF1",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 36,
+  "nome" : "Matemática (6º Ano EF2)",
+  "codigo" : "MAT-EF2-6",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Matemática do currículo base do 6º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 37,
+  "nome" : "Língua Portuguesa (6º Ano EF2)",
+  "codigo" : "PORT-EF2-6",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 6º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 38,
+  "nome" : "Ciências (6º Ano EF2)",
+  "codigo" : "CIE-EF2-6",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Ciências do currículo base do 6º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 39,
+  "nome" : "História (6º Ano EF2)",
+  "codigo" : "HIS-EF2-6",
+  "cargaHoraria" : 100,
+  "descricao" : "Disciplina de História do currículo base do 6º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 40,
+  "nome" : "Geografia (6º Ano EF2)",
+  "codigo" : "GEO-EF2-6",
+  "cargaHoraria" : 100,
+  "descricao" : "Disciplina de Geografia do currículo base do 6º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 41,
+  "nome" : "Artes (6º Ano EF2)",
+  "codigo" : "ART-EF2-6",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Artes do currículo base do 6º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 42,
+  "nome" : "Educação Física (6º Ano EF2)",
+  "codigo" : "EDF-EF2-6",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Educação Física do currículo base do 6º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 43,
+  "nome" : "Inglês (6º Ano EF2)",
+  "codigo" : "ING-EF2-6",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Inglês do currículo base do 6º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 44,
+  "nome" : "Matemática (7º Ano EF2)",
+  "codigo" : "MAT-EF2-7",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Matemática do currículo base do 7º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 45,
+  "nome" : "Língua Portuguesa (7º Ano EF2)",
+  "codigo" : "PORT-EF2-7",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 7º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 46,
+  "nome" : "Ciências (7º Ano EF2)",
+  "codigo" : "CIE-EF2-7",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Ciências do currículo base do 7º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 47,
+  "nome" : "História (7º Ano EF2)",
+  "codigo" : "HIS-EF2-7",
+  "cargaHoraria" : 100,
+  "descricao" : "Disciplina de História do currículo base do 7º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 48,
+  "nome" : "Geografia (7º Ano EF2)",
+  "codigo" : "GEO-EF2-7",
+  "cargaHoraria" : 100,
+  "descricao" : "Disciplina de Geografia do currículo base do 7º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 49,
+  "nome" : "Artes (7º Ano EF2)",
+  "codigo" : "ART-EF2-7",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Artes do currículo base do 7º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 50,
+  "nome" : "Educação Física (7º Ano EF2)",
+  "codigo" : "EDF-EF2-7",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Educação Física do currículo base do 7º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 51,
+  "nome" : "Inglês (7º Ano EF2)",
+  "codigo" : "ING-EF2-7",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Inglês do currículo base do 7º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 52,
+  "nome" : "Matemática (8º Ano EF2)",
+  "codigo" : "MAT-EF2-8",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Matemática do currículo base do 8º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 53,
+  "nome" : "Língua Portuguesa (8º Ano EF2)",
+  "codigo" : "PORT-EF2-8",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 8º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 54,
+  "nome" : "Ciências (8º Ano EF2)",
+  "codigo" : "CIE-EF2-8",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Ciências do currículo base do 8º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 55,
+  "nome" : "História (8º Ano EF2)",
+  "codigo" : "HIS-EF2-8",
+  "cargaHoraria" : 100,
+  "descricao" : "Disciplina de História do currículo base do 8º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 56,
+  "nome" : "Geografia (8º Ano EF2)",
+  "codigo" : "GEO-EF2-8",
+  "cargaHoraria" : 100,
+  "descricao" : "Disciplina de Geografia do currículo base do 8º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 57,
+  "nome" : "Artes (8º Ano EF2)",
+  "codigo" : "ART-EF2-8",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Artes do currículo base do 8º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 58,
+  "nome" : "Educação Física (8º Ano EF2)",
+  "codigo" : "EDF-EF2-8",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Educação Física do currículo base do 8º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 59,
+  "nome" : "Inglês (8º Ano EF2)",
+  "codigo" : "ING-EF2-8",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Inglês do currículo base do 8º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 60,
+  "nome" : "Matemática (9º Ano EF2)",
+  "codigo" : "MAT-EF2-9",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Matemática do currículo base do 9º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 61,
+  "nome" : "Língua Portuguesa (9º Ano EF2)",
+  "codigo" : "PORT-EF2-9",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 9º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 62,
+  "nome" : "Ciências (9º Ano EF2)",
+  "codigo" : "CIE-EF2-9",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Ciências do currículo base do 9º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 63,
+  "nome" : "História (9º Ano EF2)",
+  "codigo" : "HIS-EF2-9",
+  "cargaHoraria" : 100,
+  "descricao" : "Disciplina de História do currículo base do 9º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 64,
+  "nome" : "Geografia (9º Ano EF2)",
+  "codigo" : "GEO-EF2-9",
+  "cargaHoraria" : 100,
+  "descricao" : "Disciplina de Geografia do currículo base do 9º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 65,
+  "nome" : "Artes (9º Ano EF2)",
+  "codigo" : "ART-EF2-9",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Artes do currículo base do 9º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 66,
+  "nome" : "Educação Física (9º Ano EF2)",
+  "codigo" : "EDF-EF2-9",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Educação Física do currículo base do 9º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 67,
+  "nome" : "Inglês (9º Ano EF2)",
+  "codigo" : "ING-EF2-9",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Inglês do currículo base do 9º ano do EF2",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 68,
+  "nome" : "Matemática (1º Ano EM)",
+  "codigo" : "MAT-EM-1",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Matemática do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 69,
+  "nome" : "Língua Portuguesa (1º Ano EM)",
+  "codigo" : "PORT-EM-1",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 70,
+  "nome" : "Física (1º Ano EM)",
+  "codigo" : "FIS-EM-1",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Física do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 71,
+  "nome" : "Química (1º Ano EM)",
+  "codigo" : "QUI-EM-1",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Química do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 72,
+  "nome" : "Biologia (1º Ano EM)",
+  "codigo" : "BIO-EM-1",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Biologia do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 73,
+  "nome" : "História (1º Ano EM)",
+  "codigo" : "HIS-EM-1",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de História do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 74,
+  "nome" : "Geografia (1º Ano EM)",
+  "codigo" : "GEO-EM-1",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Geografia do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 75,
+  "nome" : "Filosofia (1º Ano EM)",
+  "codigo" : "FIL-EM-1",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Filosofia do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 76,
+  "nome" : "Sociologia (1º Ano EM)",
+  "codigo" : "SOC-EM-1",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Sociologia do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 77,
+  "nome" : "Inglês (1º Ano EM)",
+  "codigo" : "ING-EM-1",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Inglês do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 78,
+  "nome" : "Artes (1º Ano EM)",
+  "codigo" : "ART-EM-1",
+  "cargaHoraria" : 40,
+  "descricao" : "Disciplina de Artes do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 79,
+  "nome" : "Educação Física (1º Ano EM)",
+  "codigo" : "EDF-EM-1",
+  "cargaHoraria" : 40,
+  "descricao" : "Disciplina de Educação Física do currículo base do 1º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 80,
+  "nome" : "Matemática (2º Ano EM)",
+  "codigo" : "MAT-EM-2",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Matemática do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 81,
+  "nome" : "Língua Portuguesa (2º Ano EM)",
+  "codigo" : "PORT-EM-2",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 82,
+  "nome" : "Física (2º Ano EM)",
+  "codigo" : "FIS-EM-2",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Física do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 83,
+  "nome" : "Química (2º Ano EM)",
+  "codigo" : "QUI-EM-2",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Química do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 84,
+  "nome" : "Biologia (2º Ano EM)",
+  "codigo" : "BIO-EM-2",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Biologia do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 85,
+  "nome" : "História (2º Ano EM)",
+  "codigo" : "HIS-EM-2",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de História do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 86,
+  "nome" : "Geografia (2º Ano EM)",
+  "codigo" : "GEO-EM-2",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Geografia do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 87,
+  "nome" : "Filosofia (2º Ano EM)",
+  "codigo" : "FIL-EM-2",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Filosofia do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 88,
+  "nome" : "Sociologia (2º Ano EM)",
+  "codigo" : "SOC-EM-2",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Sociologia do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 89,
+  "nome" : "Inglês (2º Ano EM)",
+  "codigo" : "ING-EM-2",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Inglês do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 90,
+  "nome" : "Artes (2º Ano EM)",
+  "codigo" : "ART-EM-2",
+  "cargaHoraria" : 40,
+  "descricao" : "Disciplina de Artes do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 91,
+  "nome" : "Educação Física (2º Ano EM)",
+  "codigo" : "EDF-EM-2",
+  "cargaHoraria" : 40,
+  "descricao" : "Disciplina de Educação Física do currículo base do 2º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 92,
+  "nome" : "Matemática (3º Ano EM)",
+  "codigo" : "MAT-EM-3",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Matemática do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 93,
+  "nome" : "Língua Portuguesa (3º Ano EM)",
+  "codigo" : "PORT-EM-3",
+  "cargaHoraria" : 160,
+  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 94,
+  "nome" : "Física (3º Ano EM)",
+  "codigo" : "FIS-EM-3",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Física do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 95,
+  "nome" : "Química (3º Ano EM)",
+  "codigo" : "QUI-EM-3",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Química do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 96,
+  "nome" : "Biologia (3º Ano EM)",
+  "codigo" : "BIO-EM-3",
+  "cargaHoraria" : 120,
+  "descricao" : "Disciplina de Biologia do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 97,
+  "nome" : "História (3º Ano EM)",
+  "codigo" : "HIS-EM-3",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de História do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 98,
+  "nome" : "Geografia (3º Ano EM)",
+  "codigo" : "GEO-EM-3",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Geografia do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 99,
+  "nome" : "Filosofia (3º Ano EM)",
+  "codigo" : "FIL-EM-3",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Filosofia do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 100,
+  "nome" : "Sociologia (3º Ano EM)",
+  "codigo" : "SOC-EM-3",
+  "cargaHoraria" : 60,
+  "descricao" : "Disciplina de Sociologia do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 101,
+  "nome" : "Inglês (3º Ano EM)",
+  "codigo" : "ING-EM-3",
+  "cargaHoraria" : 80,
+  "descricao" : "Disciplina de Inglês do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 102,
+  "nome" : "Artes (3º Ano EM)",
+  "codigo" : "ART-EM-3",
+  "cargaHoraria" : 40,
+  "descricao" : "Disciplina de Artes do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+}, {
+  "id" : 103,
+  "nome" : "Educação Física (3º Ano EM)",
+  "codigo" : "EDF-EM-3",
+  "cargaHoraria" : 40,
+  "descricao" : "Disciplina de Educação Física do currículo base do 3º ano do EM",
+  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
+} ]

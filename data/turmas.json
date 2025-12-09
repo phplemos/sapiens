@@ -1,0 +1,13 @@
+[ {
+  "id" : 1,
+  "nome" : "Turma A",
+  "turno" : "MANHA",
+  "serieId" : 1,
+  "anoEscolarId" : 1
+}, {
+  "id" : 2,
+  "nome" : "Turma B",
+  "turno" : "TARDE",
+  "serieId" : 1,
+  "anoEscolarId" : 1
+} ]

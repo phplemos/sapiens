@@ -1,181 +1,100 @@
 [ {
-  "id" : 2,
-  "nomeCompleto" : "João da Silva",
-  "dataNascimento" : null,
-  "cpf" : "111.222.333-44",
-  "rg" : null,
+  "id" : 1,
+  "nomeCompleto" : "Pedro",
+  "dataNascimento" : "2025-11-29",
+  "cpf" : "076.447.195-39",
+  "rg" : "15.350.265-70",
   "telefone" : null,
-  "emailContato" : null,
+  "emailContato" : "phplemos.dev@gmail.com",
+  "enderecoId" : 1
+}, {
+  "id" : 2,
+  "nomeCompleto" : "João da silva",
+  "dataNascimento" : "1997-12-11",
+  "cpf" : "102983012938",
+  "rg" : "1092873",
+  "telefone" : "91823791823",
+  "emailContato" : "oiahsdiauhsdoihu",
   "enderecoId" : 2
 }, {
   "id" : 3,
-  "nomeCompleto" : "João da Silva",
-  "dataNascimento" : null,
-  "cpf" : "111.222.333-44",
-  "rg" : null,
-  "telefone" : null,
-  "emailContato" : null,
+  "nomeCompleto" : "Lula",
+  "dataNascimento" : "1998-10-23",
+  "cpf" : "123qweqwe",
+  "rg" : "123123123123",
+  "telefone" : "qweqweqw",
+  "emailContato" : "eqweqweqweqwe",
   "enderecoId" : 3
 }, {
   "id" : 4,
-  "nomeCompleto" : "João da Silva",
-  "dataNascimento" : null,
-  "cpf" : "111.222.333-44",
-  "rg" : null,
-  "telefone" : null,
-  "emailContato" : null,
-  "enderecoId" : 4
-}, {
-  "id" : 5,
-  "nomeCompleto" : "João da Silva",
-  "dataNascimento" : "2005-05-10",
-  "cpf" : "111.222.333-44",
-  "rg" : null,
-  "telefone" : null,
-  "emailContato" : null,
-  "enderecoId" : 5
-}, {
-  "id" : 6,
-  "nomeCompleto" : "João da Silva",
-  "dataNascimento" : "2005-05-10",
-  "cpf" : "111.222.333-44",
-  "rg" : null,
-  "telefone" : null,
-  "emailContato" : null,
-  "enderecoId" : 6
-}, {
-  "id" : 7,
-  "nomeCompleto" : "João da Silva",
-  "dataNascimento" : "2005-05-10",
-  "cpf" : "111.222.333-44",
-  "rg" : null,
-  "telefone" : null,
-  "emailContato" : null,
-  "enderecoId" : 7
-}, {
-  "id" : 8,
-  "nomeCompleto" : "João da Silva",
-  "dataNascimento" : "2005-05-10",
-  "cpf" : "111.222.333-44",
-  "rg" : null,
-  "telefone" : null,
-  "emailContato" : null,
-  "enderecoId" : 8
-}, {
-  "id" : 9,
-  "nomeCompleto" : "João da Silva",
-  "dataNascimento" : "2005-05-10",
-  "cpf" : "111.222.333-44",
-  "rg" : null,
-  "telefone" : null,
-  "emailContato" : null,
-  "enderecoId" : 9
-}, {
-  "id" : 1,
-  "nomeCompleto" : "João da Silva Santos",
-  "dataNascimento" : null,
-  "cpf" : "111.222.333-44",
-  "rg" : null,
-  "telefone" : null,
-  "emailContato" : "joao.santos@email.com",
-  "enderecoId" : 1
-}, {
-  "id" : 10,
   "nomeCompleto" : "Pedro",
   "dataNascimento" : "1997-11-26",
   "cpf" : "07644719539",
   "rg" : "1535026570",
-  "telefone" : null,
+  "telefone" : "73991295315",
+  "emailContato" : "phplemos.dev@gmail.com",
+  "enderecoId" : 9
+}, {
+  "id" : 5,
+  "nomeCompleto" : "Pedro Pinheiro",
+  "dataNascimento" : "1997-11-26",
+  "cpf" : "07644719539",
+  "rg" : "1535026570",
+  "telefone" : "73991295315",
   "emailContato" : "phplemos.dev@gmail.com",
   "enderecoId" : 10
 }, {
-  "id" : 11,
-  "nomeCompleto" : "Joao",
-  "dataNascimento" : "1997-11-27",
-  "cpf" : "109238",
-  "rg" : "1823718273",
-  "telefone" : null,
-  "emailContato" : "quiowyeiuqyw",
-  "enderecoId" : 11
-}, {
-  "id" : 12,
-  "nomeCompleto" : "Joao",
-  "dataNascimento" : "1997-11-27",
-  "cpf" : "109238",
-  "rg" : "1823718273",
-  "telefone" : null,
-  "emailContato" : "quiowyeiuqyw",
-  "enderecoId" : 0
-}, {
-  "id" : 13,
-  "nomeCompleto" : "qweq",
-  "dataNascimento" : "1997-11-26",
-  "cpf" : "qweqweqwe",
-  "rg" : "oieuqhwieuhq",
-  "telefone" : null,
-  "emailContato" : "oqiwuheoqiuwh",
-  "enderecoId" : 0
-}, {
-  "id" : 14,
-  "nomeCompleto" : "qweq",
-  "dataNascimento" : "1997-11-26",
-  "cpf" : "weqweq",
-  "rg" : "9812u3",
-  "telefone" : null,
-  "emailContato" : "qweqweqwe",
-  "enderecoId" : 14
-}, {
-  "id" : 15,
-  "nomeCompleto" : "Pedro",
-  "dataNascimento" : "1997-11-11",
-  "cpf" : "o12039810293",
-  "rg" : "ikqwyhieuy",
-  "telefone" : "iquwyei",
-  "emailContato" : "uyqwieuy",
-  "enderecoId" : 16
-}, {
-  "id" : 16,
-  "nomeCompleto" : "qweqwe",
-  "dataNascimento" : "1992-11-26",
-  "cpf" : "qweqwe",
-  "rg" : "eqwe",
-  "telefone" : "oqwieuj",
-  "emailContato" : "oqiwueoqiwue",
-  "enderecoId" : 17
-}, {
-  "id" : 17,
-  "nomeCompleto" : "qweqweqweqwe",
-  "dataNascimento" : "1992-11-26",
-  "cpf" : "qweqwe",
-  "rg" : "eqwe",
-  "telefone" : "oqwieuj",
-  "emailContato" : "oqiwueoqiwue",
-  "enderecoId" : 18
-}, {
-  "id" : 18,
-  "nomeCompleto" : "REaskd",
-  "dataNascimento" : "1997-11-26",
-  "cpf" : "apoksaposd",
-  "rg" : "poaiuhqwie",
-  "telefone" : "quwei",
-  "emailContato" : "qiwuehiquw",
-  "enderecoId" : 19
-}, {
-  "id" : 19,
-  "nomeCompleto" : "João da silva",
+  "id" : 6,
+  "nomeCompleto" : "Pedro Teste",
   "dataNascimento" : "1997-11-26",
   "cpf" : "07644719539",
-  "rg" : "72617162712",
-  "telefone" : "817263817263",
-  "emailContato" : "phplemos@gmailc.om",
-  "enderecoId" : 20
+  "rg" : "1535026570",
+  "telefone" : "73991295315",
+  "emailContato" : "phplemos.dev@gmail.com",
+  "enderecoId" : 11
 }, {
-  "id" : 20,
-  "nomeCompleto" : "GUstavo",
-  "dataNascimento" : "1997-11-23",
-  "cpf" : "981273198273",
-  "rg" : "189273918",
-  "telefone" : "oiqueoiqu",
-  "emailContato" : "oqiueoique",
-  "enderecoId" : 21
+  "id" : 7,
+  "nomeCompleto" : "Lula",
+  "dataNascimento" : "1998-10-23",
+  "cpf" : "123qweqwe",
+  "rg" : "123123123123",
+  "telefone" : "qweqweqw",
+  "emailContato" : "eqweqweqweqwe",
+  "enderecoId" : 12
+}, {
+  "id" : 8,
+  "nomeCompleto" : "Lula",
+  "dataNascimento" : "1998-10-23",
+  "cpf" : "123qweqwe",
+  "rg" : "123123123123",
+  "telefone" : "qweqweqw",
+  "emailContato" : "eqweqweqweqwe",
+  "enderecoId" : 13
+}, {
+  "id" : 9,
+  "nomeCompleto" : "João da silva",
+  "dataNascimento" : "1997-12-11",
+  "cpf" : "102983012938",
+  "rg" : "1092873",
+  "telefone" : "91823791823",
+  "emailContato" : "oiahsdiauhsdoihu",
+  "enderecoId" : 14
+}, {
+  "id" : 10,
+  "nomeCompleto" : "Pedro",
+  "dataNascimento" : "2025-12-03",
+  "cpf" : "076.447.195-39",
+  "rg" : "15.350.265-70",
+  "telefone" : null,
+  "emailContato" : "phplemos.dev@gmail.com",
+  "enderecoId" : 15
+}, {
+  "id" : 11,
+  "nomeCompleto" : "Pedro",
+  "dataNascimento" : "2025-12-03",
+  "cpf" : "076.447.195-39",
+  "rg" : "15.350.265-70",
+  "telefone" : null,
+  "emailContato" : "phplemos.dev@gmail.com",
+  "enderecoId" : 16
 } ]

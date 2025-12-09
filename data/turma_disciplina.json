@@ -1,0 +1,71 @@
+[ {
+  "id" : 1,
+  "turmaId" : 1,
+  "disciplinaId" : 68,
+  "professorPessoaId" : 2
+}, {
+  "id" : 2,
+  "turmaId" : 1,
+  "disciplinaId" : 69,
+  "professorPessoaId" : 3
+}, {
+  "id" : 3,
+  "turmaId" : 1,
+  "disciplinaId" : 70,
+  "professorPessoaId" : 3
+}, {
+  "id" : 4,
+  "turmaId" : 1,
+  "disciplinaId" : 71,
+  "professorPessoaId" : 3
+}, {
+  "id" : 5,
+  "turmaId" : 2,
+  "disciplinaId" : 68,
+  "professorPessoaId" : 2
+}, {
+  "id" : 6,
+  "turmaId" : 2,
+  "disciplinaId" : 69,
+  "professorPessoaId" : 2
+}, {
+  "id" : 7,
+  "turmaId" : 2,
+  "disciplinaId" : 70,
+  "professorPessoaId" : 2
+}, {
+  "id" : 8,
+  "turmaId" : 2,
+  "disciplinaId" : 71,
+  "professorPessoaId" : 2
+}, {
+  "id" : 9,
+  "turmaId" : 2,
+  "disciplinaId" : 72,
+  "professorPessoaId" : 2
+}, {
+  "id" : 10,
+  "turmaId" : 2,
+  "disciplinaId" : 73,
+  "professorPessoaId" : 2
+}, {
+  "id" : 11,
+  "turmaId" : 2,
+  "disciplinaId" : 74,
+  "professorPessoaId" : 2
+}, {
+  "id" : 12,
+  "turmaId" : 2,
+  "disciplinaId" : 75,
+  "professorPessoaId" : 2
+}, {
+  "id" : 13,
+  "turmaId" : 2,
+  "disciplinaId" : 78,
+  "professorPessoaId" : 2
+}, {
+  "id" : 14,
+  "turmaId" : 2,
+  "disciplinaId" : 79,
+  "professorPessoaId" : 2
+} ]

@@ -1,0 +1,25 @@
+[ {
+  "id" : 1,
+  "anoEscolarId" : 1,
+  "nome" : "1º Bimestre",
+  "dataInicio" : "2026-03-02",
+  "dataFim" : "2026-05-01"
+}, {
+  "id" : 2,
+  "anoEscolarId" : 1,
+  "nome" : "2º Bimestre",
+  "dataInicio" : "2026-05-02",
+  "dataFim" : "2026-07-01"
+}, {
+  "id" : 3,
+  "anoEscolarId" : 1,
+  "nome" : "3º Bimestre",
+  "dataInicio" : "2026-07-02",
+  "dataFim" : "2026-09-01"
+}, {
+  "id" : 4,
+  "anoEscolarId" : 1,
+  "nome" : "4º Bimestre",
+  "dataInicio" : "2026-09-02",
+  "dataFim" : "2026-11-01"
+} ]

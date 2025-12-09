@@ -1,0 +1,14 @@
+[ {
+  "pessoaId" : 11,
+  "login" : "admin",
+  "senhaHash" : "123",
+  "tipoPerfil" : "ADMIN",
+  "criadoEm" : null
+},
+  {
+    "pessoaId" : 4,
+    "login" : "202500041",
+    "senhaHash" : "123",
+    "tipoPerfil" : "ALUNO",
+    "criadoEm" : "2025-12-03T16:57:29.972573686"
+  }]
