@@ -1,10 +1,4 @@
 [ {
   "id" : 1,
-  "nome" : "1ª Ano Médio"
-}, {
-  "id" : 2,
-  "nome" : "2ª Ano Médio"
-}, {
-  "id" : 3,
-  "nome" : "3ª Ano Médio"
+  "nome" : "1º Ano Ensino Médio"
 } ]

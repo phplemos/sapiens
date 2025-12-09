@@ -2,8 +2,4 @@
   "id" : 1,
   "ano" : 2026,
   "status" : "Planejamento"
-}, {
-  "id" : 2,
-  "ano" : 2027,
-  "status" : "Planejamento"
 } ]

@@ -1,13 +1,4 @@
 [ {
-  "formacaoAcademica" : null,
-  "pessoaId" : 2
-}, {
-  "formacaoAcademica" : null,
-  "pessoaId" : 3
-}, {
-  "formacaoAcademica" : "Matematica",
-  "pessoaId" : 7
-}, {
-  "formacaoAcademica" : "Portugues",
-  "pessoaId" : 8
+  "formacaoAcademica" : "Engenharia",
+  "pessoaId" : 4
 } ]

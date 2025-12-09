@@ -1,0 +1,11 @@
+[ {
+  "id" : 1,
+  "comunicadoId" : 1,
+  "destinatarioPessoaId" : 3,
+  "lido" : true
+}, {
+  "id" : 2,
+  "comunicadoId" : 2,
+  "destinatarioPessoaId" : 3,
+  "lido" : true
+} ]

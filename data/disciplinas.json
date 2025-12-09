@@ -475,13 +475,6 @@
   "descricao" : "Disciplina de Matemática do currículo base do 1º ano do EM",
   "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
 }, {
-  "id" : 69,
-  "nome" : "Língua Portuguesa (1º Ano EM)",
-  "codigo" : "PORT-EM-1",
-  "cargaHoraria" : 160,
-  "descricao" : "Disciplina de Língua Portuguesa do currículo base do 1º ano do EM",
-  "conteudoProgramatico" : " - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral"
-}, {
   "id" : 70,
   "nome" : "Física (1º Ano EM)",
   "codigo" : "FIS-EM-1",

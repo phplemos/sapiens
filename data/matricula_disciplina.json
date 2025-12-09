@@ -1,21 +1,11 @@
 [ {
   "id" : 1,
   "matriculaId" : 1,
-  "turmaDisciplinaId" : 1,
-  "totalFaltas" : 0
+  "turmaDisciplinaId" : 2,
+  "totalFaltas" : 2
 }, {
   "id" : 2,
   "matriculaId" : 1,
-  "turmaDisciplinaId" : 2,
-  "totalFaltas" : 0
-}, {
-  "id" : 3,
-  "matriculaId" : 1,
   "turmaDisciplinaId" : 3,
-  "totalFaltas" : 0
-}, {
-  "id" : 4,
-  "matriculaId" : 1,
-  "turmaDisciplinaId" : 4,
-  "totalFaltas" : 0
+  "totalFaltas" : 22
 } ]

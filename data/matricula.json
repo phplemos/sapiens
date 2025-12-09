@@ -1,8 +1,8 @@
 [ {
   "id" : 1,
-  "alunoPessoaId" : 4,
+  "alunoPessoaId" : 3,
   "turmaId" : 1,
-  "numeroMatricula" : "202500041",
-  "dataMatricula" : "2025-12-03",
+  "numeroMatricula" : "202500031",
+  "dataMatricula" : "2025-12-09",
   "status" : "ATIVA"
 } ]

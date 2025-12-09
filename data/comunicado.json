@@ -1,0 +1,13 @@
+[ {
+  "id" : 1,
+  "remetentePessoaId" : 0,
+  "titulo" : "Matrícula Realizada",
+  "corpo" : "Bem-vindo! Sua matrícula foi confirmada com sucesso.",
+  "dataEnvio" : "2025-12-09T11:26:26.975953754"
+}, {
+  "id" : 2,
+  "remetentePessoaId" : 0,
+  "titulo" : "Matrícula Realizada",
+  "corpo" : "Bem-vindo! Sua matrícula foi confirmada com sucesso.",
+  "dataEnvio" : "2025-12-09T11:30:44.577205051"
+} ]

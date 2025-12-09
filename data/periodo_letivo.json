@@ -1,25 +1,25 @@
 [ {
   "id" : 1,
   "anoEscolarId" : 1,
-  "nome" : "1º Bimestre",
-  "dataInicio" : "2026-03-02",
-  "dataFim" : "2026-05-01"
+  "nome" : "1º bimestre",
+  "dataInicio" : "2025-03-10",
+  "dataFim" : "2025-05-10"
 }, {
   "id" : 2,
   "anoEscolarId" : 1,
   "nome" : "2º Bimestre",
-  "dataInicio" : "2026-05-02",
-  "dataFim" : "2026-07-01"
+  "dataInicio" : "2025-05-10",
+  "dataFim" : "2025-07-10"
 }, {
   "id" : 3,
   "anoEscolarId" : 1,
-  "nome" : "3º Bimestre",
-  "dataInicio" : "2026-07-02",
-  "dataFim" : "2026-09-01"
+  "nome" : "3º BImestre",
+  "dataInicio" : "2025-07-10",
+  "dataFim" : "2025-09-10"
 }, {
   "id" : 4,
   "anoEscolarId" : 1,
   "nome" : "4º Bimestre",
-  "dataInicio" : "2026-09-02",
-  "dataFim" : "2026-11-01"
+  "dataInicio" : "2025-09-10",
+  "dataFim" : "2025-11-10"
 } ]
