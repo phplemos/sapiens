@@ -1,76 +1,96 @@
 package views;
 
-import models.TurmaDisciplina;
-
+import views.components.ComboItem;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class DiarioClasseView extends JDialog {
 
-    private JLabel lblInfoTurma;
-    private JComboBox<String> cbPeriodo; // Selecionar Bimestre
-    private JButton btnCarregarPeriodo;
+    private JComboBox<ComboItem> cbPeriodo;
+    private JButton btnBuscar;
 
     private JTable tabelaDiario;
-    private DefaultTableModel modelDiario;
+    private DefaultTableModel tableModel;
 
     private JButton btnSalvar;
     private JButton btnFechar;
 
-    public DiarioClasseView(Window parent) {
-        super(parent, "Diário de Classe Digital", ModalityType.APPLICATION_MODAL);
-        setSize(800, 500
-        );
-        setLocationRelativeTo(parent);
+    public DiarioClasseView() {
+        setTitle("Diário de Classe - Professor");
+        setSize(900, 600);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
-        // Topo
-        JPanel pTopo = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        lblInfoTurma = new JLabel("Turma: - | Disciplina: -");
-        lblInfoTurma.setFont(new Font("Arial", Font.BOLD, 14));
+        // --- 1. Topo: Apenas Seleção do Período ---
+        JPanel painelTopo = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        painelTopo.setBorder(new EmptyBorder(10, 10, 0, 10));
 
-        pTopo.add(lblInfoTurma);
-        pTopo.add(new JLabel("   |   Selecione o Período:"));
-        cbPeriodo = new JComboBox<>(); // Será preenchido pelo Controller
-        pTopo.add(cbPeriodo);
+        painelTopo.add(new JLabel("Selecione o Período (Bimestre):"));
+        cbPeriodo = new JComboBox<>();
+        cbPeriodo.setPreferredSize(new Dimension(200, 25));
+        painelTopo.add(cbPeriodo);
 
-        btnCarregarPeriodo = new JButton("Carregar");
-        pTopo.add(btnCarregarPeriodo);
+        btnBuscar = new JButton("Carregar Diário");
+        painelTopo.add(btnBuscar);
 
-        add(pTopo, BorderLayout.NORTH);
+        add(painelTopo, BorderLayout.NORTH);
 
-        // Tabela Editável (Notas e Faltas)
-        // Colunas: ID_MatriculaDisc (Oculto), Nome Aluno, Nota (Edit), Faltas (Edit)
-        String[] colunas = {"ID_MD", "Aluno", "Nota (0-10)", "Total Faltas"};
-        modelDiario = new DefaultTableModel(colunas, 0) {
+        // --- 2. Tabela: ID, Aluno, Nota, Faltas ---
+        String[] colunas = {"ID_Ref", "Aluno", "Nota (0-10)", "Faltas (Qtd)"};
+
+        tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int col) {
-                return col == 2 || col == 3; // Só edita Nota e Faltas
+                // Professor edita Nota (col 2) e Faltas (col 3)
+                return col == 2 || col == 3;
             }
         };
-        tabelaDiario = new JTable(modelDiario);
+
+        tabelaDiario = new JTable(tableModel);
         tabelaDiario.setRowHeight(30);
+        tabelaDiario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // Escondendo coluna ID
         tabelaDiario.getColumnModel().getColumn(0).setMinWidth(0);
         tabelaDiario.getColumnModel().getColumn(0).setMaxWidth(0);
+        tabelaDiario.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        // Largura das colunas visíveis
+        tabelaDiario.getColumnModel().getColumn(1).setPreferredWidth(400); // Nome
+        tabelaDiario.getColumnModel().getColumn(2).setPreferredWidth(100); // Nota
+        tabelaDiario.getColumnModel().getColumn(3).setPreferredWidth(100); // Faltas
 
         add(new JScrollPane(tabelaDiario), BorderLayout.CENTER);
 
-        // Rodapé
-        JPanel pSul = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        btnSalvar = new JButton("💾 Salvar Lançamentos");
+        // --- 3. Rodapé: Apenas Salvar ---
+        JPanel painelSul = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
         btnFechar = new JButton("Fechar");
-        pSul.add(btnSalvar);
-        pSul.add(btnFechar);
-        add(pSul, BorderLayout.SOUTH);
+        btnSalvar = new JButton("💾 Salvar Diário");
+        btnSalvar.setBackground(new Color(100, 200, 100)); // Verde
+        btnSalvar.setForeground(Color.WHITE);
+        btnSalvar.setFont(new Font("Arial", Font.BOLD, 14));
+
+        painelSul.add(btnFechar);
+        painelSul.add(btnSalvar);
+
+        add(painelSul, BorderLayout.SOUTH);
     }
 
-    // Getters
-    public void setInfoTurma(String info) { lblInfoTurma.setText(info); }
-    public JComboBox<String> getCbPeriodo() { return cbPeriodo; }
-    public JButton getBtnCarregar() { return btnCarregarPeriodo; }
+    // Getters e Helpers
+    public JComboBox<ComboItem> getCbPeriodo() { return cbPeriodo; }
+    public int getPeriodoSelecionadoId() {
+        return (cbPeriodo.getSelectedItem() != null) ? ((ComboItem)cbPeriodo.getSelectedItem()).getId() : 0;
+    }
+    public void adicionarPeriodo(ComboItem item) { cbPeriodo.addItem(item); }
+
+    public JButton getBtnBuscar() { return btnBuscar; }
     public JButton getBtnSalvar() { return btnSalvar; }
     public JButton getBtnFechar() { return btnFechar; }
+
+    public DefaultTableModel getModel() { return tableModel; }
     public JTable getTabela() { return tabelaDiario; }
-    public DefaultTableModel getModel() { return modelDiario; }
 }

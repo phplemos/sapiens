@@ -3,6 +3,7 @@ package controllers;
 import models.*;
 import repositories.*;
 import views.DiarioClasseView;
+import views.components.ComboItem;
 
 import javax.swing.*;
 import java.util.List;
@@ -14,22 +15,65 @@ public class DiarioClasseController {
     private final int turmaDisciplinaId; // ID da oferta da matéria
 
     // Repos
-    private final TurmaDisciplinaRepository tdRepo = new TurmaDisciplinaRepository();
-    private final TurmaRepository turmaRepo = new TurmaRepository();
-    private final PeriodoLetivoRepository periodoRepo = new PeriodoLetivoRepository();
-    private final MatriculaDisciplinaRepository matDiscRepo = new MatriculaDisciplinaRepository();
-    private final MatriculaRepository matriculaRepo = new MatriculaRepository();
-    private final PessoaRepository pessoaRepo = new PessoaRepository();
-    private final NotaRepository notaRepo = new NotaRepository();
+    private final TurmaDisciplinaRepository tdRepo;
+    private final TurmaRepository turmaRepo;
+    private final PeriodoLetivoRepository periodoRepo;
+    private final MatriculaDisciplinaRepository matDiscRepo;
+    private final MatriculaRepository matriculaRepo;
+    private final PessoaRepository pessoaRepo;
+    private final NotaRepository notaRepo;
 
     public DiarioClasseController(DiarioClasseView view, int turmaDisciplinaId) {
         this.view = view;
         this.turmaDisciplinaId = turmaDisciplinaId;
-
+        this.matDiscRepo = new MatriculaDisciplinaRepository();
+        this.matriculaRepo = new MatriculaRepository();
+        this.pessoaRepo = new PessoaRepository();
+        this.notaRepo = new NotaRepository();
+        this.periodoRepo = new PeriodoLetivoRepository();
+        this.turmaRepo = new TurmaRepository();
+        this.tdRepo = new TurmaDisciplinaRepository();
         carregarInfoInicial();
         initController();
     }
+    private void initController() {
+        // Professor busca a lista para começar a trabalhar
+        view.getBtnBuscar().addActionListener(e -> carregarDiario());
 
+        // Professor apenas SALVA o trabalho dele
+        view.getBtnSalvar().addActionListener(e -> salvarDiario());
+        view.getBtnFechar().addActionListener(e -> view.dispose());
+    }
+    private void carregarDiario() {
+        int periodoId = view.getPeriodoSelecionadoId();
+        if (periodoId == 0) return;
+
+        view.getModel().setRowCount(0);
+
+        // 1. Busca alunos dessa matéria específica
+        List<MatriculaDisciplina> listaAlunos = matDiscRepo.buscarPorTurmaDisciplinaId(turmaDisciplinaId);
+
+        for (MatriculaDisciplina md : listaAlunos) {
+            // Nome do Aluno
+            String nomeAluno = buscarNomeAluno(md.getMatriculaId());
+
+            // Nota do Período (Se o professor já lançou antes, carrega. Se não, vem vazio)
+            Optional<Nota> notaOpt = notaRepo.buscarNota(md.getId(), periodoId);
+            String notaValor = notaOpt.map(n -> String.valueOf(n.getValorNota())).orElse("");
+
+            // Faltas (Total acumulado na disciplina)
+            int faltas = md.getTotalFaltas();
+
+            // Adiciona na Tabela: [ID_MD, Nome, Nota, Faltas]
+            view.getModel().addRow(new Object[]{ md.getId(), nomeAluno, notaValor, faltas });
+        }
+    }
+    private String buscarNomeAluno(int matriculaId) {
+        return matriculaRepo.buscarPorId(matriculaId)
+                .flatMap(m -> pessoaRepo.buscarPorId(m.getAlunoPessoaId()))
+                .map(Pessoa::getNomeCompleto)
+                .orElse("Aluno Desconhecido");
+    }
     private void carregarInfoInicial() {
         // Busca Ano Escolar para listar os Periodos
         Optional<TurmaDisciplina> tdOpt = tdRepo.buscarPorId(turmaDisciplinaId);
@@ -45,17 +89,12 @@ public class DiarioClasseController {
                 List<PeriodoLetivo> periodos = periodoRepo.buscarPorAnoEscolarId(anoId);
                 for (PeriodoLetivo p : periodos) {
                     // Armazenamos "ID - Nome" string para facilitar parse, ou use ComboItem
-                    view.getCbPeriodo().addItem(p.getId() + " - " + p.getNome());
+                    view.getCbPeriodo().addItem(new ComboItem(p.getId(),p.getNome()));
                 }
             }
         }
     }
 
-    private void initController() {
-        view.getBtnCarregar().addActionListener(e -> carregarNotasEFaltas());
-        view.getBtnSalvar().addActionListener(e -> salvarAlteracoes());
-        view.getBtnFechar().addActionListener(e -> view.dispose());
-    }
 
     private void carregarNotasEFaltas() {
         String selecionado = (String) view.getCbPeriodo().getSelectedItem();
@@ -96,12 +135,12 @@ public class DiarioClasseController {
         }
     }
 
-    private void salvarAlteracoes() {
+    private void salvarDiario() {
         if (view.getTabela().isEditing()) view.getTabela().getCellEditor().stopCellEditing();
 
-        String selecionado = (String) view.getCbPeriodo().getSelectedItem();
+        ComboItem selecionado = (ComboItem) view.getCbPeriodo().getSelectedItem();
         if (selecionado == null) return;
-        int periodoId = Integer.parseInt(selecionado.split(" - ")[0]);
+        int periodoId = selecionado.getId();
 
         int linhas = view.getModel().getRowCount();
 

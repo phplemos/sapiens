@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.util.List;
 import java.util.Optional;
 
-public class NotaController {
+public class GestaoNotasAdminController {
 
     private final NotaLancamentoView view;
 
@@ -24,7 +24,7 @@ public class NotaController {
     private final AlunoRepository alunoRepo;
     private final BoletimStatusRepository boletimRepo;
 
-    public NotaController(NotaLancamentoView view) {
+    public GestaoNotasAdminController(NotaLancamentoView view) {
         this.view = view;
 
         this.turmaRepo = new TurmaRepository();
@@ -48,7 +48,7 @@ public class NotaController {
 
         // Botões
         view.getBtnBuscar().addActionListener(e -> listarAlunosENotas());
-        view.getBtnSalvarNotas().addActionListener(e -> salvarNotas());
+        view.getBtnSalvarCorrecao().addActionListener(e -> salvarNotas());
         view.getBtnPublicar().addActionListener(e -> publicarBoletim());
     }
     private void publicarBoletim() {
@@ -56,23 +56,31 @@ public class NotaController {
         int periodoId = view.getPeriodoSelecionadoId();
 
         if (turmaId == 0 || periodoId == 0) {
-            JOptionPane.showMessageDialog(view, "Selecione Turma e Período para publicar.");
+            JOptionPane.showMessageDialog(view, "Selecione Turma e Período.");
             return;
         }
 
-        // Confirmação
-        int confirm = JOptionPane.showConfirmDialog(view,
-                "Deseja tornar as notas deste período visíveis para os alunos?\n" +
-                        "Certifique-se de ter salvo todas as alterações antes.",
-                "Publicar Boletim", JOptionPane.YES_NO_OPTION);
+        // Verifica se já está publicado
+        boolean jaPublicado = boletimRepo.isPublicado(turmaId, periodoId);
 
-        if (confirm == JOptionPane.YES_OPTION) {
-            boletimRepo.registrarPublicacao(turmaId, periodoId, true);
+        if (jaPublicado) {
+            int confirm = JOptionPane.showConfirmDialog(view,
+                    "Este boletim já está publicado. Deseja OCULTAR as notas novamente?",
+                    "Despublicar", JOptionPane.YES_NO_OPTION);
 
-            JOptionPane.showMessageDialog(view, "Boletim publicado com sucesso!");
+            if (confirm == JOptionPane.YES_OPTION) {
+                boletimRepo.registrarPublicacao(turmaId, periodoId, false); // False = Oculto
+                JOptionPane.showMessageDialog(view, "Boletim ocultado.");
+            }
+        } else {
+            int confirm = JOptionPane.showConfirmDialog(view,
+                    "Isso tornará as notas visíveis para todos os alunos da turma.\nConfirma?",
+                    "Publicar Boletim", JOptionPane.YES_NO_OPTION);
 
-            // Opcional: Disparar notificação para a turma inteira avisando!
-            // ComunicadoController.dispararNotificacaoTurma(...) // Se você criar esse método
+            if (confirm == JOptionPane.YES_OPTION) {
+                boletimRepo.registrarPublicacao(turmaId, periodoId, true); // True = Visível
+                JOptionPane.showMessageDialog(view, "Boletim publicado com sucesso!");
+            }
         }
     }
     private void carregarComboTurmas() {
@@ -163,7 +171,7 @@ public class NotaController {
 
             if (mdOpt.isPresent()) {
                 int matriculaDisciplinaId = mdOpt.get().getId();
-
+                int totalFaltas = mdOpt.get().getTotalFaltas();
                 // 3. Busca se já existe NOTA lançada
                 Optional<Nota> notaOpt = notaRepo.buscarNota(matriculaDisciplinaId, periodoId);
                 String valorNota = "";
@@ -175,7 +183,8 @@ public class NotaController {
                 view.getTableModel().addRow(new Object[]{
                         matriculaDisciplinaId, // Coluna 0 (Oculta)
                         nomeAluno,             // Coluna 1
-                        valorNota              // Coluna 2 (Editável)
+                        valorNota,
+                        totalFaltas// Coluna 2 (Editável)
                 });
             }
         }

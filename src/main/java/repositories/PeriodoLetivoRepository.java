@@ -3,8 +3,10 @@ package repositories;
 import com.fasterxml.jackson.core.type.TypeReference;
 import models.PeriodoLetivo;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class PeriodoLetivoRepository extends BaseRepository<PeriodoLetivo> {
 
@@ -42,9 +44,11 @@ public class PeriodoLetivoRepository extends BaseRepository<PeriodoLetivo> {
         salvarNoArquivo();
     }
 
-    public List<PeriodoLetivo> buscarPorAnoEscolarId(int anoId) {
+    public List<PeriodoLetivo> buscarPorAnoEscolarId(int anoEscolarId) {
         return this.cache.stream()
-                .filter(t -> t.getAnoEscolarId() == anoId)
-                .toList();
+                .filter(p -> p.getAnoEscolarId() == anoEscolarId)
+                // É crucial ordenar, senão as colunas podem aparecer fora de ordem (ex: 4º Bim antes do 1º)
+                .sorted(Comparator.comparing(PeriodoLetivo::getDataInicio))
+                .collect(Collectors.toList());
     }
 }

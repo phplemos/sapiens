@@ -16,8 +16,9 @@ public class NotaLancamentoView extends JDialog {
     private JTable tabelaNotas;
     private DefaultTableModel tableModel;
 
-    private JButton btnSalvarNotas;
-
+    private JButton btnSalvarCorrecao;
+    private JButton btnPublicarBoletim;
+    private JLabel lblStatusBoletim; // Para mostrar se já está publicado ou não
     public NotaLancamentoView() {
         setTitle("Lançamento de Notas");
         setSize(800, 600);
@@ -50,13 +51,12 @@ public class NotaLancamentoView extends JDialog {
 
         // --- 2. Tabela de Notas (Centro) ---
         // Colunas: ID (Oculto/Ref), Nome do Aluno, Nota (Editável)
-        String[] colunas = {"ID_MatDisc", "Nome do Aluno", "Nota (0-10)"};
-
+        String[] colunas = {"ID_MatDisc", "Aluno", "Nota Atual", "Faltas Atuais"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int col) {
-                // SÓ a coluna 2 (Nota) é editável
-                return col == 2;
+                // Admin também pode editar nota e falta para corrigir erros
+                return col == 2 || col == 3;
             }
         };
 
@@ -73,16 +73,32 @@ public class NotaLancamentoView extends JDialog {
 
         add(new JScrollPane(tabelaNotas), BorderLayout.CENTER);
 
-        // --- 3. Botão Salvar (Sul) ---
-        JPanel painelSul = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        btnSalvarNotas = new JButton("💾 Salvar Todas as Notas");
-        btnSalvarNotas.setFont(new Font("Arial", Font.BOLD, 14));
-        btnSalvarNotas.setBackground(new Color(200, 255, 200)); // Verdinho claro
+        // --- 3. Painel de Controle (Sul) ---
+        JPanel painelSul = new JPanel(new BorderLayout());
+        painelSul.setBorder(new EmptyBorder(10,10,10,10));
 
-        painelSul.add(btnSalvarNotas);
+        // Info de Status à esquerda
+        lblStatusBoletim = new JLabel("Status: Aguardando seleção...");
+        lblStatusBoletim.setFont(new Font("Arial", Font.BOLD, 12));
+        painelSul.add(lblStatusBoletim, BorderLayout.WEST);
+
+        // Botões à direita
+        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+        btnSalvarCorrecao = new JButton("Salvar Correções");
+
+        btnPublicarBoletim = new JButton("📢 Publicar/Ocultar Boletim");
+        btnPublicarBoletim.setBackground(new Color(255, 140, 0)); // Laranja
+        btnPublicarBoletim.setForeground(Color.WHITE);
+        btnPublicarBoletim.setFont(new Font("Arial", Font.BOLD, 12));
+
+        painelBotoes.add(btnSalvarCorrecao);
+        painelBotoes.add(Box.createHorizontalStrut(20)); // Espaço
+        painelBotoes.add(btnPublicarBoletim);
+
+        painelSul.add(painelBotoes, BorderLayout.EAST);
         add(painelSul, BorderLayout.SOUTH);
     }
-
     // --- Métodos Auxiliares ---
 
     // Combos
@@ -104,9 +120,10 @@ public class NotaLancamentoView extends JDialog {
     }
 
     // Componentes
+    public JButton getBtnPublicar() { return btnPublicarBoletim; }
     public JComboBox<ComboItem> getCbTurma() { return cbTurma; }
     public JButton getBtnBuscar() { return btnBuscar; }
-    public JButton getBtnSalvarNotas() { return btnSalvarNotas; }
+    public JButton getBtnSalvarCorrecao() { return btnSalvarCorrecao; }
     public DefaultTableModel getTableModel() { return tableModel; }
     public JTable getTabela() { return tabelaNotas; }
 }
