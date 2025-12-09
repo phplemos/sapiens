@@ -111,6 +111,11 @@ public class MatriculaController {
             JOptionPane.showMessageDialog(formView, "Selecione Aluno e Turma.");
             return;
         }
+        Optional<Pessoa> pessoaOpt = this.pessoaRepo.buscarPorId(alunoId);
+        if(pessoaOpt.isEmpty()) {
+            JOptionPane.showMessageDialog(formView, "Pessoa/Aluno nao cadastrado!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         // Validação: Aluno já matriculado nesta ou outra turma?
         if (matriculaRepo.alunoJaMatriculado(alunoId, turmaId)) {
@@ -121,6 +126,7 @@ public class MatriculaController {
             JOptionPane.showMessageDialog(formView, "Aluno já está matriculado em outra turma que está ativa!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
 
         // 1. CRIAR A MATRÍCULA
         Matricula m = new Matricula();
@@ -160,14 +166,21 @@ public class MatriculaController {
             System.out.println(" - Disciplina vinculada: ID " + td.getDisciplinaId());
         }
         // ---------------------------------------------------------
+        Optional<Usuario> usuarioOpt = usuarioRepo.buscarPorPessoaId(alunoId);
+        if(usuarioOpt.isEmpty()) {
+            Usuario usuario = new Usuario();
+            usuario.setPessoaId(alunoId);
+            usuario.setLogin(pessoaOpt.get().getCpf());
+            usuario.setSenhaHash("123");
+            usuario.setTipoPerfil(TipoPerfilUsuario.ALUNO);
+            usuario.setCriadoEm(LocalDateTime.now());
+            this.usuarioRepo.salvar(usuario);
+        }
 
-        Usuario usuario = new Usuario();
-        usuario.setPessoaId(alunoId);
-        usuario.setLogin(numMatricula);
-        usuario.setSenhaHash("123");
-        usuario.setTipoPerfil(TipoPerfilUsuario.ALUNO);
-        usuario.setCriadoEm(LocalDateTime.now());
-        this.usuarioRepo.salvar(usuario);
+        // Comunica matricula
+        String titulo = "Matrícula Realizada";
+        String corpo = "Bem-vindo! Sua matrícula foi confirmada com sucesso.";
+        ComunicadoController.dispararNotificacaoSistema(m.getAlunoPessoaId(), titulo, corpo);
 
         JOptionPane.showMessageDialog(formView, "Matrícula realizada com sucesso!\nNº: " + numMatricula);
         formView.dispose();
