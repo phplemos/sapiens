@@ -11,7 +11,9 @@ public class Mensalidade {
     private double valorDesconto;
     private double valorJurosMulta;
     private LocalDate dataVencimento;
+    private LocalDate dataPagamento;
     private StatusPagamento statusPagamento;
+
 
     public Mensalidade() {}
 
@@ -63,6 +65,13 @@ public class Mensalidade {
         this.dataVencimento = dataVencimento;
     }
 
+    public LocalDate getDataPagamento() {
+        return dataPagamento;
+    }
+    public void setDataPagamento(LocalDate dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
+    
     public StatusPagamento getStatusPagamento() {
         return statusPagamento;
     }

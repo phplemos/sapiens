@@ -46,4 +46,11 @@ public class MensalidadeRepository extends BaseRepository<Mensalidade> {
                 .filter(t -> t.getMatriculaId() == matriculaId)
                 .toList();
     }
+    public boolean existeMensalidade(int matriculaId, int mes, int ano) {
+        return this.cache.stream().anyMatch(m ->
+                m.getMatriculaId() == matriculaId &&
+                        m.getDataVencimento().getMonthValue() == mes &&
+                        m.getDataVencimento().getYear() == ano
+        );
+    }
 }
