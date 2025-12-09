@@ -17,13 +17,12 @@ public class AlunoHistoricoView extends JDialog {
 
     private final JButton btnFechar;
 
-    public AlunoHistoricoView(JDialog parent) {
-        super(parent, "Perfil e Histórico do Aluno", ModalityType.APPLICATION_MODAL);
+    public AlunoHistoricoView(Window parent) {
+        super(parent, ModalityType.APPLICATION_MODAL);
         setSize(900, 600);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
         // --- 1. PAINEL DE PERFIL (Topo) ---
         JPanel painelPerfil = new JPanel(new GridLayout(3, 2, 10, 5));
         painelPerfil.setBorder(new TitledBorder("Dados do Perfil"));

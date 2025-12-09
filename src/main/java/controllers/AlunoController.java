@@ -11,6 +11,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 public class AlunoController {
 
@@ -166,13 +168,6 @@ public class AlunoController {
         this.formView.setTelefone(pessoa.getTelefone());
         this.formView.setEmail(pessoa.getEmailContato());
 
-        this.formView.setCep(endereco.getCep());
-        this.formView.setLogradouro(endereco.getLogradouro());
-        this.formView.setNumero(endereco.getNumero());
-        this.formView.setBairro(endereco.getBairro());
-        this.formView.setCidade(endereco.getCidade());
-        this.formView.setEstado(endereco.getEstado());
-
         this.formView.setTitle("Editando Aluno: " + pessoa.getNomeCompleto());
         List<AlunoResponsavel> vinculos = this.alunoResponsavelRepo.buscarPorAlunoId(pessoaId);
 
@@ -205,16 +200,11 @@ public class AlunoController {
 
     private void salvarAluno() {
         System.out.println("Botão SALVAR (do form) clicado");
-
-        Endereco newEndereco = new Endereco();
-        newEndereco.setCep(formView.getCep());
-        newEndereco.setLogradouro(formView.getLogradouro());
-        newEndereco.setNumero(formView.getNumero());
-        newEndereco.setBairro(formView.getBairro());
-        newEndereco.setCidade(formView.getCidade());
-        newEndereco.setEstado(formView.getEstado());
-        newEndereco = this.enderecoRepo.salvar(newEndereco);
-
+        Optional<Pessoa> responsavel = this.pessoaRepo.buscarPorId(this.formView.getResponsavelSelecionadoId());
+        if(responsavel.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Problema ao buscar responsavel, verifique se preencheu corretamente");
+            return;
+        }
         Pessoa newPessoa = new Pessoa();
         newPessoa.setCpf(formView.getCpf());
         newPessoa.setDataNascimento(LocalDate.parse(formView.getDataNasc()));
@@ -222,7 +212,7 @@ public class AlunoController {
         newPessoa.setNomeCompleto(formView.getNome());
         newPessoa.setEmailContato(formView.getEmail());
         newPessoa.setTelefone(formView.getTelefone());
-        newPessoa.setEnderecoId(newEndereco.getId());
+        newPessoa.setEnderecoId(responsavel.get().getEnderecoId());
         this.pessoaRepo.salvar(newPessoa);
 
         Aluno aluno = new Aluno();
@@ -253,7 +243,7 @@ public class AlunoController {
 
         // Abre a tela de histórico
         AlunoHistoricoView histView = new AlunoHistoricoView(listView);
-        new AlunoHistoricoController(histView, pessoaId);
+        new AlunoHistoricoController(histView, pessoaId, true);
         histView.setVisible(true);
     }
 

@@ -23,7 +23,7 @@ public class AlunoHistoricoController {
     private final NotaRepository notaRepo;
     private final PeriodoLetivoRepository periodoRepo;
 
-    public AlunoHistoricoController(AlunoHistoricoView view, int alunoPessoaId) {
+    public AlunoHistoricoController(AlunoHistoricoView view, int alunoPessoaId, boolean isAdmin) {
         this.view = view;
 
         // Inicializa Repositórios
@@ -39,8 +39,9 @@ public class AlunoHistoricoController {
         this.periodoRepo = new PeriodoLetivoRepository();
 
         carregarDados(alunoPessoaId);
-
-        this.view.getBtnFechar().addActionListener(e -> view.dispose());
+        this.view.getBtnFechar().addActionListener(e -> {
+            if (isAdmin) view.dispose();
+        });
     }
 
     private void carregarDados(int alunoPessoaId) {

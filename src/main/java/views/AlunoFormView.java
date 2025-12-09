@@ -1,14 +1,18 @@
 package views;
 
+import models.Pessoa;
+import repositories.PessoaRepository;
 import views.components.ComboItem;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.Optional;
 
 public class AlunoFormView extends JDialog {
 
+    private final PessoaRepository pessoaRepository;
     // Campos de Pessoa
     private JTextField txtNome;
     private JTextField txtCpf;
@@ -16,14 +20,6 @@ public class AlunoFormView extends JDialog {
     private JTextField txtRg;
     private JTextField txtTelefone;
     private JTextField txtEmail;
-
-    // Campos de Endereço
-    private JTextField txtCep;
-    private JTextField txtLogradouro;
-    private JTextField txtNumero;
-    private JTextField txtBairro;
-    private JTextField txtCidade;
-    private JTextField txtEstado;
 
     private JButton btnSalvar;
     private JButton btnCancelar;
@@ -93,37 +89,8 @@ public class AlunoFormView extends JDialog {
         cbResponsavel = new JComboBox<>();
         painelPessoal.add(cbResponsavel, gbc);
 
-        // --- Sub-painel Endereço ---
-        JPanel painelEndereco = new JPanel(new GridLayout(0, 2, 5, 5));
-        painelEndereco.setBorder(new TitledBorder("Endereço"));
-
-        painelEndereco.add(new JLabel("CEP:"));
-        txtCep = new JTextField();
-        painelEndereco.add(txtCep);
-
-        painelEndereco.add(new JLabel("Logradouro:"));
-        txtLogradouro = new JTextField();
-        painelEndereco.add(txtLogradouro);
-
-        painelEndereco.add(new JLabel("Número:"));
-        txtNumero = new JTextField();
-        painelEndereco.add(txtNumero);
-
-        painelEndereco.add(new JLabel("Bairro:"));
-        txtBairro = new JTextField();
-        painelEndereco.add(txtBairro);
-
-        painelEndereco.add(new JLabel("Cidade:"));
-        txtCidade = new JTextField();
-        painelEndereco.add(txtCidade);
-
-        painelEndereco.add(new JLabel("Estado (UF):"));
-        txtEstado = new JTextField();
-        painelEndereco.add(txtEstado);
-
         JPanel wrapperCampos = new JPanel(new BorderLayout());
         wrapperCampos.add(painelPessoal, BorderLayout.NORTH);
-        wrapperCampos.add(painelEndereco, BorderLayout.SOUTH);
 
         // Adiciona o wrapper em uma barra de rolagem
         add(new JScrollPane(wrapperCampos), BorderLayout.CENTER);
@@ -139,16 +106,14 @@ public class AlunoFormView extends JDialog {
         painelBotoes.add(btnCancelar);
 
         add(painelBotoes, BorderLayout.SOUTH);
-
+        this.pessoaRepository = new PessoaRepository();
 
     }
 
 
-    // Getters para os botões
     public JButton getBtnSalvar() { return btnSalvar; }
     public JButton getBtnCancelar() { return btnCancelar; }
 
-    // Getters para os campos (o Controller vai usar para pegar os dados)
     public String getNome() { return txtNome.getText(); }
     public void setNome(String nome) { txtNome.setText(nome); }
 
@@ -167,24 +132,6 @@ public class AlunoFormView extends JDialog {
     public String getEmail() { return txtEmail.getText(); }
     public void setEmail(String email) { txtEmail.setText(email); }
 
-    public String getBairro() { return txtBairro.getText(); }
-    public void setBairro(String bairro) { txtBairro.setText(bairro); }
-
-    public String getCep() { return txtCep.getText(); }
-    public void setCep(String cep) { txtCep.setText(cep); }
-
-    public String getCidade() { return txtCidade.getText(); }
-    public void setCidade(String cidade) { txtCidade.setText(cidade); }
-
-    public  String getEstado() { return txtEstado.getText(); }
-    public void setEstado(String estado) { txtEstado.setText(estado); }
-
-    public String getLogradouro() { return txtLogradouro.getText(); }
-    public void setLogradouro(String logradouro) { txtLogradouro.setText(logradouro);
-    }
-    public String getNumero() { return txtNumero.getText(); }
-    public void setNumero(String numero) { txtNumero.setText(numero); }
-
 
     public void setPessoaIdParaEdicao(int id) {
         this.pessoaIdParaEdicao = id;
@@ -198,9 +145,6 @@ public class AlunoFormView extends JDialog {
         cbResponsavel.addItem(item);
     }
 
-    /**
-     * Retorna o ID do responsável selecionado (ou 0 se nenhum)
-     */
     public int getResponsavelSelecionadoId() {
         ComboItem item = (ComboItem) cbResponsavel.getSelectedItem();
         if (item != null) {
@@ -209,9 +153,6 @@ public class AlunoFormView extends JDialog {
         return 0;
     }
 
-    /**
-     * Define qual responsável está selecionado (usado na Edição)
-     */
     public void setResponsavelSelecionado(int id) {
         for (int i = 0; i < cbResponsavel.getItemCount(); i++) {
             ComboItem item = cbResponsavel.getItemAt(i);
@@ -221,6 +162,7 @@ public class AlunoFormView extends JDialog {
             }
         }
     }
+
     public boolean validateForm(){
         if(txtNome.getText().isEmpty()){
             System.out.println(txtNome.getText());
@@ -230,6 +172,12 @@ public class AlunoFormView extends JDialog {
         if(txtCpf.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Preencha o cpf do aluno!");
             return false;
+        } else {
+            Optional<Pessoa> temCadastro = this.pessoaRepository.buscarPorCPF(txtCpf.getText());
+            if(temCadastro.isPresent()){
+                JOptionPane.showMessageDialog(null, "CPF ja cadastrado!");
+                return false;
+            }
         }
         if(txtRg.getText().isEmpty()){
             // JOptionPane.showMessageDialog(null, "Preencha o rg do aluno!");
@@ -244,23 +192,11 @@ public class AlunoFormView extends JDialog {
             return false;
         }
         if(txtEmail.getText().isEmpty()){
-            // JOptionPane.showMessageDialog(null, "Preencha o email do aluno!");
-            return true; // Por enquanto liberado
-        }
-        if(txtLogradouro.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Preencha o logradouro do aluno!");
+            JOptionPane.showMessageDialog(null, "Preencha o email do aluno!");
             return false;
         }
-        if(txtNumero.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Preencha o numero do aluno!");
-            return false;
-        }
-        if(txtBairro.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Preencha o bairro do aluno!");
-            return false;
-        }
-        if(txtCidade.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Preencha o cidade do aluno!");
+        if(cbResponsavel.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Obrigatorio selecionar responsavel");
             return false;
         }
         return true;
@@ -273,12 +209,6 @@ public class AlunoFormView extends JDialog {
         txtRg.setText("");
         txtTelefone.setText("");
         txtEmail.setText("");
-        txtCep.setText("");
-        txtLogradouro.setText("");
-        txtNumero.setText("");
-        txtBairro.setText("");
-        txtCidade.setText("");
-        txtEstado.setText("");
         pessoaIdParaEdicao = 0; // Reseta o ID
         if (cbResponsavel.getItemCount() > 0) {
             cbResponsavel.setSelectedIndex(0);
