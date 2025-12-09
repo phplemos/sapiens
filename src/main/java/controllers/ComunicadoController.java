@@ -40,7 +40,7 @@ public class ComunicadoController {
 
     private void configurarAcesso() {
         // Se for ALUNO, remove a aba de envio (index 1)
-        if (usuarioLogado.getTipoPerfil() == TipoPerfilUsuario.ALUNO) {
+        if (usuarioLogado.getTipoPerfil() == TipoPerfilUsuario.ALUNO || usuarioLogado.getTipoPerfil() == TipoPerfilUsuario.RESPONSAVEL) {
             if(view.getTabbedPane().getTabCount()>1){
                 view.getTabbedPane().remove(1);
             }
