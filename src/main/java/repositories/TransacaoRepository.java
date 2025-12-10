@@ -1,6 +1,7 @@
 package repositories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import models.Disciplina;
 import models.Transacao;
 
 import java.util.List;
@@ -50,5 +51,11 @@ public class TransacaoRepository extends BaseRepository<Transacao> {
         return this.cache.stream()
                 .filter(t -> t.getCategoriaId() == categoriaId)
                 .toList();
+    }
+    public int gerarProximoId() {
+        return this.cache.stream()
+                .mapToInt(Transacao::getId)
+                .max()
+                .orElse(0) + 1;
     }
 }
