@@ -1,5 +1,6 @@
 package controllers;
 
+import models.PeriodoLetivo;
 import models.Usuario;
 import repositories.UsuarioRepository;
 import views.*;
@@ -9,18 +10,6 @@ import javax.swing.*;
 public class DashboardAdminController {
     private final UsuarioRepository usuarioRepo;
     private final DashboardAdminView dashboardView;
-    private final AlunoListView alunoListView;
-    private final ResponsavelListView responsavelListView;
-    private final ProfessorListView professorListView;
-    private final TurmaListView turmaListView;
-    private final DisciplinaListView disciplinaListView;
-    private final MatriculaListView matriculaListView;
-    private final NotaLancamentoView notaLancamentoView;
-    private final FinanceiroView financeiroView;
-    private final AnoEscolarListView AnoEscolarListView;
-    private final SerieListView serieListView;
-    private final PeriodoLetivoListView periodoLetivoListView;
-    private final UsuarioPerfilView usuarioPerfilView;
     private final Usuario usuario;
 
     public DashboardAdminController(DashboardAdminView view, Usuario usuario) {
@@ -29,30 +18,7 @@ public class DashboardAdminController {
         this.dashboardView = view;
         this.usuario = usuario;
 
-        this.alunoListView = new AlunoListView();
-        this.responsavelListView = new ResponsavelListView();
-        this.professorListView = new ProfessorListView();
-        this.turmaListView = new TurmaListView();
-        this.disciplinaListView = new DisciplinaListView();
-        this.matriculaListView = new MatriculaListView();
-        this.notaLancamentoView = new NotaLancamentoView();
-        this.financeiroView = new FinanceiroView();
-        this.AnoEscolarListView = new AnoEscolarListView();
-        this.serieListView = new SerieListView();
-        this.periodoLetivoListView = new PeriodoLetivoListView();
-        this.usuarioPerfilView = new UsuarioPerfilView();
 
-        new AlunoController(this.alunoListView);
-        new ProfessorController(this.professorListView);
-        new TurmaController(this.turmaListView);
-        new DisciplinaController(this.disciplinaListView);
-        new MatriculaController(this.matriculaListView);
-        new GestaoNotasAdminController(this.notaLancamentoView);
-        new FinanceiroController(this.financeiroView);
-        new AnoEscolarController(AnoEscolarListView);
-        new SerieController(this.serieListView);
-        new PeriodoLetivoController(periodoLetivoListView);
-        new ResponsavelController(this.responsavelListView);
         open();
     }
 
@@ -61,41 +27,57 @@ public class DashboardAdminController {
 
         // 1. Alunos
         dashboardView.btnAlunos.addActionListener(e -> {
+            AlunoListView alunoListView = new AlunoListView();
+            new AlunoController(alunoListView);
             alunoListView.setVisible(true);
         });
+
         // 1. Responsaveis
         dashboardView.btnResponsavel.addActionListener(e -> {
+            ResponsavelListView responsavelListView = new ResponsavelListView();
+            new ResponsavelController(responsavelListView);
             responsavelListView.setVisible(true);
         });
 
         // 2. Professores
         dashboardView.btnProfessores.addActionListener(e -> {
+            ProfessorListView professorListView = new ProfessorListView();
+            new ProfessorController(professorListView);
             professorListView.setVisible(true);
         });
 
         // 3. Turmas
         dashboardView.btnTurmas.addActionListener(e -> {
+            TurmaListView turmaListView = new TurmaListView();
+            new TurmaController(turmaListView);
             turmaListView.setVisible(true);
         });
 
         // 3. Disciplinas
         dashboardView.btnDisciplinas.addActionListener(e -> {
+            DisciplinaListView disciplinaListView = new DisciplinaListView();
+            new DisciplinaController(disciplinaListView);
             disciplinaListView.setVisible(true);
         });
 
         // 4. Matrículas
         dashboardView.btnMatriculas.addActionListener(e -> {
+            MatriculaListView matriculaListView = new MatriculaListView();
+            new MatriculaController(matriculaListView);
             matriculaListView.setVisible(true);
         });
 
         // 5. Notas
         dashboardView.btnNotas.addActionListener(e -> {
+            NotaLancamentoView notaLancamentoView = new NotaLancamentoView();
+            new GestaoNotasAdminController(notaLancamentoView);
             notaLancamentoView.setVisible(true);
         });
 
         // 6. Financeiro
         dashboardView.btnFinanceiro.addActionListener(e -> {
-            financeiroView.setVisible(true);
+            ModuloFinanceiroView moduloFinanceiroView = new ModuloFinanceiroView(dashboardView);
+            moduloFinanceiroView.setVisible(true);
         });
 
         // 7. Configurações (Sub-menu)
@@ -104,18 +86,26 @@ public class DashboardAdminController {
             int choice = JOptionPane.showOptionDialog(dashboardView, "Selecione uma configuração:", "Configurações",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
             if (choice == 0) {
-                AnoEscolarListView.setVisible(true);
+                AnoEscolarListView anoEscolarListView = new AnoEscolarListView();
+                new AnoEscolarController(anoEscolarListView);
+                anoEscolarListView.setVisible(true);
             } else if (choice == 1) {
+                SerieListView serieListView = new SerieListView();
+                new SerieController(serieListView);
                 serieListView.setVisible(true);
             } else if (choice == 2) {
+                PeriodoLetivoListView  periodoLetivoListView = new PeriodoLetivoListView();
+                new PeriodoLetivoController(periodoLetivoListView);
                 periodoLetivoListView.setVisible(true);
             } else if (choice == 3) {
                 ParametrosEscolaView paramView = new ParametrosEscolaView(dashboardView);
                 new ParametrosEscolaController(paramView);
+                paramView.setVisible(true);
             }
         });
         dashboardView.btnPerfil.addActionListener(e -> {
-            new UsuarioPerfilController(this.usuarioPerfilView, usuario);
+            UsuarioPerfilView usuarioPerfilView = new UsuarioPerfilView();
+            new UsuarioPerfilController(usuarioPerfilView, usuario);
             usuarioPerfilView.setVisible(true);
         });
 

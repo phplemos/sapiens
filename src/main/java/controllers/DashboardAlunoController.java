@@ -9,20 +9,12 @@ import javax.swing.*;
 public class DashboardAlunoController {
     private final UsuarioRepository usuarioRepo;
     private final DashboardAlunoView dashboardView;
-    private final UsuarioPerfilView usuarioPerfilView;
-    private final ComunicadoView comunicadoView;
-    private final AlunoHistoricoView alunoHistoricoView;
-    private final BoletimView boletimView; // Passa o dashboard como janela pai
 
     private final Usuario usuario;
 
     public DashboardAlunoController(DashboardAlunoView view, Usuario usuario) {
         this.usuarioRepo = new UsuarioRepository();
         this.dashboardView = view;
-        this.usuarioPerfilView = new UsuarioPerfilView();
-        this.comunicadoView = new ComunicadoView();
-        this.alunoHistoricoView = new AlunoHistoricoView(view);
-        this.boletimView = new BoletimView(view);
         this.usuario = usuario;
         open();
     }
@@ -32,24 +24,28 @@ public class DashboardAlunoController {
 
         // 1. Histórico
         dashboardView.btnHistorico.addActionListener(e -> {
-            new AlunoHistoricoController(this.alunoHistoricoView, usuario.getPessoaId(), false);
-            this.alunoHistoricoView.setVisible(true);
+            AlunoHistoricoView alunoHistoricoView = new AlunoHistoricoView(dashboardView);
+            new AlunoHistoricoController(alunoHistoricoView, usuario.getPessoaId(), false);
+            alunoHistoricoView.setVisible(true);
         });
 
         // 2. Boletim
         dashboardView.btnBoletim.addActionListener(e -> {
+            BoletimView boletimView = new BoletimView(dashboardView);
             new BoletimController(boletimView, usuario.getPessoaId());
-            this.boletimView.setVisible(true);
+            boletimView.setVisible(true);
         });
 
         // 3. Perfil
         dashboardView.btnPerfil.addActionListener(e -> {
-            new UsuarioPerfilController(this.usuarioPerfilView, usuario);
+            UsuarioPerfilView usuarioPerfilView = new UsuarioPerfilView();
+            new UsuarioPerfilController(usuarioPerfilView, usuario);
             usuarioPerfilView.setVisible(true);
         });
 
         // Notificações
         dashboardView.btnNotificacao.addActionListener(e -> {
+            ComunicadoView comunicadoView = new ComunicadoView();
             new ComunicadoController(comunicadoView, usuario); // Passa o usuário logado!
             comunicadoView.setVisible(true);
         });

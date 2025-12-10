@@ -42,7 +42,6 @@ public class SelecaoFilhoController {
 
         view.getBtnCancelar().addActionListener(e -> view.dispose());
 
-        view.setVisible(true);
     }
 
     private void carregarListaDeFilhos() {

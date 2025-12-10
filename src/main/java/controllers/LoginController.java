@@ -12,18 +12,11 @@ public class LoginController {
     private final UsuarioRepository usuarioRepo;
 
     private final LoginView view;
-    private final DashboardAdminView dashboardAdminView;
-    private final DashboardAlunoView dashboardAlunoView;
-    private final DashboardProfessorView dashboardProfessorView;
-    private final DashboardResponsavelView  dashboardResponsavelView;
 
     public LoginController() {
         this.view = new LoginView();
         this.usuarioRepo = new UsuarioRepository();
-        this.dashboardAdminView = new DashboardAdminView();
-        this.dashboardAlunoView = new DashboardAlunoView();
-        this.dashboardProfessorView = new DashboardProfessorView();
-        this.dashboardResponsavelView = new DashboardResponsavelView();
+
     }
     public void start() {
         abrirTelaLogin();
@@ -39,24 +32,28 @@ public class LoginController {
             if (usuarioOpt.isPresent()) {
                 switch (usuarioOpt.get().getTipoPerfil()) {
                     case ADMIN:{
+                        DashboardAdminView dashboardAdminView = new DashboardAdminView();
                         new DashboardAdminController(dashboardAdminView, usuarioOpt.get());
                         dashboardAdminView.setVisible(true);
                         view.dispose();
                         break;
                     }
                     case PROFESSOR: {
+                        DashboardProfessorView dashboardProfessorView = new DashboardProfessorView();
                         new DashboardProfessorController(dashboardProfessorView, usuarioOpt.get());
                         dashboardProfessorView.setVisible(true);
                         view.dispose();
                         break;
                     }
                     case ALUNO:{
+                        DashboardAlunoView dashboardAlunoView = new DashboardAlunoView();
                         new DashboardAlunoController(dashboardAlunoView, usuarioOpt.get());
                         dashboardAlunoView.setVisible(true);
                         view.dispose();
                         break;
                     }
                     case RESPONSAVEL:{
+                        DashboardResponsavelView dashboardResponsavelView = new DashboardResponsavelView();
                         new DashboardResponsavelController(dashboardResponsavelView, usuarioOpt.get());
                         dashboardResponsavelView.setVisible(true);
                         view.dispose();

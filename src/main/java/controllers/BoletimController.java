@@ -51,7 +51,6 @@ public class BoletimController {
     private void initController() {
         view.getBtnFechar().addActionListener(e -> view.dispose());
         carregarBoletim();
-        view.setVisible(true); // Exibe apenas após carregar
     }
 
     private void carregarBoletim() {
