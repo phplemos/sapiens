@@ -25,7 +25,6 @@ public class AnoEscolarController {
     private void initController() {
         atualizarTabela();
 
-        // Listeners
         listView.getBtnNovo().addActionListener(e -> abrirFormNovo());
         listView.getBtnEditar().addActionListener(e -> abrirFormEditar());
         listView.getBtnExcluir().addActionListener(e -> excluir());
@@ -36,7 +35,7 @@ public class AnoEscolarController {
 
     private void atualizarTabela() {
         listView.getTableModel().setRowCount(0);
-        List<AnoEscolar> lista = repository.listarTodos(); // Use o nome exato do seu método no repo
+        List<AnoEscolar> lista = repository.listarTodos();
         for (AnoEscolar a : lista) {
             listView.getTableModel().addRow(new Object[]{a.getId(), a.getAno(), a.getStatus()});
         }

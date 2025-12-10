@@ -8,10 +8,9 @@ public class SerieFormView extends JDialog {
     private final JButton btnSalvar, btnCancelar;
     private int idParaEdicao = 0;
 
-    public SerieFormView(JDialog parent) {
-        super(parent, "Série", ModalityType.APPLICATION_MODAL);
+    public SerieFormView(Window parent) {
+        super(parent, ModalityType.APPLICATION_MODAL);
         setSize(350, 180);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
@@ -29,7 +28,6 @@ public class SerieFormView extends JDialog {
         painelBotoes.add(btnSalvar); painelBotoes.add(btnCancelar);
         add(painelBotoes, BorderLayout.SOUTH);
     }
-    // Getters e Setters
     public String getNome() { return txtNome.getText(); }
     public void setNome(String s) { txtNome.setText(s); }
     public int getIdParaEdicao() { return idParaEdicao; }

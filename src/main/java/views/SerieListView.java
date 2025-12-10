@@ -8,11 +8,11 @@ public class SerieListView extends JDialog {
     private final DefaultTableModel tableModel;
     private final JButton btnNovo, btnEditar, btnExcluir;
 
-    public SerieListView() {
+    public SerieListView(Window parent) {
+        super(parent, ModalityType.APPLICATION_MODAL);
         setTitle("Configuração - Séries");
         setSize(500, 400);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
         String[] colunas = {"ID", "Nome da Série"};
@@ -30,7 +30,6 @@ public class SerieListView extends JDialog {
         painelBotoes.add(btnNovo); painelBotoes.add(btnEditar); painelBotoes.add(btnExcluir);
         add(painelBotoes, BorderLayout.SOUTH);
     }
-    // Getters iguais aos anteriores...
     public JTable getTabela() { return tabela; }
     public DefaultTableModel getTableModel() { return tableModel; }
     public JButton getBtnNovo() { return btnNovo; }

@@ -8,17 +8,17 @@ import java.awt.*;
 
 public class DashboardProfessorView extends JFrame {
 
-    private JLabel lblNomeProf, lblCargaHorariaTotal;
+    private final JLabel lblNomeProf, lblCargaHorariaTotal;
 
-    private JComboBox<ComboItem> cbTurmas;
-    private JButton btnCarregarTurma;
+    private final JComboBox<ComboItem> cbTurmas;
+    private final JButton btnCarregarTurma;
 
-    private JTable tabelaAlunos;
-    private DefaultTableModel modelAlunos;
+    private final JTable tabelaAlunos;
+    private final DefaultTableModel modelAlunos;
 
-    private JButton btnLancarNotasFrequencia; // RF019
-    private JButton btnVerHistoricoAluno;      // RF020
-    private JButton btnSair;
+    private final JButton btnLancarNotasFrequencia; // RF019
+    private final JButton btnVerHistoricoAluno;      // RF020
+    private final JButton btnSair;
 
     public DashboardProfessorView() {
         setTitle("Portal do Professor - Sapiens");
@@ -27,7 +27,6 @@ public class DashboardProfessorView extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
-        // --- 1. TOPO: Perfil e Carga Horária (RF018) ---
         JPanel painelTopo = new JPanel(new BorderLayout());
         painelTopo.setBorder(new TitledBorder("Dados do Professor"));
 
@@ -41,7 +40,6 @@ public class DashboardProfessorView extends JFrame {
         pDados.add(lblNomeProf);
         pDados.add(lblCargaHorariaTotal);
 
-        // Seletor de Turma no Topo Direito
         JPanel pSeletor = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         pSeletor.add(new JLabel("Selecione a Turma/Disciplina:"));
         cbTurmas = new JComboBox<>();
@@ -55,8 +53,6 @@ public class DashboardProfessorView extends JFrame {
 
         add(painelTopo, BorderLayout.NORTH);
 
-        // --- 2. CENTRO: Lista de Alunos (RF021) ---
-        // Colunas: ID (Oculto), Nome, Matrícula
         String[] colunas = {"ID_Aluno", "Nome do Aluno", "Nº Matrícula", "Situação"};
         modelAlunos = new DefaultTableModel(colunas, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
@@ -68,7 +64,6 @@ public class DashboardProfessorView extends JFrame {
 
         add(new JScrollPane(tabelaAlunos), BorderLayout.CENTER);
 
-        // --- 3. RODAPÉ: Ações ---
         JPanel painelSul = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         btnVerHistoricoAluno = new JButton("📄 Ver Histórico Completo (RF020)");
@@ -82,7 +77,6 @@ public class DashboardProfessorView extends JFrame {
         add(painelSul, BorderLayout.SOUTH);
     }
 
-    // Getters e Setters
     public void setDadosProfessor(String nome, int cargaHoraria) {
         lblNomeProf.setText("Professor: " + nome);
         lblCargaHorariaTotal.setText("Carga Horária Total: " + cargaHoraria + "h");

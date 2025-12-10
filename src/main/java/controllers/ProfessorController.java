@@ -1,10 +1,7 @@
 package controllers;
 
 import enums.TipoPerfilUsuario;
-import models.Endereco;
-import models.Pessoa;
-import models.Professor;
-import models.Usuario;
+import models.*;
 import repositories.EnderecoRepository;
 import repositories.PessoaRepository;
 import repositories.ProfessorRepository;
@@ -17,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class ProfessorController {
 
@@ -27,6 +25,7 @@ public class ProfessorController {
 
     private final ProfessorListView listView;
     private final ProfessorFormView formView;
+    private boolean isEditForm = false;
 
     public ProfessorController(ProfessorListView listView) {
         this.professorRepo = new ProfessorRepository();
@@ -40,10 +39,7 @@ public class ProfessorController {
         initController();
     }
 
-    /**
-     * Ponto de entrada do Controller.
-     * Carrega os dados iniciais e configura os eventos (cliques de botão).
-     */
+
     private void initController() {
         atualizarTabela("");
         this.listView.getBtnBuscar().addActionListener(e -> {
@@ -62,8 +58,13 @@ public class ProfessorController {
         });
 
         this.formView.getBtnSalvar().addActionListener(e -> {
-            boolean isValid = this.formView.validateForm();
+            boolean isValid = this.formView.validateForm(this.isEditForm);
             if (isValid) {
+                if(isEditForm){
+                    atualizarProfessor();
+                    this.isEditForm = false;
+                    return;
+                }
                 salvarProfessor();
             }
         });
@@ -93,7 +94,7 @@ public class ProfessorController {
                         pessoa.getEmailContato()
                 };
                 if(!searchParam.isEmpty()){
-                    if(pessoa.getNomeCompleto().contains(searchParam)|| pessoa.getCpf().contains(searchParam)){
+                    if(pessoa.getNomeCompleto().toLowerCase().contains(searchParam.toLowerCase())|| pessoa.getCpf().trim().contains(searchParam.trim())){
                         tableModel.addRow(rowData);
                     }
                     continue;
@@ -105,28 +106,23 @@ public class ProfessorController {
 
 
     private void abrirFormularioNovoProfessor() {
-        System.out.println("Botão NOVO clicado");
         formView.limparFormulario();
         formView.setTitle("Novo Professor");
         formView.setVisible(true);
     }
 
     private void abrirFormularioEditarProfessor() {
-        System.out.println("Botão EDITAR clicado");
+        isEditForm = true;
         int selectedRow = this.listView.getTabelaProfessores().getSelectedRow();
 
         if (!this.isLinhaSelecionada(selectedRow)) return;
 
         int pessoaId = (Integer) this.listView.getTableModel().getValueAt(selectedRow, 0);
 
-        System.out.println("ID selecionado: " + pessoaId);
-
-
         Pessoa pessoa = this.pessoaRepo.buscarPorId(pessoaId).orElse(null);
         Professor professor = this.professorRepo.buscarPorPessoaId(pessoaId).orElse(null);
         Endereco endereco = null;
         if (pessoa != null) {
-            System.out.println("Entrou aqui");
             endereco = this.enderecoRepo.buscarPorId(pessoa.getEnderecoId()).orElse(null);
         }
 
@@ -140,12 +136,12 @@ public class ProfessorController {
             return;
         }
 
-        this.formView.limparFormulario(); // Limpa antes de preencher
-        this.formView.setPessoaIdParaEdicao(pessoaId); // Salva o ID para o 'salvar'
+        this.formView.limparFormulario();
+        this.formView.setPessoaIdParaEdicao(pessoaId);
 
         this.formView.setNome(pessoa.getNomeCompleto());
         this.formView.setCpf(pessoa.getCpf());
-        this.formView.setDataNasc(pessoa.getDataNascimento().toString()); // Converte LocalDate para String
+        this.formView.setDataNasc(pessoa.getDataNascimento().toString());
         this.formView.setRg(pessoa.getRg());
         this.formView.setTelefone(pessoa.getTelefone());
         this.formView.setEmail(pessoa.getEmailContato());
@@ -158,7 +154,7 @@ public class ProfessorController {
         this.formView.setEstado(endereco.getEstado());
 
         this.formView.setTitle("Editando Professor: " + pessoa.getNomeCompleto());
-        this.formView.setVisible(true); // Abre o popup
+        this.formView.setVisible(true);
     }
 
     private void excluirProfessor() {
@@ -177,8 +173,6 @@ public class ProfessorController {
     }
 
     private void salvarProfessor() {
-        System.out.println("Botão SALVAR (do form) clicado");
-
         Endereco newEndereco = new Endereco();
         newEndereco.setCep(formView.getCep());
         newEndereco.setLogradouro(formView.getLogradouro());
@@ -203,13 +197,54 @@ public class ProfessorController {
         professor.setFormacaoAcademica(formView.getFormacaoAcademica());
         this.professorRepo.salvar(professor);
 
-        Usuario usuario = new Usuario();
-        usuario.setPessoaId(newPessoa.getId());
-        usuario.setLogin(newPessoa.getEmailContato());
-        usuario.setSenhaHash("123");
-        usuario.setTipoPerfil(TipoPerfilUsuario.PROFESSOR);
-        usuario.setCriadoEm(LocalDateTime.now());
-        this.usuarioRepo.salvar(usuario);
+        Optional<Usuario> usuarioOpt = usuarioRepo.buscarPorPessoaId(newPessoa.getId());
+        if(usuarioOpt.isEmpty()) {
+            Usuario usuario = new Usuario();
+            usuario.setPessoaId(newPessoa.getId());
+            usuario.setLogin(newPessoa.getEmailContato());
+            usuario.setSenhaHash("123");
+            usuario.setTipoPerfil(TipoPerfilUsuario.PROFESSOR);
+            usuario.setCriadoEm(LocalDateTime.now());
+            this.usuarioRepo.salvar(usuario);
+        }
+        formView.dispose();
+        atualizarTabela("");
+    }
+
+    private void atualizarProfessor() {
+        Optional<Pessoa> dadosPessoa = this.pessoaRepo.buscarPorId(this.formView.getPessoaIdParaEdicao());
+        Optional<Professor> dadosProfessor = this.professorRepo.buscarPorPessoaId(this.formView.getPessoaIdParaEdicao());
+        if(dadosProfessor.isEmpty() || dadosPessoa.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Problema ao buscar Professor, verifique se preencheu corretamente");
+            return;
+        }
+
+        Pessoa pessoa = dadosPessoa.get();
+        Optional<Endereco> endereco = this.enderecoRepo.buscarPorId(pessoa.getEnderecoId());
+        if(endereco.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar o endereço anterior");
+            return;
+        }
+        Endereco enderecoAtualizado = endereco.get();
+        enderecoAtualizado.setCep(formView.getCep());
+        enderecoAtualizado.setLogradouro(formView.getLogradouro());
+        enderecoAtualizado.setNumero(formView.getNumero());
+        enderecoAtualizado.setBairro(formView.getBairro());
+        enderecoAtualizado.setCidade(formView.getCidade());
+        enderecoAtualizado.setEstado(formView.getEstado());
+        this.enderecoRepo.editar(enderecoAtualizado);
+
+        pessoa.setCpf(formView.getCpf());
+        pessoa.setDataNascimento(LocalDate.parse(formView.getDataNasc()));
+        pessoa.setRg(formView.getRg());
+        pessoa.setNomeCompleto(formView.getNome());
+        pessoa.setEmailContato(formView.getEmail());
+        pessoa.setTelefone(formView.getTelefone());
+        this.pessoaRepo.editar(pessoa);
+
+        Professor professorAtualizado = dadosProfessor.get();
+        professorAtualizado.setFormacaoAcademica(formView.getFormacaoAcademica());
+        this.professorRepo.editar(professorAtualizado);
 
         formView.dispose();
         atualizarTabela("");

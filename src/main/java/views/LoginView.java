@@ -6,10 +6,10 @@ import java.awt.*;
 
 public class LoginView extends JFrame {
 
-    private JTextField txtLogin;
-    private JPasswordField txtSenha;
-    private JButton btnEntrar;
-    private JButton btnSair;
+    private final JTextField txtLogin;
+    private final JPasswordField txtSenha;
+    private final JButton btnEntrar;
+    private final JButton btnSair;
 
     public LoginView() {
         setTitle("Login - Sistema Escolar");
@@ -19,13 +19,11 @@ public class LoginView extends JFrame {
         setResizable(false);
         setLayout(new BorderLayout());
 
-        // Cabeçalho
         JLabel lblTitulo = new JLabel("Acesso ao Sistema", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         lblTitulo.setBorder(new EmptyBorder(15, 0, 15, 0));
         add(lblTitulo, BorderLayout.NORTH);
 
-        // Campos
         JPanel painelCampos = new JPanel(new GridLayout(4, 1, 5, 5));
         painelCampos.setBorder(new EmptyBorder(0, 20, 0, 20));
 
@@ -39,7 +37,6 @@ public class LoginView extends JFrame {
 
         add(painelCampos, BorderLayout.CENTER);
 
-        // Botões
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         btnEntrar = new JButton("Entrar");
         btnSair = new JButton("Sair");

@@ -11,26 +11,23 @@ public class MensalidadesView extends JPanel {
 
     private JTabbedPane tabbedPane;
 
-    // --- ABA 1: GESTÃO INDIVIDUAL ---
     private JComboBox<ComboItem> cbAluno;
     private JButton btnBuscar;
     private JTable tabela;
     private DefaultTableModel tableModel;
     private JButton btnGerarCarneAluno;
     private JButton btnBaixar;
-    private JButton btnBoleto;    // RF029
-    private JButton btnDesconto;  // RF032
+    private JButton btnBoleto;
+    private JButton btnDesconto;
     private JLabel lblResumo;
 
-    // --- ABA 2: GESTÃO POR TURMA (RF028) ---
     private JComboBox<ComboItem> cbTurma;
     private JButton btnGerarParaTurma;
     private JTextArea txtLogTurma;
 
-    // --- ABA 3: RELATÓRIOS (RF033, RF034) ---
     private JButton btnRelatorioInadimplentes;
     private JButton btnRelatorioPagos;
-    private JTable tabelaRelatorio; // Tabela genérica para exibir relatórios
+    private JTable tabelaRelatorio;
     private DefaultTableModel modelRelatorio;
 
     public MensalidadesView() {
@@ -50,7 +47,6 @@ public class MensalidadesView extends JPanel {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(new EmptyBorder(10,10,10,10));
 
-        // Topo
         JPanel pTopo = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pTopo.add(new JLabel("Aluno:"));
         cbAluno = new JComboBox<>();
@@ -60,7 +56,6 @@ public class MensalidadesView extends JPanel {
         pTopo.add(btnBuscar);
         panel.add(pTopo, BorderLayout.NORTH);
 
-        // Centro (Tabela)
         String[] colunas = {"ID", "Vencimento", "Valor Original", "Juros/Multa", "Total", "Status", "Pagamento"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
@@ -69,7 +64,6 @@ public class MensalidadesView extends JPanel {
         tabela.setRowHeight(25);
         panel.add(new JScrollPane(tabela), BorderLayout.CENTER);
 
-        // Sul (Ações)
         JPanel pSul = new JPanel(new BorderLayout());
         lblResumo = new JLabel("Resumo financeiro...");
         lblResumo.setFont(new Font("Arial", Font.BOLD, 13));
@@ -133,7 +127,6 @@ public class MensalidadesView extends JPanel {
         pTopo.add(btnRelatorioPagos);
         panel.add(pTopo, BorderLayout.NORTH);
 
-        // Tabela de Relatório
         String[] col = {"Aluno", "Vencimento", "Valor", "Status"};
         modelRelatorio = new DefaultTableModel(col, 0);
         tabelaRelatorio = new JTable(modelRelatorio);
@@ -142,7 +135,6 @@ public class MensalidadesView extends JPanel {
         tabbedPane.addTab("Relatórios", panel);
     }
 
-    // --- GETTERS E HELPERS ---
     public void adicionarAluno(ComboItem item) { cbAluno.addItem(item); }
     public void adicionarTurma(ComboItem item) { cbTurma.addItem(item); }
 

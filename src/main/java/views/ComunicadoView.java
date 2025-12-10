@@ -6,22 +6,21 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class ComunicadoView extends JFrame {
+public class ComunicadoView extends JDialog {
 
-    private JTabbedPane tabbedPane;
+    private final JTabbedPane tabbedPane;
 
-    // --- ABA 1: CAIXA DE ENTRADA ---
     private JTable tabelaEntrada;
     private DefaultTableModel modelEntrada;
     private JTextArea txtLeitura; // Onde aparece o texto da mensagem selecionada
 
-    // --- ABA 2: ENVIAR (Apenas Admin/Prof) ---
     private JComboBox<ComboItem> cbTurmaDestino;
     private JTextField txtTitulo;
     private JTextArea txtCorpoEnvio;
     private JButton btnEnviar;
 
-    public ComunicadoView() {
+    public ComunicadoView(Window parent) {
+        super(parent, ModalityType.APPLICATION_MODAL);
         setTitle("Central de Comunicados");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -30,11 +29,9 @@ public class ComunicadoView extends JFrame {
 
         tabbedPane = new JTabbedPane();
 
-        // --- Configura Aba 1 (Entrada) ---
         JPanel painelEntrada = criarPainelEntrada();
         tabbedPane.addTab("📥 Caixa de Entrada", painelEntrada);
 
-        // --- Configura Aba 2 (Envio) ---
         JPanel painelEnvio = criarPainelEnvio();
         tabbedPane.addTab("📤 Enviar Comunicado", painelEnvio);
 
@@ -45,13 +42,12 @@ public class ComunicadoView extends JFrame {
         JPanel p = new JPanel(new BorderLayout(10, 10));
         p.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // Tabela
         String[] colunas = {"ID_VINCULO", "ID_MSG", "Data", "Remetente", "Título", "Lido?"};
         modelEntrada = new DefaultTableModel(colunas, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
         };
         tabelaEntrada = new JTable(modelEntrada);
-        // Esconde IDs
+
         tabelaEntrada.getColumnModel().getColumn(0).setMinWidth(0);
         tabelaEntrada.getColumnModel().getColumn(0).setMaxWidth(0);
         tabelaEntrada.getColumnModel().getColumn(1).setMinWidth(0);
@@ -59,7 +55,6 @@ public class ComunicadoView extends JFrame {
 
         p.add(new JScrollPane(tabelaEntrada), BorderLayout.NORTH); // Tabela em cima
 
-        // Área de Leitura
         txtLeitura = new JTextArea();
         txtLeitura.setEditable(false);
         txtLeitura.setBorder(BorderFactory.createTitledBorder("Conteúdo da Mensagem"));
@@ -74,7 +69,6 @@ public class ComunicadoView extends JFrame {
         JPanel p = new JPanel(new BorderLayout(10, 10));
         p.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // Form
         JPanel form = new JPanel(new GridLayout(4, 1, 5, 5));
 
         form.add(new JLabel("Enviar para Turma:"));
@@ -87,19 +81,16 @@ public class ComunicadoView extends JFrame {
 
         p.add(form, BorderLayout.NORTH);
 
-        // Corpo
         txtCorpoEnvio = new JTextArea();
         txtCorpoEnvio.setBorder(BorderFactory.createTitledBorder("Mensagem"));
         p.add(new JScrollPane(txtCorpoEnvio), BorderLayout.CENTER);
 
-        // Botão
         btnEnviar = new JButton("Enviar Comunicado");
         p.add(btnEnviar, BorderLayout.SOUTH);
 
         return p;
     }
 
-    // Getters e Helpers
     public void adicionarTurma(ComboItem item) { cbTurmaDestino.addItem(item); }
     public int getTurmaSelecionadaId() {
         return (cbTurmaDestino.getSelectedItem() != null) ? ((ComboItem)cbTurmaDestino.getSelectedItem()).getId() : 0;

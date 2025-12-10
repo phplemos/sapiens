@@ -6,18 +6,28 @@ import java.awt.*;
 
 public class ResponsavelListView extends JDialog {
 
-    private JTable tabelaResponsaveis;
-    private DefaultTableModel tableModel;
-    private JButton btnNovo;
-    private JButton btnEditar;
-    private JButton btnExcluir;
+    private final JTable tabelaResponsaveis;
+    private final DefaultTableModel tableModel;
+    private final JButton btnNovo;
+    private final JButton btnEditar;
+    private final JButton btnExcluir;
+    private final JButton btnBuscar;
+    private final JTextField txtBusca;
 
-    public ResponsavelListView() {
+    public ResponsavelListView(Window parent) {
+        super(parent, Dialog.ModalityType.APPLICATION_MODAL);
         setTitle("Sapiens - Gestão de Alunos");
         setSize(800, 600);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
+
+        JPanel painelTopo = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        txtBusca = new JTextField(20);
+        btnBuscar = new JButton("Buscar por Nome/CPF");
+        painelTopo.add(new JLabel("Pesquisar:"));
+        painelTopo.add(txtBusca);
+        painelTopo.add(btnBuscar);
+        add(painelTopo, BorderLayout.NORTH);
 
         String[] colunas = {"ID", "Nome Completo", "CPF", "Email"};
 
@@ -46,6 +56,9 @@ public class ResponsavelListView extends JDialog {
 
         add(painelBotoes, BorderLayout.SOUTH);
     }
+
+    public JButton getBtnBuscar() { return  btnBuscar; }
+    public JTextField getTxtBusca() { return txtBusca; }
 
     public JTable getTabelaResponsaveis() {
         return tabelaResponsaveis;

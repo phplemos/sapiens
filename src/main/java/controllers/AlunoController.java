@@ -25,6 +25,7 @@ public class AlunoController {
     private final AlunoListView listView;
     private final AlunoFormView formView;
     private boolean isEditForm = false;
+
     public AlunoController(AlunoListView listView) {
         this.alunoRepo = new AlunoRepository();
         this.responsavelRepo = new ResponsavelRepository();
@@ -38,9 +39,7 @@ public class AlunoController {
         carregarComboResponsaveis();
         initController();
     }
-    /**
-     * Busca todos os responsáveis e preenche o dropdown da View
-     */
+
     private void carregarComboResponsaveis() {
         List<Responsavel> responsaveis = this.responsavelRepo.listarTodos();
 
@@ -54,15 +53,13 @@ public class AlunoController {
             }
         }
     }
-    /**
-     * Ponto de entrada do Controller.
-     * Carrega os dados iniciais e configura os eventos (cliques de botão).
-     */
+
     private void initController() {
         atualizarTabela("");
         this.listView.getBtnBuscar().addActionListener(e -> {
             atualizarTabela(listView.getTxtBusca().getText());
         });
+
         this.listView.getBtnNovo().addActionListener(e -> {
             abrirFormularioNovoAluno();
         });
@@ -83,6 +80,7 @@ public class AlunoController {
             if (isValid) {
                 if(isEditForm){
                     atualizarAluno();
+                    isEditForm = false;
                     return;
                 }
                 salvarAluno();
@@ -115,7 +113,7 @@ public class AlunoController {
                         pessoa.getEmailContato()
                 };
                 if(!searchParam.isEmpty()){
-                    if(pessoa.getNomeCompleto().contains(searchParam)|| pessoa.getCpf().contains(searchParam)){
+                    if(pessoa.getNomeCompleto().toLowerCase().contains(searchParam.toLowerCase())|| pessoa.getCpf().trim().contains(searchParam.trim())){
                         tableModel.addRow(rowData);
                     }
                     continue;
@@ -270,6 +268,7 @@ public class AlunoController {
         formView.dispose();
         atualizarTabela("");
     }
+
     private void abrirHistorico() {
         int row = listView.getTabelaAlunos().getSelectedRow();
         if (row == -1) {

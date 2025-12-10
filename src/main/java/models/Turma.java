@@ -4,7 +4,7 @@ import enums.TurnoTurma;
 
 public class Turma {
     private int id;
-    private String nome; // Ex: "Turma A"
+    private String nome;
     private TurnoTurma turno;
     private int serieId;
     private int anoEscolarId;

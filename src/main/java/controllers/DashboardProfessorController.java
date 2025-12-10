@@ -16,7 +16,6 @@ public class DashboardProfessorController extends JDialog {
     private final DashboardProfessorView view;
     private final Usuario usuarioLogado;
 
-    // Repositórios
     private final ProfessorRepository profRepo = new ProfessorRepository();
     private final PessoaRepository pessoaRepo = new PessoaRepository();
     private final TurmaDisciplinaRepository tdRepo = new TurmaDisciplinaRepository();
@@ -34,24 +33,20 @@ public class DashboardProfessorController extends JDialog {
     }
 
     private void initController() {
-        carregarDadosProfessor(); // RF018
+        carregarDadosProfessor();
         carregarMinhasTurmas();
 
-        // Listeners
-        view.getBtnCarregar().addActionListener(e -> carregarListaAlunos()); // RF021
-        view.getBtnLancar().addActionListener(e -> abrirDiarioClasse());     // RF019
-        view.getBtnHistorico().addActionListener(e -> abrirHistoricoAluno()); // RF020
+        view.getBtnCarregar().addActionListener(e -> carregarListaAlunos());
+        view.getBtnLancar().addActionListener(e -> abrirDiarioClasse());
+        view.getBtnHistorico().addActionListener(e -> abrirHistoricoAluno());
         view.getBtnSair().addActionListener(e -> System.exit(0));
     }
 
-    // --- RF018: Calcular Carga Horária Total ---
     private void carregarDadosProfessor() {
         int pessoaId = usuarioLogado.getPessoaId();
         Optional<Pessoa> pOpt = pessoaRepo.buscarPorId(pessoaId);
 
         if (pOpt.isPresent()) {
-            // 1. Calcular Carga Horária
-            // Busca todas as TurmaDisciplina onde este professor dá aula
             List<TurmaDisciplina> minhasAulas = tdRepo.listarTodos().stream()
                     .filter(td -> td.getProfessorPessoaId() == pessoaId)
                     .toList();
@@ -64,7 +59,6 @@ public class DashboardProfessorController extends JDialog {
                 }
             }
 
-            // 2. Atualizar View
             view.setDadosProfessor(pOpt.get().getNomeCompleto(), cargaTotal);
         }
     }
@@ -87,8 +81,6 @@ public class DashboardProfessorController extends JDialog {
             Optional<Disciplina> d = disciplinaRepo.buscarPorId(td.getDisciplinaId());
             if (d.isPresent()) nomeDisc = d.get().getNome();
 
-            // O ID do ComboItem será o ID da TURMA_DISCIPLINA (O vínculo específico)
-            // Ex: "1º Ano A - Matemática"
             view.adicionarTurmaCombo(new ComboItem(td.getId(), nomeTurma + " - " + nomeDisc));
         }
     }
@@ -99,31 +91,26 @@ public class DashboardProfessorController extends JDialog {
 
         view.getModelAlunos().setRowCount(0);
 
-        // 1. Descobrir qual é a Turma e a Disciplina
         Optional<TurmaDisciplina> tdOpt = tdRepo.buscarPorId(tdId);
         if (tdOpt.isEmpty()) return;
 
-        int turmaId = tdOpt.get().getTurmaId(); // A turma física
+        int turmaId = tdOpt.get().getTurmaId();
 
-        // 2. Buscar matrículas dessa turma
         List<Matricula> matriculas = matriculaRepo.listarTodos().stream()
                 .filter(m -> m.getTurmaId() == turmaId)
                 .toList();
 
         for (Matricula m : matriculas) {
-            // Verifica se o aluno está matriculado NESSA disciplina específica (Grade)
-            // (Às vezes o aluno pode ter sido dispensado da matéria)
             boolean cursaMateria = matDiscRepo.buscarPorMatriculaId(m.getId()).stream()
                     .anyMatch(md -> md.getTurmaDisciplinaId() == tdId);
 
             if (cursaMateria) {
-                // Pega nome do aluno
                 String nomeAluno = "Desconhecido";
                 Optional<Pessoa> p = pessoaRepo.buscarPorId(m.getAlunoPessoaId());
                 if (p.isPresent()) nomeAluno = p.get().getNomeCompleto();
 
                 view.getModelAlunos().addRow(new Object[]{
-                        m.getAlunoPessoaId(), // ID Pessoa do Aluno (para o histórico)
+                        m.getAlunoPessoaId(),
                         nomeAluno,
                         m.getNumeroMatricula(),
                         m.getStatus()
@@ -132,7 +119,6 @@ public class DashboardProfessorController extends JDialog {
         }
     }
 
-    // --- RF019: Abrir Diário (Lógica em outro Controller) ---
     private void abrirDiarioClasse() {
         int tdId = view.getTurmaDisciplinaSelecionadaId();
         if (tdId == 0) {
@@ -140,13 +126,11 @@ public class DashboardProfessorController extends JDialog {
             return;
         }
 
-        // Abre a janela do Diário
-        DiarioClasseView diarioView = new DiarioClasseView();
+        DiarioClasseView diarioView = new DiarioClasseView(view);
         new DiarioClasseController(diarioView, tdId);
         diarioView.setVisible(true);
     }
 
-    // --- RF020: Ver Histórico (Reutilizando código) ---
     private void abrirHistoricoAluno() {
         int row = view.getTabelaAlunos().getSelectedRow();
         if (row == -1) {
@@ -157,7 +141,6 @@ public class DashboardProfessorController extends JDialog {
         int alunoPessoaId = (int) view.getModelAlunos().getValueAt(row, 0);
 
         AlunoHistoricoView histView = new AlunoHistoricoView(view);
-        // Modo Admin/Prof = false (Botão Fechar)
         new AlunoHistoricoController(histView, alunoPessoaId, false);
         histView.setVisible(true);
     }

@@ -9,8 +9,8 @@ public class Transacao {
     private String descricao;
     private double valor;
     private TipoTransacao tipo;
-    private LocalDate dataTransacao; // Competência
-    private LocalDate dataPagamento; // Liquidação (pode ser nulo)
+    private LocalDate dataTransacao;
+    private LocalDate dataPagamento;
     private int categoriaId;
 
     private Integer mensalidadeId;

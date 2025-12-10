@@ -17,7 +17,6 @@ public class ComunicadoController {
     private final ComunicadoView view;
     private final Usuario usuarioLogado;
 
-    // Repositórios
     private final ComunicadoRepository msgRepo;
     private final ComunicadoDestinatarioRepository destRepo;
     private final TurmaRepository turmaRepo;
@@ -39,14 +38,12 @@ public class ComunicadoController {
     }
 
     private void configurarAcesso() {
-        // Se for ALUNO, remove a aba de envio (index 1)
         if (usuarioLogado.getTipoPerfil() == TipoPerfilUsuario.ALUNO || usuarioLogado.getTipoPerfil() == TipoPerfilUsuario.RESPONSAVEL) {
             if(view.getTabbedPane().getTabCount()>1){
                 view.getTabbedPane().remove(1);
             }
 
         } else {
-            // Se for Admin/Prof, carrega as turmas no combo
             carregarTurmas();
         }
     }
@@ -60,15 +57,12 @@ public class ComunicadoController {
     }
 
     private void initController() {
-        // Carrega Entrada
         carregarCaixaEntrada();
 
-        // Listener de Leitura (Clique na tabela)
         view.getTabelaEntrada().getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) lerMensagemSelecionada();
         });
 
-        // Listener de Envio
         if (view.getBtnEnviar() != null) {
             view.getBtnEnviar().addActionListener(e -> enviarComunicado());
         }
@@ -78,7 +72,6 @@ public class ComunicadoController {
         view.getModelEntrada().setRowCount(0);
         int meuId = usuarioLogado.getPessoaId();
 
-        // 1. Busca mensagens destinadas a mim
         List<ComunicadoDestinatario> meusDestinos = destRepo.buscarPorDestinatario(meuId);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
@@ -88,7 +81,6 @@ public class ComunicadoController {
             if (msgOpt.isPresent()) {
                 Comunicado msg = msgOpt.get();
 
-                // Busca nome do remetente
                 String remetente = "Sistema";
                 if (msg.getRemetentePessoaId() > 0) {
                     Optional<Pessoa> p = pessoaRepo.buscarPorId(msg.getRemetentePessoaId());
@@ -98,8 +90,8 @@ public class ComunicadoController {
                 }
 
                 view.getModelEntrada().addRow(new Object[]{
-                        cd.getId(),       // ID do vínculo (pra marcar lido)
-                        msg.getId(),      // ID da msg
+                        cd.getId(),
+                        msg.getId(),
                         msg.getDataEnvio().format(fmt),
                         remetente,
                         msg.getTitulo(),
@@ -116,14 +108,12 @@ public class ComunicadoController {
         int idVinculo = (int) view.getTabelaEntrada().getValueAt(row, 0);
         int idMsg = (int) view.getTabelaEntrada().getValueAt(row, 1);
 
-        // 1. Mostrar o corpo da mensagem
         Optional<Comunicado> msgOpt = msgRepo.buscarPorId(idMsg);
         if (msgOpt.isPresent()) {
             view.getTxtLeitura().setText(msgOpt.get().getCorpo());
             view.getTxtLeitura().setCaretPosition(0); // Rola pro topo
         }
 
-        // 2. Marcar como LIDO se ainda não foi
         String statusLido = (String) view.getTabelaEntrada().getValueAt(row, 5);
         if ("NÃO".equals(statusLido)) {
             destRepo.marcarComoLido(idVinculo);
@@ -141,7 +131,6 @@ public class ComunicadoController {
             return;
         }
 
-        // 1. Salvar a Mensagem
         Comunicado c = new Comunicado();
         c.setRemetentePessoaId(usuarioLogado.getPessoaId());
         c.setTitulo(titulo);
@@ -150,8 +139,6 @@ public class ComunicadoController {
 
         c = msgRepo.salvar(c); // Salva e gera ID
 
-        // 2. Distribuir para todos os alunos da turma
-        // Busca matrículas ativas da turma
         List<Matricula> matriculas = matriculaRepo.listarTodos().stream()
                 .filter(m -> m.getTurmaId() == turmaId)
                 .toList();
@@ -166,13 +153,11 @@ public class ComunicadoController {
             destRepo.salvar(cd);
             enviados++;
 
-            // Opcional: Enviar também para os Responsáveis (usando AlunoResponsavelRepo)
         }
 
         JOptionPane.showMessageDialog(view, "Comunicado enviado para " + enviados + " alunos.");
         view.limparFormEnvio();
 
-        // Atualiza minha própria caixa de entrada (caso eu tenha mandado pra mim mesmo por teste)
         carregarCaixaEntrada();
     }
 
@@ -180,8 +165,7 @@ public class ComunicadoController {
         ComunicadoRepository msgRepo = new ComunicadoRepository();
         ComunicadoDestinatarioRepository destRepo = new ComunicadoDestinatarioRepository();
 
-        // 1. Cria a Mensagem
-        models.Comunicado c = new models.Comunicado();
+        Comunicado c = new Comunicado();
         c.setRemetentePessoaId(0); // 0 = Sistema
         c.setTitulo(titulo);
         c.setCorpo(corpo);
@@ -189,8 +173,7 @@ public class ComunicadoController {
 
         c = msgRepo.salvar(c);
 
-        // 2. Cria o Vínculo
-        models.ComunicadoDestinatario cd = new models.ComunicadoDestinatario();
+        ComunicadoDestinatario cd = new ComunicadoDestinatario();
         cd.setComunicadoId(c.getId());
         cd.setDestinatarioPessoaId(idDestinatario);
         cd.setLido(false);

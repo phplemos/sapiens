@@ -47,7 +47,6 @@ public class MatriculaController {
     }
 
     private void carregarCombos() {
-        // 1. Carregar Alunos (Join com Pessoa para mostrar nome)
         List<Aluno> alunos = alunoRepo.listarTodos();
         for (Aluno a : alunos) {
             Pessoa p = pessoaRepo.buscarPorId(a.getPessoaId()).orElse(null);
@@ -56,7 +55,6 @@ public class MatriculaController {
             }
         }
 
-        // 2. Carregar Turmas
         List<Turma> turmas = turmaRepo.listarTodos();
         for (Turma t : turmas) {
             formView.adicionarTurma(new ComboItem(t.getId(), t.getNome() + " (" + t.getTurno() + ")"));
@@ -78,12 +76,10 @@ public class MatriculaController {
         List<Matricula> lista = matriculaRepo.listarTodos();
 
         for (Matricula m : lista) {
-            // Join Aluno (Nome)
             String nomeAluno = "Desconhecido";
             Optional<Pessoa> p = pessoaRepo.buscarPorId(m.getAlunoPessoaId());
             if (p.isPresent()) nomeAluno = p.get().getNomeCompleto();
 
-            // Join Turma (Nome)
             String nomeTurma = "Desconhecida";
             Optional<Turma> t = turmaRepo.buscarPorId(m.getTurmaId());
             if (t.isPresent()) nomeTurma = t.get().getNome();
@@ -117,7 +113,6 @@ public class MatriculaController {
             return;
         }
 
-        // Validação: Aluno já matriculado nesta ou outra turma?
         if (matriculaRepo.alunoJaMatriculado(alunoId, turmaId)) {
             JOptionPane.showMessageDialog(formView, "Aluno já está matriculado nesta turma!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
@@ -128,34 +123,26 @@ public class MatriculaController {
         }
 
 
-        // 1. CRIAR A MATRÍCULA
         Matricula m = new Matricula();
         m.setAlunoPessoaId(alunoId);
         m.setTurmaId(turmaId);
         m.setDataMatricula(LocalDate.now());
         m.setStatus(StatusMatricula.ATIVA);
 
-        // Gera número de matrícula simples (Ano + ID do aluno + ID da turma)
-        // Em um sistema real seria um sequencial mais complexo
         String numMatricula = LocalDate.now().getYear() + String.format("%04d", alunoId) + turmaId;
         m.setNumeroMatricula(numMatricula);
 
-        // Salva e recupera o objeto com ID gerado
         m = matriculaRepo.salvar(m);
 
-        // ---------------------------------------------------------
-        // 2. A MÁGICA AUTOMÁTICA (Espelhamento de Grade)
-        // ---------------------------------------------------------
+
         System.out.println("Gerando grade curricular para a matrícula " + m.getId() + "...");
 
-        // A. Busca todas as disciplinas oferecidas nesta turma
         List<TurmaDisciplina> gradeDaTurma = turmaDisciplinaRepo.buscarPorTurmaId(turmaId);
 
         if (gradeDaTurma.isEmpty()) {
             JOptionPane.showMessageDialog(formView, "Aviso: Esta turma não tem disciplinas cadastradas.\nO aluno foi matriculado, mas sem matérias.");
         }
 
-        // B. Para cada disciplina da turma, cria um registro na matrícula do aluno
         for (TurmaDisciplina td : gradeDaTurma) {
             MatriculaDisciplina md = new MatriculaDisciplina();
             md.setMatriculaId(m.getId()); // Vincula a esta matrícula nova
@@ -165,7 +152,6 @@ public class MatriculaController {
             matDisciplinaRepo.salvar(md);
             System.out.println(" - Disciplina vinculada: ID " + td.getDisciplinaId());
         }
-        // ---------------------------------------------------------
         Optional<Usuario> usuarioOpt = usuarioRepo.buscarPorPessoaId(alunoId);
         if(usuarioOpt.isEmpty()) {
             Usuario usuario = new Usuario();
@@ -177,7 +163,6 @@ public class MatriculaController {
             this.usuarioRepo.salvar(usuario);
         }
 
-        // Comunica matricula
         String titulo = "Matrícula Realizada";
         String corpo = "Bem-vindo! Sua matrícula foi confirmada com sucesso.";
         ComunicadoController.dispararNotificacaoSistema(m.getAlunoPessoaId(), titulo, corpo);
@@ -188,13 +173,10 @@ public class MatriculaController {
     }
 
     private void cancelarMatricula() {
-        // Implementar lógica de exclusão (lembrar do CASCADE DELETE manual)
-        // Excluir MatriculaDisciplinas -> Excluir Matricula
         int row = listView.getTabela().getSelectedRow();
         if (row != -1) {
             int id = (int) listView.getTabela().getValueAt(row, 0);
 
-            // Cascata simples
             List<MatriculaDisciplina> mds = matDisciplinaRepo.buscarPorMatriculaId(id);
             for(MatriculaDisciplina md : mds) {
                 matDisciplinaRepo.excluir(md.getId());

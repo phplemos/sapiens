@@ -13,44 +13,35 @@ public class ResponsavelFormView extends JDialog {
 
     private final PessoaRepository pessoaRepo;
 
+    private final JTextField txtNome;
+    private final JTextField txtCpf;
+    private final JTextField txtDataNasc;
+    private final JTextField txtRg;
+    private final JTextField txtTelefone;
+    private final JTextField txtEmail;
 
-    // Campos de Pessoa
-    private JTextField txtNome;
-    private JTextField txtCpf;
-    private JTextField txtDataNasc;
-    private JTextField txtRg;
-    private JTextField txtTelefone;
-    private JTextField txtEmail;
+    private final JTextField txtCep;
+    private final JTextField txtLogradouro;
+    private final JTextField txtNumero;
+    private final JTextField txtBairro;
+    private final JTextField txtCidade;
+    private final JTextField txtEstado;
 
-    // Campos de Endereço
-    private JTextField txtCep;
-    private JTextField txtLogradouro;
-    private JTextField txtNumero;
-    private JTextField txtBairro;
-    private JTextField txtCidade;
-    private JTextField txtEstado;
-
-    private JButton btnSalvar;
-    private JButton btnCancelar;
+    private final JButton btnSalvar;
+    private final JButton btnCancelar;
 
     private int pessoaIdParaEdicao = 0;
 
-    public ResponsavelFormView(JDialog parent) {
-        // 'true' torna o Dialog "modal" (trava a janela principal)
-        super(parent, "Formulário de Responsavel", true);
-
+    public ResponsavelFormView(Window parent) {
+        super(parent, Dialog.ModalityType.APPLICATION_MODAL);
         setSize(600, 500);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
-        // --- 1. Painel de Campos (Centro) ---
         JPanel painelCampos = new JPanel();
-        // GridLayout(0, 4) = N linhas, 4 colunas (Label:Campo | Label:Campo)
         painelCampos.setLayout(new GridLayout(0, 4, 10, 10));
         painelCampos.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // --- Sub-painel Dados Pessoais ---
         JPanel painelPessoal = new JPanel(new GridLayout(0, 2, 5, 5));
         painelPessoal.setBorder(new TitledBorder("Dados Pessoais"));
 
@@ -78,7 +69,6 @@ public class ResponsavelFormView extends JDialog {
         txtEmail = new JTextField();
         painelPessoal.add(txtEmail);
 
-        // --- Sub-painel Endereço ---
         JPanel painelEndereco = new JPanel(new GridLayout(0, 2, 5, 5));
         painelEndereco.setBorder(new TitledBorder("Endereço"));
 
@@ -110,10 +100,8 @@ public class ResponsavelFormView extends JDialog {
         wrapperCampos.add(painelPessoal, BorderLayout.NORTH);
         wrapperCampos.add(painelEndereco, BorderLayout.SOUTH);
 
-        // Adiciona o wrapper em uma barra de rolagem
         add(new JScrollPane(wrapperCampos), BorderLayout.CENTER);
 
-        // --- 2. Painel de Botões (Sul) ---
         JPanel painelBotoes = new JPanel();
         painelBotoes.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
 
@@ -129,13 +117,9 @@ public class ResponsavelFormView extends JDialog {
 
     }
 
-    // --- Métodos de Acesso (para o Controller) ---
-
-    // Getters para os botões
     public JButton getBtnSalvar() { return btnSalvar; }
     public JButton getBtnCancelar() { return btnCancelar; }
 
-    // Getters para os campos (o Controller vai usar para pegar os dados)
     public String getNome() { return txtNome.getText(); }
     public void setNome(String nome) { txtNome.setText(nome); }
 
@@ -180,8 +164,8 @@ public class ResponsavelFormView extends JDialog {
     public int getPessoaIdParaEdicao() {
         return this.pessoaIdParaEdicao;
     }
-    public boolean validateForm(){
 
+    public boolean validateForm(boolean isEdicao){
         if(txtNome.getText().isEmpty()){
             System.out.println(txtNome.getText());
             JOptionPane.showMessageDialog(null, "Preencha o nome do Responsavel!");
@@ -191,6 +175,9 @@ public class ResponsavelFormView extends JDialog {
             JOptionPane.showMessageDialog(null, "Preencha o cpf do Responsavel!");
             return false;
         } else {
+            if(isEdicao){
+                return true;
+            }
             Optional<Pessoa> temCadastro = this.pessoaRepo.buscarPorCPF(txtCpf.getText());
             if(temCadastro.isPresent()){
                 JOptionPane.showMessageDialog(null, "CPF ja cadastrado!");
@@ -198,8 +185,8 @@ public class ResponsavelFormView extends JDialog {
             }
         }
         if(txtRg.getText().isEmpty()){
-            // JOptionPane.showMessageDialog(null, "Preencha o rg do aluno!");
-            return true; // Por enquanto liberado
+            JOptionPane.showMessageDialog(null, "Preencha o rg do Responsavel!");
+            return true;
         }
         if(txtDataNasc.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Preencha o data de nascimento do Responsavel!");
@@ -210,8 +197,8 @@ public class ResponsavelFormView extends JDialog {
             return false;
         }
         if(txtEmail.getText().isEmpty()){
-            // JOptionPane.showMessageDialog(null, "Preencha o email do aluno!");
-            return true; // Por enquanto liberado
+            JOptionPane.showMessageDialog(null, "Preencha o email do Responsavel!");
+            return true;
         }
         if(txtLogradouro.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Preencha o logradouro do Responsavel!");
@@ -245,6 +232,6 @@ public class ResponsavelFormView extends JDialog {
         txtBairro.setText("");
         txtCidade.setText("");
         txtEstado.setText("");
-        pessoaIdParaEdicao = 0; // Reseta o ID
+        pessoaIdParaEdicao = 0;
     }
 }

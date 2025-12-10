@@ -36,20 +36,18 @@ public class DisciplinaController {
     private void initController() {
         atualizarTabela();
 
-        // Listeners da ListView
         this.listView.getBtnNovo().addActionListener(e -> abrirFormularioNovo());
         this.listView.getBtnEditar().addActionListener(e -> abrirFormularioEdicao());
         this.listView.getBtnExcluir().addActionListener(e -> excluirDisciplina());
         this.listView.getBtnBuscar().addActionListener(e -> buscarDisciplina());
 
-        // Listeners da FormView
         this.formView.getBtnSalvar().addActionListener(e -> salvarDisciplina());
         this.formView.getBtnCancelar().addActionListener(e -> this.formView.dispose());
     }
 
     private void atualizarTabela() {
         DefaultTableModel model = listView.getTableModel();
-        model.setRowCount(0); // Limpa tabela
+        model.setRowCount(0);
 
         List<Disciplina> lista = repository.listarTodas();
 
@@ -95,7 +93,6 @@ public class DisciplinaController {
 
     private void salvarDisciplina() {
         try {
-            // Validação simples
             String nome = formView.getNome();
             String codigo = formView.getCodigo();
             String chStr = formView.getCargaHoraria();
@@ -115,11 +112,9 @@ public class DisciplinaController {
             d.setConteudoProgramatico(formView.getConteudo());
 
             if (formView.getDisciplinaIdParaEdicao() > 0) {
-                // Edição
                 d.setId(formView.getDisciplinaIdParaEdicao());
                 repository.editar(d);
             } else {
-                // Novo
                 repository.salvar(d);
             }
 
@@ -172,7 +167,6 @@ public class DisciplinaController {
             return;
         }
 
-        // Filtro em memória (poderia estar no Repository também)
         DefaultTableModel model = listView.getTableModel();
         model.setRowCount(0);
 

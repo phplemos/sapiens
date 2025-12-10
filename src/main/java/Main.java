@@ -16,7 +16,6 @@ import java.util.Optional;
 public class Main {
 
     public static void main(String[] args) {
-        // Estilo visual nativo
         try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } catch (Exception e) {}
 
         final boolean isPopulated = SeedersController.populate();
@@ -30,8 +29,6 @@ public class Main {
         } else {
             System.out.println("Sem dados para iniciar!");
         }
-
-
     }
 
 }

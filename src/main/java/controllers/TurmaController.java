@@ -39,15 +39,12 @@ public class TurmaController {
     }
 
     private void carregarCombos() {
-        // Carregar Séries
         List<Serie> series = serieRepo.listarTodos();
-        // Adiciona item vazio (opcional)
-        // formView.adicionarSerie(new ComboItem(0, "Selecione..."));
+
         for (Serie s : series) {
             formView.adicionarSerie(new ComboItem(s.getId(), s.getNome()));
         }
 
-        // Carregar Anos
         List<AnoEscolar> anos = anoRepo.listarTodos();
         for (AnoEscolar a : anos) {
             String label = a.getAno() + " (" + a.getStatus() + ")";
@@ -75,17 +72,13 @@ public class TurmaController {
 
         int turmaId = (int) listView.getTableModel().getValueAt(row, 0);
 
-        // Busca o objeto Turma para passar o nome correto para a próxima tela
         Turma turma = turmaRepo.buscarPorId(turmaId).orElse(null);
 
         if (turma != null) {
-            // 1. Cria a nova View (Janela)
             TurmaDisciplinaView tdView = new TurmaDisciplinaView(listView);
 
-            // 2. Cria o Controller dela (passando a turma selecionada)
             new TurmaDisciplinaController(tdView, turma);
 
-            // 3. Exibe
             tdView.setVisible(true);
         }
     }
@@ -94,7 +87,6 @@ public class TurmaController {
         List<Turma> turmas = turmaRepo.listarTodos();
 
         for (Turma t : turmas) {
-            // JOIN MANUAL: Buscar Nome da Série e do Ano
             String nomeSerie = "N/A";
             String nomeAno = "N/A";
 
@@ -107,7 +99,7 @@ public class TurmaController {
             listView.getTableModel().addRow(new Object[]{
                     t.getId(),
                     t.getNome(),
-                    t.getTurno(), // O Java exibe o Enum como String automaticamente
+                    t.getTurno(),
                     nomeSerie,
                     nomeAno
             });
@@ -132,8 +124,8 @@ public class TurmaController {
             formView.setIdParaEdicao(t.getId());
             formView.setNome(t.getNome());
             formView.setTurno(t.getTurno());
-            formView.setSerieId(t.getSerieId());      // Seleciona a Série no combo
-            formView.setAnoId(t.getAnoEscolarId());   // Seleciona o Ano no combo
+            formView.setSerieId(t.getSerieId());
+            formView.setAnoId(t.getAnoEscolarId());
 
             formView.setTitle("Editar Turma");
             formView.setVisible(true);

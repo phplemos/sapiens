@@ -63,14 +63,11 @@ public class SeedersController {
     }
 
     public static void popularDisciplinas(DisciplinaRepository repo) {
-            // Se já tiver dados, não faz nada para não duplicar
             if (!repo.listarTodas().isEmpty()) {
                 System.out.println("O arquivo disciplinas.json já contém dados. Seed cancelado.");
                 return;
             }
 
-            // --- 1. ENSINO FUNDAMENTAL 1 (1º ao 5º Ano) ---
-            // Matérias Base
             String[][] materiasEF1 = {
                     {"Matemática", "MAT", "200"},
                     {"Língua Portuguesa", "PORT", "200"}, // Usando PORT como pediu
@@ -87,8 +84,6 @@ public class SeedersController {
                 }
             }
 
-            // --- 2. ENSINO FUNDAMENTAL 2 (6º ao 9º Ano) ---
-            // Adiciona Inglês
             String[][] materiasEF2 = {
                     {"Matemática", "MAT", "160"},
                     {"Língua Portuguesa", "PORT", "160"},
@@ -106,8 +101,6 @@ public class SeedersController {
                 }
             }
 
-            // --- 3. ENSINO MÉDIO (1º ao 3º Ano) ---
-            // Separa as ciências e adiciona sociologia/filosofia
             String[][] materiasEM = {
                     {"Matemática", "MAT", "160"},
                     {"Língua Portuguesa", "PORT", "160"},
@@ -134,17 +127,14 @@ public class SeedersController {
     }
 
     private static void criarDisciplina(Disciplina d, DisciplinaRepository repo, String nome, String sigla, String modalidade, int ano, int carga) {
-        // Formata o nome ex: "Matemática (1º Ano EF1)"
         d.setNome(nome + " (" + ano + "º Ano " + modalidade + ")");
 
-        // Formata o código ex: MAT-EF1-1
         d.setCodigo(sigla + "-" + modalidade + "-" + ano);
 
         d.setCargaHoraria(carga);
         d.setDescricao("Disciplina de " + nome + " do currículo base do " + ano + "º ano do " + modalidade);
         d.setConteudoProgramatico(" - Conteúdo A\n - Conteúdo B\n - Avaliação Bimestral");
 
-        // Salva (o ID é gerado automaticamente pelo seu BaseRepository)
         repo.salvar(d);
 
         System.out.println("Criado: " + d.getCodigo());

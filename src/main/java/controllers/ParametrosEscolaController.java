@@ -23,15 +23,11 @@ public class ParametrosEscolaController {
 
         view.btnSalvar.addActionListener(e -> salvarDados());
         view.btnCancelar.addActionListener(e -> view.dispose());
-
-        view.setVisible(true);
     }
 
     private void carregarDados() {
-        // Busca os dados do JSON
         this.model = repo.buscarParametrosGerais();
 
-        // Preenche a tela
         view.txtNomeEscola.setText(model.getNomeInstituicao());
         view.spnMediaAprovacao.setValue(model.getMediaAprovacao());
         view.spnMediaRecuperacao.setValue(model.getMediaRecuperacao());
@@ -40,13 +36,11 @@ public class ParametrosEscolaController {
 
     private void salvarDados() {
         try {
-            // Atualiza o Model com o que está na View
             model.setNomeInstituicao(view.txtNomeEscola.getText());
             model.setMediaAprovacao((Double) view.spnMediaAprovacao.getValue());
             model.setMediaRecuperacao((Double) view.spnMediaRecuperacao.getValue());
             model.setLimiteFaltas((Integer) view.spnLimiteFaltas.getValue());
 
-            // Salva no Repository
             repo.salvar(model);
 
             JOptionPane.showMessageDialog(view, "Parâmetros atualizados com sucesso!");

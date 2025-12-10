@@ -37,7 +37,6 @@ public class DashboardAlunoView extends JFrame {
         painelTopo.add(lblUsuarioLogado, BorderLayout.EAST);
         add(painelTopo, BorderLayout.NORTH);
 
-        // Centro (Grid de Botões)
         JPanel painelGrid = new JPanel(new GridLayout(2, 4, 20, 20));
         painelGrid.setBorder(new EmptyBorder(30, 30, 30, 30));
 

@@ -32,7 +32,6 @@ public class BoletimController {
         this.view = view;
         this.alunoPessoaId = alunoPessoaId;
 
-        // Inicializa Repositórios
         this.parametrosRepo = new ParametrosEscolaRepository();
         this.alunoRepo = new AlunoRepository();
         this.pessoaRepo = new PessoaRepository();
@@ -62,7 +61,6 @@ public class BoletimController {
             return;
         }
 
-        // 2. Buscar Matrícula mais recente
         Optional<Matricula> matriculaOpt = matriculaRepo.listarTodos().stream()
                 .filter(m -> m.getAlunoPessoaId() == alunoPessoaId)
                 .max(Comparator.comparingInt(Matricula::getId));
@@ -77,8 +75,6 @@ public class BoletimController {
 
         view.setInfo(pessoaOpt.get().getNomeCompleto(), turma.getNome());
 
-        // 3. BUSCAR PERÍODOS REAIS (CORREÇÃO AQUI)
-        // Busca todos os periodos vinculados ao ano escolar da turma
         List<PeriodoLetivo> periodos = periodoRepo.buscarPorAnoEscolarId(turma.getAnoEscolarId());
 
         if (periodos.isEmpty()) {
@@ -86,69 +82,58 @@ public class BoletimController {
             return;
         }
 
-        // 4. Configurar Tabela Dinamicamente
         List<String> nomesPeriodos = periodos.stream()
                 .map(PeriodoLetivo::getNome)
                 .collect(Collectors.toList());
 
         view.configurarTabela(nomesPeriodos);
 
-        // 5. Preencher Linhas (Disciplinas e Notas)
         List<MatriculaDisciplina> disciplinasMatriculadas = matDiscRepo.buscarPorMatriculaId(matricula.getId());
 
-        for (MatriculaDisciplina md : disciplinasMatriculadas) {
-
-            // Buscar Nome da Disciplina
+        for (MatriculaDisciplina matriculaDisciplina : disciplinasMatriculadas) {
             String nomeDisciplina = "Desconhecida";
-            Optional<TurmaDisciplina> tdOpt = turmaDiscRepo.buscarPorId(md.getTurmaDisciplinaId());
-            if (tdOpt.isPresent()) {
-                Optional<Disciplina> dOpt = disciplinaRepo.buscarPorId(tdOpt.get().getDisciplinaId());
+            Optional<TurmaDisciplina> turmaDisciplinaOpt = turmaDiscRepo.buscarPorId(matriculaDisciplina.getTurmaDisciplinaId());
+            if (turmaDisciplinaOpt.isPresent()) {
+                Optional<Disciplina> dOpt = disciplinaRepo.buscarPorId(turmaDisciplinaOpt.get().getDisciplinaId());
                 if (dOpt.isPresent()) nomeDisciplina = dOpt.get().getNome();
             }
 
-            // Criar a linha (Tamanho = 1 p/ nome + N periodos + 2 p/ faltas e situação)
             Object[] linha = new Object[1 + periodos.size() + 2];
 
-            linha[0] = nomeDisciplina; // Coluna 0
+            linha[0] = nomeDisciplina;
 
             int colIndex = 1;
 
-            // ITERAR SOBRE A LISTA DE PERÍODOS (Não mais loop int fixo)
             for (PeriodoLetivo p : periodos) {
-
-                // Verificar Publicação: Usa o ID do período atual do loop
                 boolean publicado = boletimStatusRepo.isPublicado(turma.getId(), p.getId());
 
                 if (publicado) {
-                    Optional<Nota> notaOpt = notaRepo.buscarNota(md.getId(), p.getId());
+                    Optional<Nota> notaOpt = notaRepo.buscarNota(matriculaDisciplina.getId(), p.getId());
                     if (notaOpt.isPresent()) {
                         linha[colIndex] = notaOpt.get().getValorNota();
                     } else {
-                        linha[colIndex] = "-"; // Sem nota lançada
+                        linha[colIndex] = "-";
                     }
                 } else {
-                    linha[colIndex] = "*"; // Oculto/Bloqueado
+                    linha[colIndex] = "*";
                 }
-
                 colIndex++;
             }
-
-            // Faltas e Situação
-            linha[colIndex] = md.getTotalFaltas();
-            linha[colIndex + 1] = calcularSituacao(md, periodos); // Lógica opcional de situação
+            linha[colIndex] = matriculaDisciplina.getTotalFaltas();
+            linha[colIndex + 1] = calcularSituacao(matriculaDisciplina, periodos);
 
             view.getTableModel().addRow(linha);
         }
     }
 
-    private String calcularSituacao(MatriculaDisciplina md, List<PeriodoLetivo> periodos) {
+    private String calcularSituacao(MatriculaDisciplina matriculaDisciplina, List<PeriodoLetivo> periodos) {
         ParametrosEscola regras = parametrosRepo.buscarParametrosGerais();
 
         double MEDIA_APROVACAO = regras.getMediaAprovacao();
         double MEDIA_RECUPERACAO = regras.getMediaRecuperacao();
         int LIMITE_FALTAS = regras.getLimiteFaltas();
 
-        if (md.getTotalFaltas() > LIMITE_FALTAS) {
+        if (matriculaDisciplina.getTotalFaltas() > LIMITE_FALTAS) {
             return "Reprovado (Faltas)";
         }
 
@@ -156,10 +141,8 @@ public class BoletimController {
         int notasLancadas = 0;
         int totalPeriodos = periodos.size();
 
-        // 2. SOMA DAS NOTAS LANÇADAS
-        for (PeriodoLetivo p : periodos) {
-            // Busca a nota usando o ID da MatriculaDisciplina e do Periodo
-            Optional<Nota> notaOpt = notaRepo.buscarNota(md.getId(), p.getId());
+        for (PeriodoLetivo periodo : periodos) {
+            Optional<Nota> notaOpt = notaRepo.buscarNota(matriculaDisciplina.getId(), periodo.getId());
 
             if (notaOpt.isPresent()) {
                 somaNotas += notaOpt.get().getValorNota();

@@ -43,9 +43,7 @@ public class MensalidadesController {
 
 
 
-    // --- NOVO MÉTODO AUXILIAR PARA CRIAR A TRANSAÇÃO ---
     private void criarTransacaoReceita(Mensalidade m, double valorPago) {
-        // Recupera nome do aluno para a descrição ficar bonita
         String nomeAluno = "Aluno Desconhecido";
         Optional<Matricula> mat = matriculaRepo.buscarPorId(m.getMatriculaId());
         if (mat.isPresent()) {
@@ -56,40 +54,35 @@ public class MensalidadesController {
         }
 
         Transacao t = new Transacao();
-        // Descrição informativa
         t.setDescricao("Mensalidade Venc: " + m.getDataVencimento().format(DateTimeFormatter.ofPattern("dd/MM")) + " - " + nomeAluno);
 
         t.setValor(valorPago);
-        t.setTipo(TipoTransacao.RECEITA); // Importante: É dinheiro entrando!
-        t.setDataTransacao(LocalDate.now()); // Data da competência (ou vencimento original, depende da regra contábil)
-        t.setDataPagamento(LocalDate.now()); // Data que o dinheiro entrou efetivamente (Regime de Caixa)
+        t.setTipo(TipoTransacao.RECEITA);
+        t.setDataTransacao(LocalDate.now());
+        t.setDataPagamento(LocalDate.now());
 
-        t.setMensalidadeId(m.getId()); // VÍNCULO IMPORTANTE
+        t.setMensalidadeId(m.getId());
 
-        // Define categoria "Mensalidades" (Cria se não existir ou busca ID)
         t.setCategoriaId(resolverCategoriaMensalidade());
 
         transacaoRepo.salvar(t);
     }
 
     private int resolverCategoriaMensalidade() {
-        // Tenta achar uma categoria chamada "Mensalidades"
         return categoriaFinanceiraRepo.listarTodos().stream()
                 .filter(c -> c.getNome().equalsIgnoreCase("Mensalidades") && c.getTipo() == TipoTransacao.RECEITA)
                 .findFirst()
                 .map(CategoriaFinanceira::getId)
                 .orElseGet(() -> {
-                    // Se não existir, cria automaticamente para não dar erro
                     CategoriaFinanceira nova = new CategoriaFinanceira();
                     nova.setNome("Mensalidades");
                     nova.setTipo(TipoTransacao.RECEITA);
-                    categoriaFinanceiraRepo.salvar(nova); // Adapte se seu repo usar 'salvar' ou 'add' direto
+                    categoriaFinanceiraRepo.salvar(nova);
                     return nova.getId();
                 });
     }
 
     private void carregarDadosIniciais() {
-        // Carrega Alunos
         view.adicionarAluno(new ComboItem(0, "Selecione..."));
         alunoRepo.listarTodos().forEach(a -> {
             pessoaRepo.buscarPorId(a.getPessoaId()).ifPresent(p ->
@@ -97,7 +90,6 @@ public class MensalidadesController {
             );
         });
 
-        // Carrega Turmas (RF028)
         view.adicionarTurma(new ComboItem(0, "Selecione..."));
         turmaRepo.listarTodos().forEach(t ->
                 view.adicionarTurma(new ComboItem(t.getId(), t.getNome()))
@@ -105,26 +97,20 @@ public class MensalidadesController {
     }
 
     private void initController() {
-        // Individual
         view.getBtnBuscar().addActionListener(e -> listarMensalidades());
         view.getBtnGerarCarneAluno().addActionListener(e -> gerarCarne(view.getAlunoSelecionadoPessoaId()));
         view.getBtnBaixar().addActionListener(e -> baixarPagamento());
 
-        // RF032 - Desconto
         view.getBtnDesconto().addActionListener(e -> aplicarDesconto());
 
-        // RF029 - Boleto
         view.getBtnBoleto().addActionListener(e -> simularBoleto());
 
-        // RF028 - Turma
         view.getBtnGerarParaTurma().addActionListener(e -> gerarParaTurma());
 
-        // RF033 e RF034 - Relatórios
         view.getBtnRelatorioInadimplentes().addActionListener(e -> gerarRelatorioInadimplentes());
         view.getBtnRelatorioPagos().addActionListener(e -> gerarRelatorioPagos());
     }
 
-    // --- LÓGICA DE LISTAGEM INDIVIDUAL ---
     private void listarMensalidades() {
         int pessoaId = view.getAlunoSelecionadoPessoaId();
         if (pessoaId == 0) return;
@@ -142,7 +128,7 @@ public class MensalidadesController {
         double totalDevido = 0;
 
         for (Mensalidade m : mensalidades) {
-            verificarAtraso(m); // Atualiza status se venceu
+            verificarAtraso(m);
 
             double valorFinal = (m.getValorTotal() - m.getValorDesconto()) + m.getValorJurosMulta();
             String dataPagto = (m.getDataPagamento() != null) ? m.getDataPagamento().format(fmt) : "-";
@@ -164,7 +150,6 @@ public class MensalidadesController {
         view.setResumo("Total a Pagar (com multas): R$ " + String.format("%.2f", totalDevido));
     }
 
-    // Helper: Verifica se está atrasado apenas ao listar (sem salvar juros ainda)
     private void verificarAtraso(Mensalidade m) {
         if (m.getStatusPagamento() == StatusPagamento.PENDENTE &&
                 m.getDataVencimento().isBefore(LocalDate.now())) {
@@ -172,7 +157,6 @@ public class MensalidadesController {
         }
     }
 
-    // --- RF031: BAIXA COM JUROS E MULTA ---
     private void baixarPagamento() {
         int row = view.getTabela().getSelectedRow();
         if (row == -1) {
@@ -188,15 +172,14 @@ public class MensalidadesController {
             return;
         }
 
-        // 1. Cálculos Financeiros (Juros/Multa)
         double valorBase = m.getValorTotal() - m.getValorDesconto();
         double multa = 0;
         double juros = 0;
 
         if (LocalDate.now().isAfter(m.getDataVencimento())) {
             long diasAtraso = ChronoUnit.DAYS.between(m.getDataVencimento(), LocalDate.now());
-            multa = valorBase * 0.02; // 2%
-            juros = (valorBase * 0.001) * diasAtraso; // 0.1% ao dia
+            multa = valorBase * 0.02;
+            juros = (valorBase * 0.001) * diasAtraso;
 
             String msg = String.format("Atraso: %d dias\nMulta: R$ %.2f\nJuros: R$ %.2f\n\nTotal Final: R$ %.2f",
                     diasAtraso, multa, juros, (valorBase + multa + juros));
@@ -207,20 +190,17 @@ public class MensalidadesController {
 
         double valorFinalPago = valorBase + multa + juros;
 
-        // 2. Atualiza a Mensalidade (Módulo Acadêmico)
         m.setValorJurosMulta(multa + juros);
         m.setStatusPagamento(StatusPagamento.PAGO);
         m.setDataPagamento(LocalDate.now());
         mensalidadeRepo.editar(m);
 
-        // 3. INTEGRAÇÃO: Gera a Receita no Fluxo de Caixa (Módulo Financeiro Geral)
         criarTransacaoReceita(m, valorFinalPago);
 
         JOptionPane.showMessageDialog(view, "Pagamento baixado e Receita registrada no caixa!");
         listarMensalidades();
     }
 
-    // --- RF032: APLICAR DESCONTO ---
     private void aplicarDesconto() {
         int row = view.getTabela().getSelectedRow();
         if (row == -1) {
@@ -252,7 +232,6 @@ public class MensalidadesController {
         }
     }
 
-    // --- RF029: SIMULAR BOLETO ---
     private void simularBoleto() {
         int row = view.getTabela().getSelectedRow();
         if (row == -1) {
@@ -262,7 +241,6 @@ public class MensalidadesController {
         int id = (int) view.getTabela().getValueAt(row, 0);
         Mensalidade m = mensalidadeRepo.buscarPorId(id).orElseThrow();
 
-        // Dados do Aluno para o boleto
         Matricula mat = matriculaRepo.buscarPorId(m.getMatriculaId()).orElse(new Matricula());
         Optional<Aluno> alunoOpt = alunoRepo.buscarPorPessoaId(mat.getAlunoPessoaId());
         String nomeAluno = "Desconhecido";
@@ -270,7 +248,6 @@ public class MensalidadesController {
             nomeAluno = pessoaRepo.buscarPorId(alunoOpt.get().getPessoaId()).get().getNomeCompleto();
         }
 
-        // Gera visualização HTML simples em um Dialog
         double valorCobrado = (m.getValorTotal() - m.getValorDesconto()) + m.getValorJurosMulta();
 
         String html = String.format("<html>" +
@@ -290,7 +267,6 @@ public class MensalidadesController {
         JOptionPane.showMessageDialog(view, new JLabel(html), "Visualização de Boleto", JOptionPane.PLAIN_MESSAGE);
     }
 
-    // --- RF028: GERAR PARA TURMA ---
     private void gerarParaTurma() {
         int turmaId = view.getTurmaSelecionadaId();
         if (turmaId == 0) {
@@ -313,9 +289,7 @@ public class MensalidadesController {
             int geradasAluno = gerarMensalidadesAno(mat.getId(), valor, 2025);
             totalGerado += geradasAluno;
 
-            // Busca nome para logar
             String nome = "Matricula " + mat.getNumeroMatricula();
-            // (Opcional: buscar nome no PessoaRepo para ficar bonito o log)
 
             view.appendLog("> " + nome + ": " + geradasAluno + " mensalidades geradas.");
         }
@@ -329,7 +303,7 @@ public class MensalidadesController {
                 Mensalidade m = new Mensalidade();
                 m.setMatriculaId(matriculaId);
                 m.setValorTotal(valor);
-                m.setValorDesconto(0); // RF032: Poderia buscar desconto do cadastro do aluno aqui
+                m.setValorDesconto(0);
                 m.setValorJurosMulta(0);
                 m.setDataVencimento(LocalDate.of(ano, mes, 10));
                 m.setStatusPagamento(StatusPagamento.PENDENTE);
@@ -353,17 +327,14 @@ public class MensalidadesController {
         }
     }
 
-    // --- RF033 e RF034: RELATÓRIOS ---
     private void gerarRelatorioInadimplentes() {
         view.getModelRelatorio().setRowCount(0);
         List<Mensalidade> todas = mensalidadeRepo.listarTodos();
 
         for (Mensalidade m : todas) {
-            // Verifica atraso
             if (m.getStatusPagamento() == StatusPagamento.PENDENTE && m.getDataVencimento().isBefore(LocalDate.now())) {
                 adicionarLinhaRelatorio(m, "ATRASADO");
             }
-            // Se já está marcado como ATRASADO no banco
             else if (m.getStatusPagamento() == StatusPagamento.ATRASADO) {
                 adicionarLinhaRelatorio(m, "ATRASADO");
             }
@@ -385,7 +356,6 @@ public class MensalidadesController {
     }
 
     private void adicionarLinhaRelatorio(Mensalidade m, String statusCustom) {
-        // Precisa recuperar o nome do aluno via Matricula -> Aluno -> Pessoa
         Matricula mat = matriculaRepo.buscarPorId(m.getMatriculaId()).orElse(new Matricula());
         Optional<Aluno> aluno = alunoRepo.buscarPorPessoaId(mat.getAlunoPessoaId());
         String nome = "Desconhecido";
@@ -405,6 +375,6 @@ public class MensalidadesController {
     private Optional<Matricula> buscarMatriculaAtiva(int pessoaId) {
         return matriculaRepo.listarTodos().stream()
                 .filter(m -> m.getAlunoPessoaId() == pessoaId)
-                .findFirst(); // Pegar Status ATIVA idealmente
+                .findFirst();
     }
 }

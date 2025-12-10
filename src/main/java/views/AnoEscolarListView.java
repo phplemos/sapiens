@@ -6,18 +6,17 @@ import java.awt.*;
 
 public class AnoEscolarListView extends JDialog {
 
-    private JTable tabela;
-    private DefaultTableModel tableModel;
-    private JButton btnNovo, btnEditar, btnExcluir;
+    private final JTable tabela;
+    private final DefaultTableModel tableModel;
+    private final JButton btnNovo, btnEditar, btnExcluir;
 
-    public AnoEscolarListView() {
+    public AnoEscolarListView(Window parent) {
+        super(parent,ModalityType.APPLICATION_MODAL);
         setTitle("Configuração - Anos Escolares");
         setSize(500, 400);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
-        // Tabela
         String[] colunas = {"ID", "Ano", "Status"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
@@ -40,7 +39,6 @@ public class AnoEscolarListView extends JDialog {
         add(painelBotoes, BorderLayout.SOUTH);
     }
 
-    // Getters
     public JTable getTabela() { return tabela; }
     public DefaultTableModel getTableModel() { return tableModel; }
     public JButton getBtnNovo() { return btnNovo; }

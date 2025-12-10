@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class PeriodoLetivo {
     private int id;
     private int anoEscolarId;
-    private String nome; // Ex: "1º Bimestre"
+    private String nome;
     private LocalDate dataInicio;
     private LocalDate dataFim;
 

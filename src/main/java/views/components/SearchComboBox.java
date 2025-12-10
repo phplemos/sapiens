@@ -18,10 +18,8 @@ public class SearchComboBox {
                     return;
                 }
 
-                // Pega o texto atual
                 String text = textEditor.getText();
 
-                // Filtra a lista original (Case insensitive)
                 List<ComboItem> filteredItems = new ArrayList<>();
                 for (ComboItem item : items) {
                     if (item.getLabel().toLowerCase().contains(text.toLowerCase())) {
@@ -29,15 +27,12 @@ public class SearchComboBox {
                     }
                 }
 
-                // Atualiza o Model na Thread da UI para evitar erros
                 SwingUtilities.invokeLater(() -> {
                     DefaultComboBoxModel<ComboItem> newModel = new DefaultComboBoxModel<>(filteredItems.toArray(new ComboItem[0]));
                     comboBox.setModel(newModel);
 
-                    // Restaura o texto que o usuário digitou
                     textEditor.setText(text);
 
-                    // Se houver itens, abre o popup. Se não, fecha.
                     if (filteredItems.size() > 0) {
                         comboBox.showPopup();
                     } else {

@@ -6,18 +6,17 @@ import java.awt.*;
 
 public class MatriculaListView extends JDialog {
 
-    private JTable tabela;
-    private DefaultTableModel tableModel;
-    private JButton btnNovaMatricula, btnExcluir;
+    private final JTable tabela;
+    private final DefaultTableModel tableModel;
+    private final JButton btnNovaMatricula, btnExcluir;
 
-    public MatriculaListView() {
+    public MatriculaListView(Window parent) {
+        super(parent, ModalityType.APPLICATION_MODAL);
         setTitle("Gestão de Matrículas");
         setSize(800, 500);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
-        // Colunas: ID, Aluno, Turma, Data, Número Matrícula
         String[] colunas = {"ID", "Aluno", "Turma", "Data", "Nº Matrícula"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
@@ -35,7 +34,6 @@ public class MatriculaListView extends JDialog {
         add(painelBotoes, BorderLayout.SOUTH);
     }
 
-    // Getters
     public JTable getTabela() { return tabela; }
     public DefaultTableModel getTableModel() { return tableModel; }
     public JButton getBtnNovaMatricula() { return btnNovaMatricula; }

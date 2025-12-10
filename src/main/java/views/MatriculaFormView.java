@@ -7,14 +7,13 @@ import java.awt.*;
 
 public class MatriculaFormView extends JDialog {
 
-    private JComboBox<ComboItem> cbAluno;
-    private JComboBox<ComboItem> cbTurma;
-    private JButton btnSalvar, btnCancelar;
+    private final JComboBox<ComboItem> cbAluno;
+    private final JComboBox<ComboItem> cbTurma;
+    private final JButton btnSalvar, btnCancelar;
 
-    public MatriculaFormView(JDialog parent) {
-        super(parent, "Realizar Matrícula", ModalityType.APPLICATION_MODAL);
+    public MatriculaFormView(Window parent) {
+        super(parent, Dialog.ModalityType.APPLICATION_MODAL);
         setSize(400, 250);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
@@ -38,14 +37,11 @@ public class MatriculaFormView extends JDialog {
         add(painelBotoes, BorderLayout.SOUTH);
     }
 
-    // Métodos para Aluno
     public void adicionarAluno(ComboItem item) { cbAluno.addItem(item); }
     public int getAlunoSelecionadoId() {
         ComboItem item = (ComboItem) cbAluno.getSelectedItem();
         return (item != null) ? item.getId() : 0;
     }
-
-    // Métodos para Turma
     public void adicionarTurma(ComboItem item) { cbTurma.addItem(item); }
     public int getTurmaSelecionadaId() {
         ComboItem item = (ComboItem) cbTurma.getSelectedItem();

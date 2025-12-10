@@ -6,17 +6,16 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class PeriodoLetivoFormView extends JDialog {
-    private JTextField txtNome;
-    private JComboBox<ComboItem> cbAnoEscolar; // Dropdown de Anos
-    private JTextField txtDataInicio;
-    private JTextField txtDataFim;
-    private JButton btnSalvar, btnCancelar;
+    private final JTextField txtNome;
+    private final JComboBox<ComboItem> cbAnoEscolar;
+    private final JTextField txtDataInicio;
+    private final JTextField txtDataFim;
+    private final JButton btnSalvar, btnCancelar;
     private int idParaEdicao = 0;
 
-    public PeriodoLetivoFormView(JDialog parent) {
-        super(parent, "Período Letivo", ModalityType.APPLICATION_MODAL);
+    public PeriodoLetivoFormView(Window parent) {
+        super(parent, ModalityType.APPLICATION_MODAL);
         setSize(400, 350);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
@@ -48,7 +47,6 @@ public class PeriodoLetivoFormView extends JDialog {
         add(painelBotoes, BorderLayout.SOUTH);
     }
 
-    // Getters e Setters
     public String getNome() { return txtNome.getText(); }
     public void setNome(String s) { txtNome.setText(s); }
 
@@ -64,7 +62,6 @@ public class PeriodoLetivoFormView extends JDialog {
     public JButton getBtnSalvar() { return btnSalvar; }
     public JButton getBtnCancelar() { return btnCancelar; }
 
-    // Métodos do Combo
     public void adicionarAnoCombo(ComboItem item) { cbAnoEscolar.addItem(item); }
     public int getAnoSelecionadoId() {
         ComboItem item = (ComboItem) cbAnoEscolar.getSelectedItem();

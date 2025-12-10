@@ -10,14 +10,13 @@ public class TurmaListView extends JDialog {
     private final DefaultTableModel tableModel;
     private final JButton btnNovo, btnEditar, btnExcluir, btnDisciplinas;
 
-    public TurmaListView() {
+    public TurmaListView(Window parent) {
+        super(parent, Dialog.ModalityType.APPLICATION_MODAL);
         setTitle("Gestão de Turmas");
         setSize(700, 500);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
-        // Colunas: ID, Nome (Turma A), Turno, Série, Ano
         String[] colunas = {"ID", "Nome", "Turno", "Série", "Ano Letivo"};
 
         tableModel = new DefaultTableModel(colunas, 0) {
@@ -28,7 +27,6 @@ public class TurmaListView extends JDialog {
         tabela = new JTable(tableModel);
         tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // Ajuste de largura das colunas
         tabela.getColumnModel().getColumn(0).setPreferredWidth(50); // ID
         tabela.getColumnModel().getColumn(1).setPreferredWidth(150); // Nome
 

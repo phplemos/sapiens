@@ -12,6 +12,7 @@ public class DashboardAdminView extends JFrame {
     public JButton btnDisciplinas = new JButton("📚 Disciplinas");
     public JButton btnMatriculas = new JButton("📝 Matrículas");
     public JButton btnNotas = new JButton("📊 Notas");
+    public JButton btnNotificacao = new JButton("Notificacoes");
     public JButton btnFinanceiro = new JButton("💰 Financeiro");
     public JButton btnResponsavel = new JButton("Responsaveis");
     public JButton btnConfig = new JButton("⚙️ Configurações");
@@ -43,7 +44,6 @@ public class DashboardAdminView extends JFrame {
         painelTopo.add(lblUsuarioLogado, BorderLayout.EAST);
         add(painelTopo, BorderLayout.NORTH);
 
-        // Centro (Grid de Botões)
         JPanel painelGrid = new JPanel(new GridLayout(2, 4, 20, 20));
         painelGrid.setBorder(new EmptyBorder(30, 30, 30, 30));
 
@@ -58,6 +58,7 @@ public class DashboardAdminView extends JFrame {
         configurarBotao(btnPerfil);
         configurarBotao(btnSair);
         configurarBotao(btnResponsavel);
+        configurarBotao(btnNotas);
 
         painelGrid.add(btnAlunos);
         painelGrid.add(btnResponsavel);
@@ -69,6 +70,7 @@ public class DashboardAdminView extends JFrame {
         painelGrid.add(btnFinanceiro);
         painelGrid.add(btnConfig);
         painelGrid.add(btnPerfil);
+        painelGrid.add(btnNotificacao);
         painelGrid.add(btnSair);
 
         add(painelGrid, BorderLayout.CENTER);

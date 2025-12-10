@@ -22,8 +22,7 @@ public class AlunoHistoricoView extends JDialog {
         setSize(900, 600);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        // --- 1. PAINEL DE PERFIL (Topo) ---
+
         JPanel painelPerfil = new JPanel(new GridLayout(3, 2, 10, 5));
         painelPerfil.setBorder(new TitledBorder("Dados do Perfil"));
         painelPerfil.setBackground(new Color(245, 245, 245)); // Cinza claro
@@ -44,8 +43,7 @@ public class AlunoHistoricoView extends JDialog {
 
         add(painelPerfil, BorderLayout.NORTH);
 
-        // --- 2. PAINEL DE HISTÓRICO (Centro) ---
-        // Colunas: Ano Letivo | Turma | Disciplina | Período (Bimestre) | Nota | Faltas
+
         String[] colunas = {"Ano", "Turma", "Disciplina", "Período", "Nota", "Faltas"};
 
         tableModel = new DefaultTableModel(colunas, 0) {
@@ -62,14 +60,12 @@ public class AlunoHistoricoView extends JDialog {
 
         add(scroll, BorderLayout.CENTER);
 
-        // --- 3. RODAPÉ ---
         JPanel painelSul = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnFechar = new JButton("Fechar");
         painelSul.add(btnFechar);
         add(painelSul, BorderLayout.SOUTH);
     }
 
-    // Setters para preencher os dados
     public void setDadosPerfil(String nome, String cpf, String email, String tel, String end) {
         lblNome.setText("Nome: " + nome);
         lblCpf.setText("CPF: " + cpf);

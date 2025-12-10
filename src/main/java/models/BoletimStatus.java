@@ -8,7 +8,6 @@ public class BoletimStatus {
 
     public BoletimStatus() {}
 
-    // Getters e Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public int getTurmaId() { return turmaId; }

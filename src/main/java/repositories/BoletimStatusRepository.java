@@ -19,13 +19,11 @@ public class BoletimStatusRepository extends BaseRepository<BoletimStatus> {
         if (existente.isPresent()) {
             BoletimStatus b = existente.get();
             b.setPublicado(status);
-            editar(b); // Método genérico do BaseRepository (precisa implementar editar lá ou aqui)
-            // Se o Base não tiver editar genérico, implemente:
+            editar(b);
             this.cache.removeIf(item -> item.getId() == b.getId());
             this.cache.add(b);
             salvarNoArquivo();
         } else {
-            // Cria novo
             BoletimStatus b = new BoletimStatus();
             b.setId(gerarProximoId(BoletimStatus::getId));
             b.setTurmaId(turmaId);
@@ -50,6 +48,6 @@ public class BoletimStatusRepository extends BaseRepository<BoletimStatus> {
     public boolean isPublicado(int turmaId, int periodoId) {
         return buscarPorTurmaEPeriodo(turmaId, periodoId)
                 .map(BoletimStatus::isPublicado)
-                .orElse(false); // Se não achar registro, assume NÃO publicado
+                .orElse(false);
     }
 }

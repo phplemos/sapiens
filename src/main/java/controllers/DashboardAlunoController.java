@@ -38,14 +38,14 @@ public class DashboardAlunoController {
 
         // 3. Perfil
         dashboardView.btnPerfil.addActionListener(e -> {
-            UsuarioPerfilView usuarioPerfilView = new UsuarioPerfilView();
+            UsuarioPerfilView usuarioPerfilView = new UsuarioPerfilView(dashboardView);
             new UsuarioPerfilController(usuarioPerfilView, usuario);
             usuarioPerfilView.setVisible(true);
         });
 
         // Notificações
         dashboardView.btnNotificacao.addActionListener(e -> {
-            ComunicadoView comunicadoView = new ComunicadoView();
+            ComunicadoView comunicadoView = new ComunicadoView(dashboardView);
             new ComunicadoController(comunicadoView, usuario); // Passa o usuário logado!
             comunicadoView.setVisible(true);
         });

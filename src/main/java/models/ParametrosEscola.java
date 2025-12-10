@@ -8,14 +8,12 @@ public class ParametrosEscola {
     private String nomeInstituicao;
 
     public ParametrosEscola() {
-        // Valores Padrão (caso seja criado pela primeira vez)
         this.mediaAprovacao = 7.0;
-        this.mediaRecuperacao = 4.0; // Abaixo disso reprova direto
-        this.limiteFaltas = 25; // % ou quantidade absoluta
+        this.mediaRecuperacao = 4.0;
+        this.limiteFaltas = 25;
         this.nomeInstituicao = "Escola Sapiens";
     }
 
-    // Getters e Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public double getMediaAprovacao() { return mediaAprovacao; }

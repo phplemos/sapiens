@@ -5,18 +5,17 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class PeriodoLetivoListView extends JDialog {
-    private JTable tabela;
-    private DefaultTableModel tableModel;
-    private JButton btnNovo, btnEditar, btnExcluir;
+    private final JTable tabela;
+    private final DefaultTableModel tableModel;
+    private final JButton btnNovo, btnEditar, btnExcluir;
 
-    public PeriodoLetivoListView() {
+    public PeriodoLetivoListView(Window parent) {
+        super(parent, ModalityType.APPLICATION_MODAL);
         setTitle("Configuração - Períodos Letivos");
         setSize(600, 450);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
-        // Colunas: ID, Nome, Ano (ID), Datas
         String[] colunas = {"ID", "Nome", "Ano (ID)", "Início", "Fim"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override public boolean isCellEditable(int row, int col) { return false; }
@@ -35,7 +34,6 @@ public class PeriodoLetivoListView extends JDialog {
         add(painelBotoes, BorderLayout.SOUTH);
     }
 
-    // Getters padrão
     public JTable getTabela() { return tabela; }
     public DefaultTableModel getTableModel() { return tableModel; }
     public JButton getBtnNovo() { return btnNovo; }

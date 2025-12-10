@@ -5,19 +5,15 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class UsuarioPerfilView extends JFrame {
+public class UsuarioPerfilView extends JDialog {
 
-    // --- Parte Fixa: Dados Pessoais ---
-    private JLabel lblNome, lblCpf, lblEmail, lblTelefone;
-    private JLabel lblTipoUsuario; // "Aluno", "Professor" ou "Admin"
+    private final JLabel lblNome, lblCpf, lblEmail, lblTelefone;
+    private final JLabel lblTipoUsuario;
 
-    // --- Parte Dinâmica: Painel Acadêmico ---
-    private JPanel painelAcademico;
+    private final JPanel painelAcademico;
 
-    // Componentes para ALUNO (Exibe apenas um label com a turma)
     private JLabel lblTurmaAtual;
 
-    // Componentes para PROFESSOR (Exibe tabela de turmas)
     private JTable tabelaTurmasProf;
     private DefaultTableModel modelTurmasProf;
 
@@ -25,19 +21,22 @@ public class UsuarioPerfilView extends JFrame {
     private DefaultTableModel modelDisciplinasAluno;
     private JButton btnVerConteudo;
 
-    private JButton btnSair;
+    private JTable tabelaFilhosResponsavel;
+    private DefaultTableModel modelFilhosResponsavel;
 
-    public UsuarioPerfilView() {
+    private final JButton btnSair;
+    private JButton btnAlterarSenha;
+
+    public UsuarioPerfilView(Window parent) {
+        super(parent, ModalityType.APPLICATION_MODAL);
         setTitle("Meu Perfil - Sapiens");
-        setSize(600, 500);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Fecha o app ao sair daqui
-        setLocationRelativeTo(null);
+        setSize(700, 600);
+        setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
-        // --- 1. CABEÇALHO (Dados Pessoais) ---
-        JPanel painelDados = new JPanel(new GridLayout(5, 1, 5, 5));
+        JPanel painelDados = new JPanel(new GridLayout(6, 1, 5, 5));
         painelDados.setBorder(new TitledBorder("Meus Dados"));
-        painelDados.setBackground(new Color(245, 245, 250)); // Cor suave
+        painelDados.setBackground(new Color(245, 245, 250));
 
         lblTipoUsuario = new JLabel("Tipo: -");
         lblTipoUsuario.setForeground(Color.BLUE);
@@ -52,33 +51,44 @@ public class UsuarioPerfilView extends JFrame {
         painelDados.add(lblCpf);
         painelDados.add(lblEmail);
         painelDados.add(lblTelefone);
+        JPanel pSenha = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pSenha.setOpaque(false);
+        btnAlterarSenha = new JButton("🔒 Alterar Minha Senha");
+        pSenha.add(btnAlterarSenha);
+        painelDados.add(pSenha);
 
         add(painelDados, BorderLayout.NORTH);
 
-        // --- 2. CENTRO (Dados Acadêmicos - Variavel) ---
         painelAcademico = new JPanel(new BorderLayout());
-        painelAcademico.setBorder(new TitledBorder("Informações Acadêmicas"));
-
-        // Inicialmente vazio, o Controller vai preencher
+        painelAcademico.setBorder(new TitledBorder("Informações do Perfil"));
         add(painelAcademico, BorderLayout.CENTER);
 
-        // --- 3. RODAPÉ ---
+
         JPanel painelSul = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        btnSair = new JButton("Sair do Sistema");
+        btnSair = new JButton("Fechar Janela");
         painelSul.add(btnSair);
         add(painelSul, BorderLayout.SOUTH);
     }
+    public void configurarLayoutResponsavel() {
+        painelAcademico.removeAll();
+        painelAcademico.setBorder(new TitledBorder("Meus Dependentes (Filhos)"));
 
-    // --- MÉTODOS DE CONFIGURAÇÃO DE LAYOUT ---
+        String[] colunas = {"Nome do Aluno", "Matrícula", "Turma Atual"};
+        modelFilhosResponsavel = new DefaultTableModel(colunas, 0) {
+            @Override public boolean isCellEditable(int r, int c) { return false; }
+        };
+        tabelaFilhosResponsavel = new JTable(modelFilhosResponsavel);
+        tabelaFilhosResponsavel.setRowHeight(25);
 
-    /**
-     * Prepara a tela para exibir informações de ALUNO (Turma Atual)
-     */
+        painelAcademico.add(new JScrollPane(tabelaFilhosResponsavel), BorderLayout.CENTER);
+
+        painelAcademico.revalidate();
+        painelAcademico.repaint();
+    }
     public void configurarLayoutAluno() {
         painelAcademico.removeAll();
         painelAcademico.setLayout(new BorderLayout(5, 5));
 
-        // 1. Topo: Nome da Turma
         JPanel pTopo = new JPanel(new FlowLayout(FlowLayout.LEFT));
         lblTurmaAtual = new JLabel("Minha Turma: Buscando...");
         lblTurmaAtual.setFont(new Font("Arial", Font.BOLD, 16));
@@ -87,7 +97,6 @@ public class UsuarioPerfilView extends JFrame {
 
         painelAcademico.add(pTopo, BorderLayout.NORTH);
 
-        // 2. Centro: Tabela de Disciplinas
         String[] colunas = {"ID_Disc", "Disciplina", "Carga Horária"};
         modelDisciplinasAluno = new DefaultTableModel(colunas, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
@@ -95,13 +104,11 @@ public class UsuarioPerfilView extends JFrame {
         tabelaDisciplinasAluno = new JTable(modelDisciplinasAluno);
         tabelaDisciplinasAluno.setRowHeight(25);
 
-        // Esconde a coluna ID
         tabelaDisciplinasAluno.getColumnModel().getColumn(0).setMinWidth(0);
         tabelaDisciplinasAluno.getColumnModel().getColumn(0).setMaxWidth(0);
 
         painelAcademico.add(new JScrollPane(tabelaDisciplinasAluno), BorderLayout.CENTER);
 
-        // 3. Sul: Botão de Ação
         JPanel pSul = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnVerConteudo = new JButton("📖 Ver Conteúdo Programático (RF027)");
         pSul.add(btnVerConteudo);
@@ -111,9 +118,7 @@ public class UsuarioPerfilView extends JFrame {
         painelAcademico.revalidate();
         painelAcademico.repaint();
     }
-    /**
-     * Prepara a tela para exibir informações de PROFESSOR (Tabela de Aulas)
-     */
+
     public void configurarLayoutProfessor() {
         painelAcademico.removeAll();
 
@@ -130,20 +135,19 @@ public class UsuarioPerfilView extends JFrame {
         painelAcademico.repaint();
     }
 
-    /**
-     * Prepara a tela para ADMIN (Apenas mensagem)
-     */
     public void configurarLayoutAdmin() {
         painelAcademico.removeAll();
         JLabel lbl = new JLabel("Administradores têm acesso total pelo Dashboard.", SwingConstants.CENTER);
         painelAcademico.add(lbl, BorderLayout.CENTER);
         painelAcademico.revalidate();
     }
+    public DefaultTableModel getModelFilhosResponsavel() { return modelFilhosResponsavel; }
+    public JButton getBtnAlterarSenha() { return btnAlterarSenha; }
 
     public JTable getTabelaDisciplinasAluno() { return tabelaDisciplinasAluno; }
     public DefaultTableModel getModelDisciplinasAluno() { return modelDisciplinasAluno; }
     public JButton getBtnVerConteudo() { return btnVerConteudo; }
-    // --- SETTERS ---
+
     public void setDadosPessoais(String tipo, String nome, String cpf, String email, String tel) {
         lblTipoUsuario.setText("Perfil: " + tipo);
         lblNome.setText("Nome: " + nome);

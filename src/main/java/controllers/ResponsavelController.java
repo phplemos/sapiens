@@ -1,10 +1,7 @@
 package controllers;
 
 import enums.TipoPerfilUsuario;
-import models.Endereco;
-import models.Pessoa;
-import models.Responsavel;
-import models.Usuario;
+import models.*;
 import repositories.EnderecoRepository;
 import repositories.PessoaRepository;
 import repositories.ResponsavelRepository;
@@ -26,27 +23,25 @@ public class ResponsavelController {
     private final EnderecoRepository enderecoRepo;
     private final UsuarioRepository usuarioRepo;
     private final ResponsavelListView listView;
-    private final ResponsavelFormView formView; // O formulário de popup
+    private final ResponsavelFormView formView;
+    private boolean isEditForm = false;
 
-    public ResponsavelController(ResponsavelListView listView) {
+    public ResponsavelController(ResponsavelListView responsavelListView) {
         this.responsavelRepo = new ResponsavelRepository();
         this.pessoaRepo = new PessoaRepository();
         this.enderecoRepo = new EnderecoRepository();
         this.usuarioRepo = new UsuarioRepository();
-
-        this.listView = listView;
+        this.listView = responsavelListView;
         this.formView = new ResponsavelFormView(listView);
-
         initController();
     }
 
-    /**
-     * Ponto de entrada do Controller.
-     * Carrega os dados iniciais e configura os eventos (cliques de botão).
-     */
     private void initController() {
-        atualizarTabela();
 
+        atualizarTabela("");
+        this.listView.getBtnBuscar().addActionListener(e -> {
+            atualizarTabela(listView.getTxtBusca().getText());
+        });
         this.listView.getBtnNovo().addActionListener(e -> {
             abrirFormularioNovoResponsavel();
         });
@@ -60,7 +55,15 @@ public class ResponsavelController {
         });
 
         this.formView.getBtnSalvar().addActionListener(e -> {
-            salvarResponsavel();
+            boolean isValid = this.formView.validateForm(this.isEditForm);
+            if (isValid) {
+                if(isEditForm){
+                    atualizarResponsavel();
+                    this.isEditForm = false;
+                    return;
+                }
+                salvarResponsavel();
+            }
         });
 
         this.formView.getBtnCancelar().addActionListener(e -> {
@@ -68,9 +71,7 @@ public class ResponsavelController {
         });
     }
 
-    private void atualizarTabela() {
-        System.out.println("Atualizando tabela de professores...");
-
+    private void atualizarTabela(String searchParam) {
         DefaultTableModel tableModel = this.listView.getTableModel();
 
         tableModel.setRowCount(0);
@@ -87,6 +88,12 @@ public class ResponsavelController {
                         pessoa.getCpf(),
                         pessoa.getEmailContato()
                 };
+                if(!searchParam.isEmpty()){
+                    if(pessoa.getNomeCompleto().toLowerCase().contains(searchParam.toLowerCase())|| pessoa.getCpf().trim().contains(searchParam.trim())){
+                        tableModel.addRow(rowData);
+                    }
+                    continue;
+                }
 
                 tableModel.addRow(rowData);
             }
@@ -95,22 +102,18 @@ public class ResponsavelController {
 
 
     private void abrirFormularioNovoResponsavel() {
-        System.out.println("Botão NOVO clicado");
         formView.limparFormulario();
         formView.setTitle("Novo Responsavel");
         formView.setVisible(true);
     }
 
     private void abrirFormularioEditarResponsavel() {
-        System.out.println("Botão EDITAR clicado");
+        this.isEditForm = true;
         int selectedRow = this.listView.getTabelaResponsaveis().getSelectedRow();
 
         if (!this.isLinhaSelecionada(selectedRow)) return;
 
         int pessoaId = (Integer) this.listView.getTableModel().getValueAt(selectedRow, 0);
-
-        System.out.println("ID selecionado: " + pessoaId);
-
 
         Pessoa pessoa = this.pessoaRepo.buscarPorId(pessoaId).orElse(null);
 
@@ -129,12 +132,12 @@ public class ResponsavelController {
             return;
         }
 
-        this.formView.limparFormulario(); // Limpa antes de preencher
-        this.formView.setPessoaIdParaEdicao(pessoaId); // Salva o ID para o 'salvar'
+        this.formView.limparFormulario();
+        this.formView.setPessoaIdParaEdicao(pessoaId);
 
         this.formView.setNome(pessoa.getNomeCompleto());
         this.formView.setCpf(pessoa.getCpf());
-        this.formView.setDataNasc(pessoa.getDataNascimento().toString()); // Converte LocalDate para String
+        this.formView.setDataNasc(pessoa.getDataNascimento().toString());
         this.formView.setRg(pessoa.getRg());
         this.formView.setTelefone(pessoa.getTelefone());
         this.formView.setEmail(pessoa.getEmailContato());
@@ -147,14 +150,12 @@ public class ResponsavelController {
         this.formView.setEstado(endereco.getEstado());
 
         this.formView.setTitle("Editando Responsavel: " + pessoa.getNomeCompleto());
-        this.formView.setVisible(true); // Abre o popup
+        this.formView.setVisible(true);
     }
 
     private void excluirResponsavel() {
         int selectedRow = this.listView.getTabelaResponsaveis().getSelectedRow();
         int pessoaId = (Integer) this.listView.getTableModel().getValueAt(selectedRow, 0);
-
-        System.out.println("ID selecionado: " + pessoaId);
 
         if(!this.isLinhaSelecionada(selectedRow)){
             JOptionPane.showMessageDialog(
@@ -172,12 +173,10 @@ public class ResponsavelController {
             this.responsavelRepo.excluir(pessoaId);
             formView.dispose();
         }
-        atualizarTabela();
+        atualizarTabela("");
     }
 
     private void salvarResponsavel() {
-        System.out.println("Botão SALVAR (do form) clicado");
-
         Endereco newEndereco = new Endereco();
         newEndereco.setCep(formView.getCep());
         newEndereco.setLogradouro(formView.getLogradouro());
@@ -213,7 +212,43 @@ public class ResponsavelController {
         }
 
         formView.dispose();
-        atualizarTabela();
+        atualizarTabela("");
+    }
+
+    private void atualizarResponsavel() {
+        Optional<Pessoa> dadosPessoa = this.pessoaRepo.buscarPorId(this.formView.getPessoaIdParaEdicao());
+        Optional<Responsavel> dadosResponsavel = this.responsavelRepo.buscarPorPessoaId(this.formView.getPessoaIdParaEdicao());
+        if(dadosResponsavel.isEmpty() || dadosPessoa.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Problema ao buscar Respoonsavel, verifique se preencheu corretamente");
+            return;
+        }
+
+        Pessoa pessoa = dadosPessoa.get();
+        Optional<Endereco> endereco = this.enderecoRepo.buscarPorId(pessoa.getEnderecoId());
+        if(endereco.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar o endereço anterior");
+            return;
+        }
+
+        Endereco enderecoAtualizado = endereco.get();
+        enderecoAtualizado.setCep(formView.getCep());
+        enderecoAtualizado.setLogradouro(formView.getLogradouro());
+        enderecoAtualizado.setNumero(formView.getNumero());
+        enderecoAtualizado.setBairro(formView.getBairro());
+        enderecoAtualizado.setCidade(formView.getCidade());
+        enderecoAtualizado.setEstado(formView.getEstado());
+        this.enderecoRepo.editar(enderecoAtualizado);
+
+        pessoa.setCpf(formView.getCpf());
+        pessoa.setDataNascimento(LocalDate.parse(formView.getDataNasc()));
+        pessoa.setRg(formView.getRg());
+        pessoa.setNomeCompleto(formView.getNome());
+        pessoa.setEmailContato(formView.getEmail());
+        pessoa.setTelefone(formView.getTelefone());
+        this.pessoaRepo.editar(pessoa);
+
+        formView.dispose();
+        atualizarTabela("");
     }
 
     private boolean isLinhaSelecionada(int selectedRow) {

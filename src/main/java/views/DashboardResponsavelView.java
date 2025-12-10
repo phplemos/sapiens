@@ -6,7 +6,6 @@ import java.awt.*;
 
 public class DashboardResponsavelView extends JFrame {
 
-    // Botões específicos para o Responsável
     public JButton btnFinanceiro = new JButton("💰 Financeiro");
     public JButton btnBoletimFilhos = new JButton("📊 Boletim dos Filhos");
     public JButton btnNotificacao = new JButton("🔔 Notificações");
@@ -22,7 +21,6 @@ public class DashboardResponsavelView extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // --- Topo (Cabeçalho) ---
         JPanel painelTopo = new JPanel(new BorderLayout());
         painelTopo.setBackground(new Color(60, 60, 60)); // Mesmo tom do Aluno para consistência
         painelTopo.setBorder(new EmptyBorder(15, 20, 15, 20));
@@ -38,8 +36,7 @@ public class DashboardResponsavelView extends JFrame {
         painelTopo.add(lblUsuarioLogado, BorderLayout.EAST);
         add(painelTopo, BorderLayout.NORTH);
 
-        // --- Centro (Grid de Botões) ---
-        // Ajustei para 2 linhas e 3 colunas para acomodar os botões centralizados
+
         JPanel painelGrid = new JPanel(new GridLayout(2, 3, 20, 20));
         painelGrid.setBorder(new EmptyBorder(40, 40, 40, 40));
 
@@ -49,7 +46,6 @@ public class DashboardResponsavelView extends JFrame {
         configurarBotao(btnPerfil);
         configurarBotao(btnSair);
 
-        // Adicionando na ordem lógica
         painelGrid.add(btnBoletimFilhos); // Foco acadêmico
         painelGrid.add(btnFinanceiro);    // Foco financeiro
         painelGrid.add(btnNotificacao);   // Comunicação

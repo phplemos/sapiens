@@ -47,7 +47,6 @@ public class PeriodoLetivoRepository extends BaseRepository<PeriodoLetivo> {
     public List<PeriodoLetivo> buscarPorAnoEscolarId(int anoEscolarId) {
         return this.cache.stream()
                 .filter(p -> p.getAnoEscolarId() == anoEscolarId)
-                // É crucial ordenar, senão as colunas podem aparecer fora de ordem (ex: 4º Bim antes do 1º)
                 .sorted(Comparator.comparing(PeriodoLetivo::getDataInicio))
                 .collect(Collectors.toList());
     }

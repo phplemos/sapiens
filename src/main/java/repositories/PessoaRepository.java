@@ -18,8 +18,7 @@ public class PessoaRepository extends BaseRepository<Pessoa> {
         pessoa.setId(novoId);
         this.cache.add(pessoa);
         salvarNoArquivo();
-
-        return pessoa; // Retorna a pessoa com o ID atribuído
+        return pessoa;
     }
 
     public List<Pessoa> listarTodas() {

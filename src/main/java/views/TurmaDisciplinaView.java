@@ -22,30 +22,25 @@ public class TurmaDisciplinaView extends JDialog {
     private final JLabel lblTituloTurma;
 
     public TurmaDisciplinaView(JDialog parent) {
-        super(parent, "Oferta de Disciplinas", ModalityType.APPLICATION_MODAL);
+        super(parent, ModalityType.APPLICATION_MODAL);
         setSize(700, 500);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
-        // --- 1. Topo: Informações e Formulário de Adição ---
         JPanel painelTopo = new JPanel(new BorderLayout());
         painelTopo.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // Título da Turma
         lblTituloTurma = new JLabel("Turma: Carregando...");
         lblTituloTurma.setFont(new Font("Arial", Font.BOLD, 16));
         lblTituloTurma.setBorder(new EmptyBorder(0, 0, 10, 0));
         painelTopo.add(lblTituloTurma, BorderLayout.NORTH);
 
-        // Painel de Adição (GridBag para alinhar combos e botão)
         JPanel painelForm = new JPanel(new GridBagLayout());
         painelForm.setBorder(new TitledBorder("Adicionar Disciplina à Turma"));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Combo Disciplina
         gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.4;
         painelForm.add(new JLabel("Disciplina:"), gbc);
 
@@ -53,7 +48,6 @@ public class TurmaDisciplinaView extends JDialog {
         cbDisciplina = new JComboBox<>();
         painelForm.add(cbDisciplina, gbc);
 
-        // Combo Professor
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.4;
         painelForm.add(new JLabel("Professor:"), gbc);
 
@@ -61,7 +55,6 @@ public class TurmaDisciplinaView extends JDialog {
         cbProfessor = new JComboBox<>();
         painelForm.add(cbProfessor, gbc);
 
-        // Botão Adicionar
         gbc.gridx = 2; gbc.gridy = 1; gbc.weightx = 0.2; gbc.fill = GridBagConstraints.NONE;
         btnAdicionar = new JButton("Adicionar");
         painelForm.add(btnAdicionar, gbc);
@@ -69,7 +62,6 @@ public class TurmaDisciplinaView extends JDialog {
         painelTopo.add(painelForm, BorderLayout.CENTER);
         add(painelTopo, BorderLayout.NORTH);
 
-        // --- 2. Centro: Tabela de Disciplinas da Turma ---
         String[] colunas = {"ID Vínculo", "Disciplina", "Professor"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override public boolean isCellEditable(int row, int col) { return false; }
@@ -79,14 +71,12 @@ public class TurmaDisciplinaView extends JDialog {
 
         add(new JScrollPane(tabela), BorderLayout.CENTER);
 
-        // --- 3. Sul: Botão Remover ---
         JPanel painelSul = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnRemover = new JButton("Remover Selecionada");
         painelSul.add(btnRemover);
         add(painelSul, BorderLayout.SOUTH);
     }
 
-    // --- Getters e Helpers ---
     public void setTituloTurma(String nome) { lblTituloTurma.setText("Gerenciando: " + nome); }
 
     public void adicionarDisciplinaCombo(ComboItem item) { cbDisciplina.addItem(item); }

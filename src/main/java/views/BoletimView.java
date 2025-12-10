@@ -11,7 +11,7 @@ import java.util.List;
 public class BoletimView extends JDialog {
 
     private final JTable tabelaBoletim;
-    private final DefaultTableModel tableModel; // O modelo será recriado dinamicamente
+    private final DefaultTableModel tableModel;
     private final JLabel lblAlunoInfo;
     private final JLabel lblTurmaInfo;
     private final JButton btnFechar;
@@ -23,7 +23,6 @@ public class BoletimView extends JDialog {
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
 
-        // --- TOPO ---
         JPanel painelTopo = new JPanel(new GridLayout(2, 1));
         painelTopo.setBackground(new Color(245, 245, 245));
         painelTopo.setBorder(new EmptyBorder(10, 20, 10, 20));
@@ -36,8 +35,6 @@ public class BoletimView extends JDialog {
         painelTopo.add(lblTurmaInfo);
         add(painelTopo, BorderLayout.NORTH);
 
-        // --- CENTRO ---
-        // Inicializa modelo vazio, será preenchido pelo Controller
         tableModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -51,35 +48,27 @@ public class BoletimView extends JDialog {
         scroll.setBorder(new TitledBorder("Notas e Frequência"));
         add(scroll, BorderLayout.CENTER);
 
-        // --- RODAPÉ ---
         JPanel painelSul = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnFechar = new JButton("Fechar");
         painelSul.add(btnFechar);
         add(painelSul, BorderLayout.SOUTH);
     }
 
-    // --- NOVO MÉTODO PARA CONFIGURAR COLUNAS ---
     public void configurarTabela(List<String> nomesPeriodos) {
-        // Recria o modelo de colunas
         tableModel.setColumnCount(0);
         tableModel.setRowCount(0);
 
-        // Colunas Fixas Iniciais
         tableModel.addColumn("Disciplina");
 
-        // Colunas Dinâmicas (1º Bim, 2º Bim, etc...)
         for (String nome : nomesPeriodos) {
             tableModel.addColumn(nome);
         }
 
-        // Colunas Fixas Finais
         tableModel.addColumn("Faltas");
         tableModel.addColumn("Situação");
 
-        // Centralizar
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        // Aplica centralização a partir da coluna 1
         for (int i = 1; i < tableModel.getColumnCount(); i++) {
             tabelaBoletim.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }

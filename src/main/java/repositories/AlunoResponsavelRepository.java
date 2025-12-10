@@ -2,7 +2,6 @@ package repositories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import models.AlunoResponsavel;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -6,20 +6,20 @@ import java.awt.*;
 
 public class ProfessorListView extends JDialog {
 
-    private JTable tabelaProfessores;
-    private DefaultTableModel tableModel;
-    private JButton btnNovo;
-    private JButton btnEditar;
-    private JButton btnExcluir;
-    private JButton btnBuscar;
-    private JTextField txtBusca;
+    private final JTable tabelaProfessores;
+    private final DefaultTableModel tableModel;
+    private final JButton btnNovo;
+    private final JButton btnEditar;
+    private final JButton btnExcluir;
+    private final JButton btnBuscar;
+    private final JTextField txtBusca;
 
-    public ProfessorListView() {
-        // --- Configuração básica da Janela ---
+    public ProfessorListView(Window parent) {
+        super(parent, Dialog.ModalityType.APPLICATION_MODAL);
         setTitle("Sapiens - Gestão de Alunos");
         setSize(800, 600);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null); // Centralizar na tela
+        setLocationRelativeTo(parent);
+
         setLayout(new BorderLayout(10, 10));
 
         JPanel painelTopo = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -30,10 +30,8 @@ public class ProfessorListView extends JDialog {
         painelTopo.add(btnBuscar);
         add(painelTopo, BorderLayout.NORTH);
 
-        // --- 1. Tabela (Centro) ---
         String[] colunas = {"ID", "Nome Completo", "CPF", "Email"};
 
-        // O 'tableModel' permite adicionar e remover linhas da tabela dinamicamente
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -43,11 +41,9 @@ public class ProfessorListView extends JDialog {
         tabelaProfessores = new JTable(tableModel);
         tabelaProfessores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Só pode selecionar 1 por vez
 
-        // Adiciona a tabela a um painel com barra de rolagem
         JScrollPane scrollPane = new JScrollPane(tabelaProfessores);
         add(scrollPane, BorderLayout.CENTER);
 
-        // --- 2. Painel de Botões (Sul) ---
         JPanel painelBotoes = new JPanel();
         painelBotoes.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
 
@@ -62,31 +58,20 @@ public class ProfessorListView extends JDialog {
         add(painelBotoes, BorderLayout.SOUTH);
     }
 
-    // --- Métodos de Acesso (para o Controller) ---
-    // O Controller usará estes métodos para adicionar listeners e pegar dados
-
     public JTable getTabelaProfessores() {
         return tabelaProfessores;
     }
-
     public DefaultTableModel getTableModel() {
         return tableModel;
     }
-
-    public JTextField getTxtBusca() {
-        return txtBusca;
-    }
-    public JButton getBtnBuscar() {
-        return btnBuscar;
-    }
+    public JTextField getTxtBusca() { return txtBusca; }
+    public JButton getBtnBuscar() { return btnBuscar; }
     public JButton getBtnNovo() {
         return btnNovo;
     }
-
     public JButton getBtnEditar() {
         return btnEditar;
     }
-
     public JButton getBtnExcluir() {
         return btnExcluir;
     }

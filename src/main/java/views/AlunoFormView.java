@@ -13,41 +13,35 @@ import java.util.Optional;
 public class AlunoFormView extends JDialog {
 
     private final PessoaRepository pessoaRepository;
-    // Campos de Pessoa
-    private JTextField txtNome;
-    private JTextField txtCpf;
-    private JTextField txtDataNasc;
-    private JTextField txtRg;
-    private JTextField txtTelefone;
-    private JTextField txtEmail;
 
-    private JButton btnSalvar;
-    private JButton btnCancelar;
+    private final JTextField txtNome;
+    private final JTextField txtCpf;
+    private final JTextField txtDataNasc;
+    private final JTextField txtRg;
+    private final JTextField txtTelefone;
+    private final JTextField txtEmail;
 
-    // Armazena o ID da Pessoa/Aluno que está sendo editado (0 se for novo)
-    private int pessoaIdParaEdicao = 0;
+    private final JButton btnSalvar;
+    private final JButton btnCancelar;
 
-    // Combobox AlunoREsponsavel
-    private JComboBox<ComboItem> cbResponsavel;
+    private int pessoaIdParaEdicao = 0; //0 se for novo
 
-    public AlunoFormView(JDialog parent) {
-        // 'true' torna o Dialog "modal" (trava a janela principal)
-        super(parent, "Formulário de Aluno", true);
+    private final JComboBox<ComboItem> cbResponsavel;
 
+    public AlunoFormView(Window parent) {
+        super(parent, Dialog.ModalityType.APPLICATION_MODAL);
         setSize(600, 500);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // --- 1. Painel de Campos (Centro) ---
+        // Painel de Campos (Centro)
         JPanel painelCampos = new JPanel();
-        // GridLayout(0, 4) = N linhas, 4 colunas (Label:Campo | Label:Campo)
         painelCampos.setLayout(new GridLayout(0, 4, 10, 10));
         painelCampos.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // --- Sub-painel Dados Pessoais ---
+        // Dados Pessoais
         JPanel painelPessoal = new JPanel(new GridLayout(0, 2, 5, 5));
         painelPessoal.setBorder(new TitledBorder("Dados Pessoais"));
 
@@ -74,28 +68,27 @@ public class AlunoFormView extends JDialog {
         painelPessoal.add(new JLabel("Email:"));
         txtEmail = new JTextField();
         painelPessoal.add(txtEmail);
-        gbc.gridy = 4; // Ajuste o índice da linha conforme seu layout atual
+        gbc.gridy = 4;
         gbc.gridx = 0;
         gbc.weightx = 0.0;
         gbc.fill = GridBagConstraints.NONE;
         painelCampos.add(new JLabel("Responsável:"), gbc);
 
         gbc.gridx = 1;
-        gbc.gridwidth = 3; // Ocupa o resto da linha
+        gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Inicializa o ComboBox
         cbResponsavel = new JComboBox<>();
         painelPessoal.add(cbResponsavel, gbc);
 
         JPanel wrapperCampos = new JPanel(new BorderLayout());
         wrapperCampos.add(painelPessoal, BorderLayout.NORTH);
 
-        // Adiciona o wrapper em uma barra de rolagem
+
         add(new JScrollPane(wrapperCampos), BorderLayout.CENTER);
 
-        // --- 2. Painel de Botões (Sul) ---
+        // Painel de Botões (Sul)
         JPanel painelBotoes = new JPanel();
         painelBotoes.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
 
@@ -183,8 +176,8 @@ public class AlunoFormView extends JDialog {
             }
         }
         if(txtRg.getText().isEmpty()){
-            // JOptionPane.showMessageDialog(null, "Preencha o rg do aluno!");
-            return true; // Por enquanto liberado
+            JOptionPane.showMessageDialog(null, "Preencha o rg do aluno!");
+            return true;
         }
         if(txtDataNasc.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Preencha o data de nascimento do aluno!");

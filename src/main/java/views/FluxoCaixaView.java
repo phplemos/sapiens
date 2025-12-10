@@ -10,7 +10,6 @@ public class FluxoCaixaView extends JPanel {
 
     private JTabbedPane abas;
 
-    // --- ABA 1: LANÇAMENTOS (Diário) ---
     private JTable tabelaTransacoes;
     private DefaultTableModel tableModel;
     private JButton btnNovaReceita;
@@ -20,7 +19,6 @@ public class FluxoCaixaView extends JPanel {
     private JButton btnBaixar; // Pagar uma conta pendente
     private JButton btnRecibo; // RF047
 
-    // --- ABA 2: RELATÓRIOS (Fluxo de Caixa) ---
     private JLabel lblSaldoEntradas;
     private JLabel lblSaldoSaidas;
     private JLabel lblSaldoFinal; // RF048
@@ -43,8 +41,6 @@ public class FluxoCaixaView extends JPanel {
         JPanel painel = new JPanel(new BorderLayout(10,10));
         painel.setBorder(new EmptyBorder(10,10,10,10));
 
-        // Tabela
-        // Colunas: ID, Descrição, Categoria, Vencimento/Data, Valor, Tipo, Status
         String[] colunas = {"ID", "Descrição", "Categoria", "Data", "Valor", "Tipo", "Status"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
@@ -53,7 +49,6 @@ public class FluxoCaixaView extends JPanel {
         tabelaTransacoes.setRowHeight(25);
         painel.add(new JScrollPane(tabelaTransacoes), BorderLayout.CENTER);
 
-        // Botões
         JPanel pSul = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnNovaReceita = new JButton("➕ Nova Receita");
         btnNovaReceita.setBackground(new Color(144, 238, 144));
@@ -80,7 +75,6 @@ public class FluxoCaixaView extends JPanel {
         JPanel painel = new JPanel(new BorderLayout(10,10));
         painel.setBorder(new EmptyBorder(20,20,20,20));
 
-        // Painel de Cards de Valores
         JPanel pValores = new JPanel(new GridLayout(1, 3, 20, 0));
 
         lblSaldoEntradas = criarCard("Entradas (Receitas)", Color.BLUE);
@@ -93,7 +87,6 @@ public class FluxoCaixaView extends JPanel {
 
         painel.add(pValores, BorderLayout.CENTER);
 
-        // Botões
         JPanel pSul = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnAtualizarRelatorio = new JButton("🔄 Recalcular Fluxo");
         btnExportarCSV = new JButton("📂 Exportar para Excel/CSV");
@@ -113,7 +106,6 @@ public class FluxoCaixaView extends JPanel {
         return lbl;
     }
 
-    // Getters
     public JTable getTabela() { return tabelaTransacoes; }
     public DefaultTableModel getTableModel() { return tableModel; }
     public JButton getBtnNovaReceita() { return btnNovaReceita; }

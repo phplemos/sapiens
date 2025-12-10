@@ -21,14 +21,11 @@ public class SelecaoFilhoView extends JDialog {
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
 
-        // --- TOPO ---
         JLabel lblTitulo = new JLabel("Selecione um aluno para visualizar:");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 14));
         lblTitulo.setBorder(new EmptyBorder(10, 10, 10, 10));
         add(lblTitulo, BorderLayout.NORTH);
 
-        // --- CENTRO: Tabela ---
-        // Coluna 0: ID (Oculto ou visível), Coluna 1: Nome, Coluna 2: Turma
         String[] colunas = {"ID", "Nome do Aluno", "Turma Atual"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
@@ -44,14 +41,12 @@ public class SelecaoFilhoView extends JDialog {
         scroll.setBorder(new TitledBorder("Meus Filhos / Dependentes"));
         add(scroll, BorderLayout.CENTER);
 
-        // --- RODAPÉ: Botões ---
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         btnVerHistorico = new JButton("📜 Ver Histórico Completo");
         btnVerBoletim = new JButton("📊 Ver Boletim (Ano Atual)");
         btnCancelar = new JButton("Cancelar");
 
-        // Estilização básica
         btnVerBoletim.setBackground(new Color(100, 149, 237)); // Azul
         btnVerBoletim.setForeground(Color.WHITE);
 

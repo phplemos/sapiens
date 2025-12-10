@@ -34,7 +34,6 @@ public class PeriodoLetivoController {
     private void carregarComboAnos() {
         List<AnoEscolar> anos = anoRepo.listarTodos();
         for (AnoEscolar ano : anos) {
-            // Cria o item com ID e Texto (ex: "2025 - Planejamento")
             String label = ano.getAno() + " (" + ano.getStatus() + ")";
             formView.adicionarAnoCombo(new ComboItem(ano.getId(), label));
         }
@@ -56,7 +55,7 @@ public class PeriodoLetivoController {
             listView.getTableModel().addRow(new Object[]{
                     p.getId(),
                     p.getNome(),
-                    p.getAnoEscolarId(), // Mostra ID do ano (simplificado)
+                    p.getAnoEscolarId(),
                     p.getDataInicio(),
                     p.getDataFim()
             });
@@ -90,7 +89,7 @@ public class PeriodoLetivoController {
         try {
             String nome = formView.getNome();
             int anoId = formView.getAnoSelecionadoId();
-            LocalDate inicio = LocalDate.parse(formView.getDataInicio()); // Formato YYYY-MM-DD
+            LocalDate inicio = LocalDate.parse(formView.getDataInicio());
             LocalDate fim = LocalDate.parse(formView.getDataFim());
 
             if (anoId == 0) {

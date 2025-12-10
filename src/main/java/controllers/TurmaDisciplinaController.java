@@ -19,19 +19,17 @@ public class TurmaDisciplinaController {
     private final PessoaRepository pessoaRepo;
 
     private final TurmaDisciplinaView view;
-    private final int turmaId; // ID da Turma que estamos editando
+    private final int turmaId;
 
     public TurmaDisciplinaController(TurmaDisciplinaView view, Turma turma) {
         this.view = view;
         this.turmaId = turma.getId();
 
-        // Inicializa Repositórios
         this.tdRepo = new TurmaDisciplinaRepository();
         this.disciplinaRepo = new DisciplinaRepository();
         this.professorRepo = new ProfessorRepository();
         this.pessoaRepo = new PessoaRepository();
 
-        // Configura Tela
         this.view.setTituloTurma(turma.getNome());
 
         carregarCombos();
@@ -84,16 +82,13 @@ public class TurmaDisciplinaController {
     private void atualizarTabela() {
         view.getTableModel().setRowCount(0);
 
-        // Busca APENAS os itens desta turma
         List<TurmaDisciplina> lista = tdRepo.buscarPorTurmaId(this.turmaId);
 
         for (TurmaDisciplina td : lista) {
-            // Join Manual Disciplina
             String nomeDisciplina = "Desconhecida";
             Optional<Disciplina> d = disciplinaRepo.buscarPorId(td.getDisciplinaId());
             if (d.isPresent()) nomeDisciplina = d.get().getNome();
 
-            // Join Manual Professor
             String nomeProfessor = "Desconhecido";
             Optional<Pessoa> p = pessoaRepo.buscarPorId(td.getProfessorPessoaId());
             if (p.isPresent()) nomeProfessor = p.get().getNomeCompleto();
@@ -114,8 +109,6 @@ public class TurmaDisciplinaController {
             JOptionPane.showMessageDialog(view, "Selecione uma disciplina e um professor.");
             return;
         }
-
-        // (Opcional) Verificar se já existe essa disciplina na turma para não duplicacao
 
         TurmaDisciplina td = new TurmaDisciplina();
         td.setTurmaId(this.turmaId);

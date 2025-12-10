@@ -50,7 +50,6 @@ public class ComunicadoDestinatarioRepository extends BaseRepository<ComunicadoD
         }
     }
 
-    // Busca todas as mensagens destinadas a uma pessoa
     public List<ComunicadoDestinatario> buscarPorDestinatario(int pessoaId) {
         return this.cache.stream()
                 .filter(cd -> cd.getDestinatarioPessoaId() == pessoaId)

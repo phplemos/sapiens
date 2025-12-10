@@ -11,7 +11,6 @@ public class AlunoHistoricoController {
 
     private final AlunoHistoricoView view;
 
-    // Precisamos de quase todos os repositórios para montar o histórico completo
     private final AlunoRepository alunoRepo;
     private final PessoaRepository pessoaRepo;
     private final EnderecoRepository enderecoRepo;
@@ -23,10 +22,10 @@ public class AlunoHistoricoController {
     private final NotaRepository notaRepo;
     private final PeriodoLetivoRepository periodoRepo;
     private final BoletimStatusRepository  boletimRepo;
+
     public AlunoHistoricoController(AlunoHistoricoView view, int alunoPessoaId, boolean isAdmin) {
         this.view = view;
 
-        // Inicializa Repositórios
         this.alunoRepo = new AlunoRepository();
         this.pessoaRepo = new PessoaRepository();
         this.enderecoRepo = new EnderecoRepository();
@@ -39,13 +38,13 @@ public class AlunoHistoricoController {
         this.periodoRepo = new PeriodoLetivoRepository();
         this.boletimRepo = new BoletimStatusRepository();
         carregarDados(alunoPessoaId);
+
         this.view.getBtnFechar().addActionListener(e -> {
             if (isAdmin) view.dispose();
         });
     }
 
     private void carregarDados(int alunoPessoaId) {
-        // 1. CARREGAR PERFIL
         Optional<Aluno> alunoOpt = alunoRepo.buscarPorPessoaId(alunoPessoaId);
         Optional<Pessoa> pessoaOpt = pessoaRepo.buscarPorId(alunoPessoaId);
 
@@ -62,16 +61,13 @@ public class AlunoHistoricoController {
 
         view.setDadosPerfil(p.getNomeCompleto(), p.getCpf(), p.getEmailContato(), p.getTelefone(), enderecoStr);
 
-        // 2. CARREGAR HISTÓRICO (A "Query" Complexa)
         view.getTableModel().setRowCount(0);
 
-        // A. Busca todas as matrículas desse aluno (Histórico de anos)
         List<Matricula> matriculas = matriculaRepo.listarTodos().stream()
                 .filter(m -> m.getAlunoPessoaId() == alunoPessoaId)
                 .toList();
 
         for (Matricula mat : matriculas) {
-            // Dados da Turma/Ano
             String nomeTurma = "N/A";
             String anoLetivo = "N/A";
 
@@ -83,16 +79,10 @@ public class AlunoHistoricoController {
                 if(anoOpt.isPresent()) anoLetivo = String.valueOf(anoOpt.get().getAno());
             }
 
-            // B. Busca as disciplinas cursadas nessa matrícula
             List<MatriculaDisciplina> disciplinasCursadas = matDiscRepo.buscarPorMatriculaId(mat.getId());
 
             for (MatriculaDisciplina md : disciplinasCursadas) {
-                // Nome da Disciplina
                 String nomeDisciplina = "N/A";
-                // Precisamos achar a TurmaDisciplina para achar a Disciplina (Volta longa)
-                // Simplificação: Vamos supor que você ajustou o MatriculaDisciplina para guardar o ID da Disciplina direto
-                // OU fazemos a busca via TurmaDisciplinaRepository.
-                // Vou assumir o caminho: MD -> TurmaDisciplina -> Disciplina
 
                 TurmaDisciplinaRepository tdRepo = new TurmaDisciplinaRepository();
                 Optional<TurmaDisciplina> tdOpt = tdRepo.buscarPorId(md.getTurmaDisciplinaId());
@@ -110,28 +100,25 @@ public class AlunoHistoricoController {
                     Optional<PeriodoLetivo> perOpt = periodoRepo.buscarPorId(n.getPeriodoLetivoId());
                     if(perOpt.isPresent()) nomePeriodo = perOpt.get().getNome();
 
-                    // --- VERIFICAÇÃO DE SEGURANÇA (RF043) ---
                     int periodoId = n.getPeriodoLetivoId();
-                    int turmaId = mat.getTurmaId(); // Pegamos da matrícula do loop externo
+                    int turmaId = mat.getTurmaId();
 
                     boolean isPublicado = boletimRepo.isPublicado(turmaId, periodoId);
 
-                    // Variável para exibição
                     Object valorExibido;
 
                     if (isPublicado) {
                         valorExibido = n.getValorNota();
                     } else {
-                        valorExibido = "Em fecham."; // Ou "-" ou "Oculto"
+                        valorExibido = "Em fecham.";
                     }
-                    // ----------------------------------------
 
                     view.getTableModel().addRow(new Object[]{
                             anoLetivo,
                             nomeTurma,
                             nomeDisciplina,
                             nomePeriodo,
-                            valorExibido, // <--- Use a variável tratada
+                            valorExibido,
                             md.getTotalFaltas()
                     });
                 }
