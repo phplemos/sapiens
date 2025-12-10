@@ -22,4 +22,22 @@
   "titulo" : "Matrícula Realizada",
   "corpo" : "Bem-vindo! Sua matrícula foi confirmada com sucesso.",
   "dataEnvio" : "2025-12-09T16:25:21.743319644"
+}, {
+  "id" : 5,
+  "remetentePessoaId" : 0,
+  "titulo" : "Boletim publicado",
+  "corpo" : "Sua nota foi publicada, verifique o boletim",
+  "dataEnvio" : "2025-12-09T23:47:10.242065807"
+}, {
+  "id" : 6,
+  "remetentePessoaId" : 0,
+  "titulo" : "Boletim publicado",
+  "corpo" : "Sua nota foi publicada, verifique o boletim",
+  "dataEnvio" : "2025-12-09T23:47:10.245583202"
+}, {
+  "id" : 7,
+  "remetentePessoaId" : 1,
+  "titulo" : "Teste",
+  "corpo" : "Testestes",
+  "dataEnvio" : "2025-12-10T00:35:42.714369011"
 } ]

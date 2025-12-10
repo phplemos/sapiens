@@ -8,24 +8,6 @@
   "estado" : "Bahia",
   "cep" : "45.203-346"
 }, {
-  "id" : 2,
-  "logradouro" : "oqiwueoiquwe",
-  "numero" : "oiqwueoiquwe",
-  "complemento" : null,
-  "bairro" : "oiuqwoieuoqiwue",
-  "cidade" : "oiquweoiquo",
-  "estado" : "iuqowie",
-  "cep" : "qoweuqowue"
-}, {
-  "id" : 3,
-  "logradouro" : "qweqwe",
-  "numero" : "qweqwe",
-  "complemento" : null,
-  "bairro" : "eqweqw",
-  "cidade" : "eqweqwe",
-  "estado" : "qweqweqwe",
-  "cep" : "QWEQWE"
-}, {
   "id" : 4,
   "logradouro" : "qwe",
   "numero" : "qwe",
@@ -52,4 +34,22 @@
   "cidade" : "uqweu",
   "estado" : "qwoeiu",
   "cep" : "oqweujoqwueoi"
+}, {
+  "id" : 3,
+  "logradouro" : "qweqwe",
+  "numero" : "qweqwe",
+  "complemento" : null,
+  "bairro" : "eqweqw",
+  "cidade" : "eqweqwe",
+  "estado" : "qweqweqwe",
+  "cep" : "QWEQWE"
+}, {
+  "id" : 2,
+  "logradouro" : "oqiwueoiquwe",
+  "numero" : "oiqwueoiquwe",
+  "complemento" : null,
+  "bairro" : "oiuqwoieuoqiwue",
+  "cidade" : "oiquweoiquo",
+  "estado" : "iuqowie",
+  "cep" : "qoweuqowue"
 } ]

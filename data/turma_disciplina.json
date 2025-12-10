@@ -8,4 +8,9 @@
   "turmaId" : 1,
   "disciplinaId" : 69,
   "professorPessoaId" : 4
+}, {
+  "id" : 4,
+  "turmaId" : 2,
+  "disciplinaId" : 1,
+  "professorPessoaId" : 4
 } ]

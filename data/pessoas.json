@@ -8,24 +8,6 @@
   "emailContato" : "phplemos.dev@gmail.com",
   "enderecoId" : 1
 }, {
-  "id" : 2,
-  "nomeCompleto" : "Gustavo",
-  "dataNascimento" : "1997-11-26",
-  "cpf" : "12312312312",
-  "rg" : "123123123",
-  "telefone" : "123812381",
-  "emailContato" : "gustavo@gmail.com",
-  "enderecoId" : 2
-}, {
-  "id" : 4,
-  "nomeCompleto" : "Lucas",
-  "dataNascimento" : "1997-11-23",
-  "cpf" : "12312312311",
-  "rg" : "1029381023",
-  "telefone" : "019238019283",
-  "emailContato" : "lucas@gmail.com",
-  "enderecoId" : 3
-}, {
   "id" : 3,
   "nomeCompleto" : "Pedro Pinheiro",
   "dataNascimento" : "1997-11-26",
@@ -70,4 +52,22 @@
   "telefone" : "123123",
   "emailContato" : "jjoaj@gmail.com",
   "enderecoId" : 6
+}, {
+  "id" : 4,
+  "nomeCompleto" : "LucasSS",
+  "dataNascimento" : "1997-11-23",
+  "cpf" : "12312312311",
+  "rg" : "1029381023",
+  "telefone" : "019238019283",
+  "emailContato" : "lucas@gmail.com",
+  "enderecoId" : 3
+}, {
+  "id" : 2,
+  "nomeCompleto" : "Gustavo Souza",
+  "dataNascimento" : "1997-11-26",
+  "cpf" : "12312312312",
+  "rg" : "123123123",
+  "telefone" : "123812381",
+  "emailContato" : "gustavo@gmail.com",
+  "enderecoId" : 2
 } ]
