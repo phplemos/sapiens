@@ -1,0 +1,217 @@
+[ {
+  "id" : 1,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-01-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 2,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-02-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 3,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-03-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 4,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-04-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 5,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-05-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 6,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-06-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 7,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-07-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 8,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-08-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 10,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-10-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 11,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-11-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 12,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-12-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "PENDENTE"
+}, {
+  "id" : 14,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-02-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 15,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-03-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 16,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-04-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 17,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-05-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 18,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-06-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 19,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-07-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 20,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-08-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 21,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-09-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 22,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-10-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 23,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-11-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "ATRASADO"
+}, {
+  "id" : 24,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 0.0,
+  "dataVencimento" : "2025-12-10",
+  "dataPagamento" : null,
+  "statusPagamento" : "PENDENTE"
+}, {
+  "id" : 13,
+  "matriculaId" : 2,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 200.0,
+  "valorJurosMulta" : 105.89999999999999,
+  "dataVencimento" : "2025-01-10",
+  "dataPagamento" : "2025-12-09",
+  "statusPagamento" : "PAGO"
+}, {
+  "id" : 9,
+  "matriculaId" : 1,
+  "valorTotal" : 500.0,
+  "valorDesconto" : 0.0,
+  "valorJurosMulta" : 55.0,
+  "dataVencimento" : "2025-09-10",
+  "dataPagamento" : "2025-12-09",
+  "statusPagamento" : "PAGO"
+} ]

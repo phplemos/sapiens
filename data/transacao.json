@@ -1,0 +1,46 @@
+[ {
+  "id" : 1,
+  "descricao" : "1000",
+  "valor" : 1000.0,
+  "tipo" : "RECEITA",
+  "dataTransacao" : "2025-12-09",
+  "dataPagamento" : "2025-12-09",
+  "categoriaId" : 0,
+  "mensalidadeId" : null
+}, {
+  "id" : 2,
+  "descricao" : "201",
+  "valor" : 200.0,
+  "tipo" : "DESPESA",
+  "dataTransacao" : "2025-12-09",
+  "dataPagamento" : "2025-12-09",
+  "categoriaId" : 0,
+  "mensalidadeId" : null
+}, {
+  "id" : 3,
+  "descricao" : "Mensalidade Venc: 10/09 - Pedro Pinheiro",
+  "valor" : 555.0,
+  "tipo" : "RECEITA",
+  "dataTransacao" : "2025-12-09",
+  "dataPagamento" : "2025-12-09",
+  "categoriaId" : 1,
+  "mensalidadeId" : 9
+}, {
+  "id" : 4,
+  "descricao" : "teste",
+  "valor" : 100.0,
+  "tipo" : "RECEITA",
+  "dataTransacao" : "2025-12-09",
+  "dataPagamento" : "2025-12-09",
+  "categoriaId" : 1,
+  "mensalidadeId" : null
+}, {
+  "id" : 5,
+  "descricao" : "Conta luz",
+  "valor" : 1000.0,
+  "tipo" : "DESPESA",
+  "dataTransacao" : "2025-12-09",
+  "dataPagamento" : "2025-12-09",
+  "categoriaId" : 0,
+  "mensalidadeId" : null
+} ]
